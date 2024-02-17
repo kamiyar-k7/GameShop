@@ -1,7 +1,18 @@
+using Data.ShopDbcontext;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+
+#region DbContext
+builder.Services.AddDbContext<GameShopDbContext>(
+    option => option.UseSqlServer
+    (builder.Configuration.GetConnectionString("GameShopDbContextConnectionString")));
+#endregion
 
 var app = builder.Build();
 
