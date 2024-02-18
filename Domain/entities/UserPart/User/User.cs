@@ -1,4 +1,4 @@
-﻿using Domain.entities.Roles;
+﻿using Domain.entities.UserPart.Roles;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.entities.User
+namespace Domain.entities.UserPart.User
 {
     public class User
     {
@@ -17,6 +17,7 @@ namespace Domain.entities.User
         [Required]
         public string Email { get; set; }
         [Required]
+        [MinLength(8)]
         public string Password { get; set; }
         [Required]
         public long PhoneNumber { get; set; }
@@ -24,6 +25,7 @@ namespace Domain.entities.User
         public string? UserAvatar { get; set; }
         public bool IsAdmin { get; set; }
         public bool IsDelete { get; set; }
+
 
         public ICollection<UserSelectedRole> UserSelectedRoles { get; set; }
     }
