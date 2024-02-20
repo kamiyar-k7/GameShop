@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Application.Services.implements
 {
-	public class SignUpService  : iSignUpService
+	public class SignUpService  : ISignUpService
 	{
 		#region Ctor
 		private readonly ISignUpRepository _signUpRepository;

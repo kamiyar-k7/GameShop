@@ -20,6 +20,7 @@ namespace Domain.entities.Store.Game
         public float Rating { get; set; }
         public string Trailer { get; set; }
         public string SystemRequirements { get; set; }
+        public bool IsDelete { get; set; } = false;
        
 
 

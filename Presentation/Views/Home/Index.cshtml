@@ -2,6 +2,9 @@
 
 @{
     Layout = "_Layout";
+    @using System.Drawing;
+    @using System.Drawing.Drawing2D;
+    @using System.IO;
 }
 
 
@@ -15,12 +18,16 @@
 
         <!-- START: Image Slider -->
         <div class="nk-image-slider" data-autoplay="8000">
-            @foreach (var Game in Model)
+            @{
+                var topten = Model.OrderByDescending(x => x.ReleaseDate).Take(5);
+            }
+            @foreach (var Game in topten)
             {
-                
+
+
                 if (Game.Screenshots.Any())
                 {
-                   
+
                     var firstScreenshot = Game.Screenshots.First();
 
                     <div class="nk-image-slider-item">
@@ -33,51 +40,13 @@
                     </div>
                 }
             }
-                
+
 
         </div>
         <!-- END: Image Slider -->
         <!-- START: Categories -->
-   
-        <div class="nk-gap-2"></div>
-        <div class="row vertical-gap">
-            <div class="col-lg-4">
-                <div class="nk-feature-1">
-                    <div class="nk-feature-icon">
-                        <img src="assets/images/icon-mouse.png" alt="">
-                    </div>
-                    <div class="nk-feature-cont">
-                        <h3 class="nk-feature-title"><a href="#">PC</a></h3>
-                        <h4 class="nk-feature-title text-main-1"><a href="#">View Games</a></h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="nk-feature-1">
-                    <div class="nk-feature-icon">
-                        <img src="assets/images/icon-gamepad.png" alt="">
-                    </div>
-                    <div class="nk-feature-cont">
-                        <h3 class="nk-feature-title"><a href="#">PS4/PS5</a></h3>
-                        <h4 class="nk-feature-title text-main-1"><a href="#">View Games</a></h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="nk-feature-1">
-                    <div class="nk-feature-icon">
-                        <img src="assets/images/icon-gamepad-2.png" alt="">
-                    </div>
-                    <div class="nk-feature-cont">
-                        <h3 class="nk-feature-title"><a href="#">Xbox</a></h3>
-                        <h4 class="nk-feature-title text-main-1"><a href="#">View Games</a></h4>
-                    </div>
-                </div>
-            </div>
-        </div>
         <!-- END: Categories -->
         <!-- START: Latest News -->
-      
         <!-- END: Latest News -->
 
         <div class="nk-gap-2"></div>
@@ -85,17 +54,12 @@
             <div class="col-lg-8">
 
                 <!-- START: Latest Posts -->
-                
                 <!-- END: Latest Posts -->
-
                 <!-- START: Latest Matches -->
-            
                 <!-- END: Latest Matches -->
                 <!-- START: Tabbed News  -->
-                
                 <!-- END: Tabbed News -->
                 <!-- START: Latest Pictures -->
-              
                 <!-- END: Latest Pictures -->
 
                 <div class="nk-widget">
@@ -116,20 +80,22 @@
                 <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Our</span> Games</span></h3>
                 <div class="nk-gap"></div>
                 <div class="row vertical-gap">
-                 
-                    @foreach (var Game in Model)
+                    @{
+                        var ordered = Model.OrderByDescending(x => x.ReleaseDate).ToList();
+                    }
+                    @foreach (var Game in ordered)
                     {
-                       
+
                         <div class="col-md-6">
                             <div class="nk-product-cat">
-                               @if (Game.Screenshots.Any())
+                                @if (Game.Screenshots.Any())
                                 {
-                                var firstscreenshot = Game.Screenshots.First();
+                                    var firstscreenshot = Game.Screenshots.First();
                                     <a class="nk-product-image" href="store-product.html">
                                         <img src="assets/images/@firstscreenshot" alt="none" style="width: 160px; height: 205px; object-fit: fill;">
                                     </a>
                                 }
-                              
+
                                 <div class="nk-product-cont">
                                     <h3 class="nk-product-title h5"><a href="store-product.html">@Game.Name</a></h3>
                                     <div class="nk-gap-1"></div>
@@ -164,18 +130,18 @@
                                     <div class="nk-gap-1"></div>
                                     <div class="nk-product-price">€ @Game.Price</div>
                                     <div class="nk-gap-1"></div>
-                                    <a  class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                                    <a class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
                                 </div>
                             </div>
                         </div>
                     }
-                
 
 
-                
 
 
-                 
+
+
+
                 </div>
                 <!-- END: Our Games -->
             </div>
@@ -191,11 +157,11 @@
                         .nk-sidebar-sticky
                 -->
                 <aside class="nk-sidebar nk-sidebar-right nk-sidebar-sticky">
-          
+
                     <div class="nk-widget nk-widget-highlighted">
                         <h4 class="nk-widget-title"><span><span class="text-main-1">We</span> Are Social</span></h4>
                         <div class="nk-widget-content">
-                         
+
 
                             <ul class="nk-social-links-3 nk-social-links-cols-4">
                                 <li><a class="nk-social-twitch" href="#"><span class="fab fa-twitch"></span></a></li>
@@ -233,65 +199,68 @@
                         </div>
                     </div>
 
-                  
-                   
-                 
+                    
                     <div class="nk-widget nk-widget-highlighted">
-                        <h4 class="nk-widget-title"><span><span class="text-main-1">Most</span> Popular</span></h4>
-                        @{
-                            // Sort games by Rating in descending order and select the top 5
-                            var top5Games = Model.OrderByDescending(g => g.Rating).Take(5);
-                        }
-                        @foreach (var Game in top5Games)
-                        {
-                          
-                            <div class="nk-widget-content">
+                    <h4 class="nk-widget-title"><span><span class="text-main-1">Most</span> Popular</span></h4>
+                    @{
+                    // Sort games by Rating in descending order and select the top 5
+                    var top5Games = Model.OrderByDescending(g => g.Rating).Take(5);
+                    }
+                    @foreach (var Game in top5Games)
+                    {
 
-                                <div class="nk-widget-post">
-                                    @if (Game.Screenshots.Any())
-                                    {
-                                        var firstscreenshot = Game.Screenshots.First();
-                                        <a href="store-product.html" class="nk-post-image">
-                                            <img src="assets/images/@firstscreenshot" alt="none" style="width: 160px; height: 205px; object-fit: fill;">
-                                        </a>
-                                    }
-                                    
-                                    <h3 class="nk-post-title"><a href="store-product.html">@Game.Name</a></h3>
+                    <div class="nk-widget-content">
 
-                                    <div class="nk-product-rating" data-rating="@Game.Rating">
-                                        @{
-                                            // Calculate the number of full stars and half star based on the Rating value
-                                            int fullStars1 = (int)Math.Floor(Game.Rating);
-                                            bool hasHalfStar1 = Game.Rating - fullStars1 >= 0.5;
-                                        }
-                                        @for (int i = 0; i < 5; i++)
-                                        {
-                                            if (i < fullStars1)
-                                            {
-                                                // Render full star icon
-                                                <i class="fa fa-star"></i>
-                                            }
-                                            else if (hasHalfStar1 && i == fullStars1)
-                                            {
-                                            // Render half star icon
-                                                <i class="fas fa-star-half"></i>
-                                            }
-                                            else
-                                            {
-                                            // Render empty star icon
-                                                <i class="far fa-star"></i>
-                                            }
-                                        }
-                                    </div>
-                                    <div class="nk-product-price">€ @Game.Price</div>
-                                </div>
+                    <div class="nk-widget-post">
+                    @if (Game.Screenshots.Any())
+                    {
+                    var firstscreenshot = Game.Screenshots.First();
+                    <a href="store-product.html" class="nk-post-image">
+                    <img src="assets/images/@firstscreenshot" alt="none" style="width: 160px; height: 205px; object-fit: fill;">
+                    </a>
+                    }
 
+                    <h3 class="nk-post-title"><a href="store-product.html">@Game.Name</a></h3>
 
-
-                            </div>
-                        }
-                   
+                    <div class="nk-product-rating" data-rating="@Game.Rating">
+                    @{
+                    // Calculate the number of full stars and half star based on the Rating value
+                    int fullStars1 = (int)Math.Floor(Game.Rating);
+                    bool hasHalfStar1 = Game.Rating - fullStars1 >= 0.5;
+                    }
+                    @for (int i = 0; i < 5; i++)
+                    {
+                    if (i < fullStars1)
+                    {
+                    // Render full star icon
+                    <i class="fa fa-star"></i>
+                    }
+                    else if (hasHalfStar1 && i == fullStars1)
+                    {
+                    // Render half star icon
+                    <i class="fas fa-star-half"></i>
+                    }
+                    else
+                    {
+                    // Render empty star icon
+                    <i class="far fa-star"></i>
+                    }
+                    }
                     </div>
+                    <div class="nk-product-price">€ @Game.Price</div>
+                    </div>
+
+
+
+                    </div>
+                    }
+
+                    </div> 
+
+                  
+
+
+
 
                 </aside>
                 <!-- END: Sidebar -->
@@ -303,7 +272,7 @@
 
 
 
-  
+
 
 
 </div>

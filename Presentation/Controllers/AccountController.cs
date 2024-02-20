@@ -11,8 +11,8 @@ namespace Presentation.Controllers
     {
 
         #region Ctor
-        private readonly iSignUpService _signpService;
-		public AccountController(iSignUpService SignUpservice) 
+        private readonly ISignUpService _signpService;
+		public AccountController(ISignUpService SignUpservice) 
         {
             _signpService = SignUpservice;
         }

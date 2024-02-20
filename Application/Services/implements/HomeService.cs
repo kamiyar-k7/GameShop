@@ -35,7 +35,9 @@ public class HomeService : IHomeService
                     Price = game.Price,
                     Rating = game.Rating,
                     Trailer = game.Trailer,
-                    Screenshots = new List<string>()
+                    Screenshots = new List<string>(),
+                    ReleaseDate = game.ReleaseDate,
+                   
                    
                 };
                 foreach (var screenshot in game.Screenshots)

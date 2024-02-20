@@ -15,7 +15,8 @@ namespace Application.DTOs.UserSide.Home
 		public float Price { get; set; }
 		public float Rating { get; set; }
 		public string Trailer { get; set; }
-		public List<string> Screenshots { get; set; }
+        public DateOnly ReleaseDate { get; set; }
+        public List<string> Screenshots { get; set; }
 		#endregion
 	}
 }

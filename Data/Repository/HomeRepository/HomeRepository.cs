@@ -23,7 +23,7 @@ public class HomeRepository : IHomeRepository
     public async Task<List<Game>> GetListOfGames()
     {
         return await _gameShopDbContext.games
-     .Include(g => g.Screenshots)
+     .Include(x=> x.Screenshots)
      .ToListAsync();
     }
     #endregion

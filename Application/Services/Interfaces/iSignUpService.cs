@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Services.Interfaces
 {
-	public interface iSignUpService
+	public interface ISignUpService
 	{
 		#region general
 		Task<bool> AddToDataBase(SignUpDto model, CancellationToken cancellation);
