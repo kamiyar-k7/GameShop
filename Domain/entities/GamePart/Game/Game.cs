@@ -1,4 +1,5 @@
 ﻿using Domain.entities.GamePart.Paltform;
+using Domain.entities.Store.Game;
 using Domain.entities.Store.GemSelectedGenre;
 using System;
 using System.Collections.Generic;
@@ -15,18 +16,32 @@ namespace Domain.entities.Store.Game
         public string Description { get; set; }
         public DateOnly ReleaseDate { get; set; }
         public string Company { get; set; }
-        public int Price { get; set; }
-        public int Rating { get; set; }
+        public float Price { get; set; }
+        public float Rating { get; set; }
         public string Trailer { get; set; }
         public string SystemRequirements { get; set; }
-        public List<string> Screenshots { get; set; }
+       
 
 
 
         #region Rels
+        public ICollection<Screenshot> Screenshots { get; set; }
         public ICollection<GemSelectedGenre.GemeSelectedGenre> gemeSelectedGenres { get; set; }
         public ICollection<GameSelectedPlatform> gameSelectedPlatforms { get; set; }
         #endregion
 
+
     }
+  
 }
+
+public class Screenshot
+{
+    public int Id { get; set; }
+    public string AvararUrl { get; set; }
+   
+
+    public int GameId { get; set; }
+    public Game Game { get; set; } 
+}
+

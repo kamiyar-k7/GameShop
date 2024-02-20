@@ -3,6 +3,7 @@ using Application.Services.implements;
 using Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Diagnostics.Eventing.Reader;
 
 namespace Presentation.Controllers
 {
@@ -39,6 +40,7 @@ namespace Presentation.Controllers
                 {
 					TempData["ErrorMessage"] = "This Phone or Email Already Exist";
 				}
+              
                
             }
             else

@@ -13,7 +13,7 @@ namespace Domain.IRepository.AccountRepositories
 		Task SaveChanges();
 		Task AddToDataBase(User user , CancellationToken cancellation);
 		Task<List<User>> GetListOfUsers(CancellationToken cancellationToken);
-		bool IsExist(long PhoneNumbers , string email);
+		bool IsExist(string	PhoneNumbers , string email);
 		#endregion
 
 	}

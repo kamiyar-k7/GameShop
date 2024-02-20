@@ -1,27 +1,33 @@
+using Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace Presentation.Controllers
+namespace Presentation.Controllers;
+
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+    #region Ctor
+    private readonly IHomeService _homeService;
+
+    public HomeController( IHomeService homeService)
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-      
+            _homeService = homeService;
     }
+	#endregion
+
+	#region Index
+	public async Task<IActionResult> Index()
+	{
+		if (ModelState.IsValid)
+		{
+			var games = await	_homeService.ShowGames();
+			return View(games);
+		}
+
+			return View();
+
+	}
+	#endregion
+
+
 }

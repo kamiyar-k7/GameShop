@@ -4,6 +4,7 @@ using Data.ShopDbcontext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(GameShopDbContext))]
-    partial class GameShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240219144245_Changes")]
+    partial class Changes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,11 +113,15 @@ namespace Data.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
-                    b.Property<float>("Rating")
-                        .HasColumnType("real");
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
 
                     b.Property<DateOnly>("ReleaseDate")
                         .HasColumnType("date");
+
+                    b.Property<string>("Screenshots")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SystemRequirements")
                         .IsRequired()
@@ -244,28 +251,6 @@ namespace Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Screenshot", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AvararUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GameId");
-
-                    b.ToTable("Screenshot");
-                });
-
             modelBuilder.Entity("Domain.entities.GamePart.Paltform.GameSelectedPlatform", b =>
                 {
                     b.HasOne("Domain.entities.Store.Game.Game", "Game")
@@ -323,17 +308,6 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Screenshot", b =>
-                {
-                    b.HasOne("Domain.entities.Store.Game.Game", "Game")
-                        .WithMany("Screenshots")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Game");
-                });
-
             modelBuilder.Entity("Domain.entities.GamePart.GemSelectedGenre.Genre", b =>
                 {
                     b.Navigation("gemeSelectedGenres");
@@ -346,8 +320,6 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Domain.entities.Store.Game.Game", b =>
                 {
-                    b.Navigation("Screenshots");
-
                     b.Navigation("gameSelectedPlatforms");
 
                     b.Navigation("gemeSelectedGenres");

@@ -26,6 +26,7 @@
 	</ItemGroup>
 	
 	<ItemGroup>
+	  <Folder Include="wwwroot\assets\images\GameImages\" />
 	  <Folder Include="wwwroot\Login\" />
 	</ItemGroup>
 	

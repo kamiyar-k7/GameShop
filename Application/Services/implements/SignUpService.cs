@@ -26,7 +26,7 @@ namespace Application.Services.implements
 
 		#region Genera
 		#region Sign Up
-		public bool IsExist(long phonenumber, string email)
+		public bool IsExist(string phonenumber, string email)
 		{
 			return _signUpRepository.IsExist(phonenumber, email);
 		}

@@ -35,7 +35,7 @@ namespace Data.Repository.AccountRepositories
 		 await	_dbContext.AddAsync(user);
 		}
 
-		 public  bool IsExist(long PhoneNumber, string email  )
+		 public  bool IsExist(string PhoneNumber, string email  )
 		{
 			return _dbContext.Users.Any(x => x.PhoneNumber == PhoneNumber || x.Email == email);
 			

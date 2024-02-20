@@ -13,10 +13,12 @@ namespace Application.DTOs.AdminSide.Account
 		
 		public string Email { get; set; }
 		[DataType(DataType.Password)]
+		[MinLength(8)]
 		public string Password { get; set; }
 		[Compare("Password", ErrorMessage = "Password And Repeat Paswword Are Not Same!!")]
-		public string  RepeatPassword { get; set; }
-		public long PhoneNumber { get; set; }
+        [MinLength(8)]
+        public string  RepeatPassword { get; set; }
+		public string PhoneNumber { get; set; }
 	
 	}
 }

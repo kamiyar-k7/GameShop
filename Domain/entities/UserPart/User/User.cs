@@ -20,11 +20,13 @@ namespace Domain.entities.UserPart.User
         [MinLength(8)]
         public string Password { get; set; }
         [Required]
-        public long PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;
         public string? UserAvatar { get; set; }
         public bool IsAdmin { get; set; }
+        public bool SuperAdmin { get; set; }
         public bool IsDelete { get; set; }
+
 
 
         public ICollection<UserSelectedRole> UserSelectedRoles { get; set; }

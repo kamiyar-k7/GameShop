@@ -1,8 +1,10 @@
 using Application.Services.implements;
 using Application.Services.Interfaces;
 using Data.Repository.AccountRepositories;
+using Data.Repository.HomeRepository;
 using Data.ShopDbcontext;
 using Domain.IRepository.AccountRepositories;
+using Domain.IRepository.HomeRepositoryInterface;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 #region ioc Container
+//Home
+builder.Services.AddScoped<IHomeRepository, HomeRepository>();
+builder.Services.AddScoped<IHomeService , HomeService>();
+
 // sign up
 builder.Services.AddScoped<ISignUpRepository , SignUpRepository>();
 builder.Services.AddScoped<iSignUpService , SignUpService>();
