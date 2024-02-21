@@ -29,9 +29,9 @@
                 {
 
                     var firstScreenshot = Game.Screenshots.First();
-
-                    <div class="nk-image-slider-item">
-                        <img src="/assets/images/@firstScreenshot" alt="" class="nk-image-slider-img" data-thumb="/assets/images/@firstScreenshot">
+                    <div class="nk-image-slider-item" style="background: url('assets/images/@firstScreenshot') no-repeat center ; background-size:auto;">
+                        <img src="/assets/images/GameImages/@firstScreenshot" alt="" class="nk-image-slider-img" data-thumb="/assets/images/@firstScreenshot" style="background: url('assets/images/@firstScreenshot') no-repeat center ; background-size:auto;">
+                    
                         <div class="nk-image-slider-content">
                             <h3 class="h4">@Game.Name</h3>
                             <p class="text-white">@Game.Description</p>
@@ -92,7 +92,7 @@
                                 {
                                     var firstscreenshot = Game.Screenshots.First();
                                     <a class="nk-product-image" href="store-product.html">
-                                        <img src="assets/images/@firstscreenshot" alt="none" style="width: 160px; height: 205px; object-fit: fill;">
+                                        <img src="assets/images/@firstscreenshot" alt="none" style="background: url('assets/images/@firstscreenshot') no-repeat center fixed; background-size:cover width: 205px; height: 160px;">
                                     </a>
                                 }
 
@@ -199,65 +199,65 @@
                         </div>
                     </div>
 
-                    
+
                     <div class="nk-widget nk-widget-highlighted">
-                    <h4 class="nk-widget-title"><span><span class="text-main-1">Most</span> Popular</span></h4>
-                    @{
-                    // Sort games by Rating in descending order and select the top 5
-                    var top5Games = Model.OrderByDescending(g => g.Rating).Take(5);
-                    }
-                    @foreach (var Game in top5Games)
-                    {
+                        <h4 class="nk-widget-title"><span><span class="text-main-1">Most</span> Popular</span></h4>
+                        @{
+                            // Sort games by Rating in descending order and select the top 5
+                            var top5Games = Model.OrderByDescending(g => g.Rating).Take(5);
+                        }
+                        @foreach (var Game in top5Games)
+                        {
 
-                    <div class="nk-widget-content">
+                            <div class="nk-widget-content">
 
-                    <div class="nk-widget-post">
-                    @if (Game.Screenshots.Any())
-                    {
-                    var firstscreenshot = Game.Screenshots.First();
-                    <a href="store-product.html" class="nk-post-image">
-                    <img src="assets/images/@firstscreenshot" alt="none" style="width: 160px; height: 205px; object-fit: fill;">
-                    </a>
-                    }
+                                <div class="nk-widget-post">
+                                    @if (Game.Screenshots.Any())
+                                    {
+                                        var firstscreenshot = Game.Screenshots.First();
+                                        <a href="store-product.html" class="nk-post-image">
+                                            <img src="assets/images/@firstscreenshot" alt="none" style="background: url('assets/images/@firstscreenshot') no-repeat center fixed; background-size:cover width: 205px; height: 160px;">
+                                        </a>
+                                    }
 
-                    <h3 class="nk-post-title"><a href="store-product.html">@Game.Name</a></h3>
+                                    <h3 class="nk-post-title"><a href="store-product.html">@Game.Name</a></h3>
 
-                    <div class="nk-product-rating" data-rating="@Game.Rating">
-                    @{
-                    // Calculate the number of full stars and half star based on the Rating value
-                    int fullStars1 = (int)Math.Floor(Game.Rating);
-                    bool hasHalfStar1 = Game.Rating - fullStars1 >= 0.5;
-                    }
-                    @for (int i = 0; i < 5; i++)
-                    {
-                    if (i < fullStars1)
-                    {
-                    // Render full star icon
-                    <i class="fa fa-star"></i>
-                    }
-                    else if (hasHalfStar1 && i == fullStars1)
-                    {
-                    // Render half star icon
-                    <i class="fas fa-star-half"></i>
-                    }
-                    else
-                    {
-                    // Render empty star icon
-                    <i class="far fa-star"></i>
-                    }
-                    }
+                                    <div class="nk-product-rating" data-rating="@Game.Rating">
+                                        @{
+                                            // Calculate the number of full stars and half star based on the Rating value
+                                            int fullStars1 = (int)Math.Floor(Game.Rating);
+                                            bool hasHalfStar1 = Game.Rating - fullStars1 >= 0.5;
+                                        }
+                                        @for (int i = 0; i < 5; i++)
+                                        {
+                                            if (i < fullStars1)
+                                            {
+                                                // Render full star icon
+                                                <i class="fa fa-star"></i>
+                                            }
+                                            else if (hasHalfStar1 && i == fullStars1)
+                                            {
+                                            // Render half star icon
+                                                <i class="fas fa-star-half"></i>
+                                            }
+                                            else
+                                            {
+                                            // Render empty star icon
+                                                <i class="far fa-star"></i>
+                                            }
+                                        }
+                                    </div>
+                                    <div class="nk-product-price">€ @Game.Price</div>
+                                </div>
+
+
+
+                            </div>
+                        }
+
                     </div>
-                    <div class="nk-product-price">€ @Game.Price</div>
-                    </div>
 
 
-
-                    </div>
-                    }
-
-                    </div> 
-
-                  
 
 
 

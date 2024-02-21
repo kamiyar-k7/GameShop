@@ -99,7 +99,7 @@
 
                         <a href="store-product.html" class="nk-gallery-item">
                             <span class="nk-gallery-item-overlay"><span><span class="nk-icon-circles"></span></span></span>
-                            <img src="assets/images/GameImages/@game.Screenshots.First()" alt="none">
+                            <img src="assets/images/GameImages/@game.Screenshots.First()" alt="none" style="background: url('assets/images/@game.Screenshots.First()') no-repeat center fixed; background-size:cover width: 400px; height: 399px;">
                         </a>
                         <div class="nk-gallery-item-label">
                             <h4 class="mb-0">@game.Name</h4>
@@ -144,7 +144,7 @@
                         {
                             var firstscreenshot = Game.Screenshots.First();
                             <a class="nk-product-image" href="store-product.html">
-                                <img src="assets/images/GameImages/@firstscreenshot" alt="none">
+                                <img src="assets/images/GameImages/@firstscreenshot" alt="none" style="background: url('assets/images/@Game.Screenshots.First()') no-repeat center fixed; background-size:cover width: 200px; height: 205px;">
                             </a>
                         }
                         <div class="nk-product-cont">
@@ -180,6 +180,8 @@
 
                             <div class="nk-gap-1"></div>
                             <div class="nk-product-price">€ @Game.Price</div>
+                            <div class="nk-gap-1"></div>
+                            <a class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
                         </div>
                     </div>
                 </div>
