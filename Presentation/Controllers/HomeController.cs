@@ -4,6 +4,7 @@ using System.Diagnostics;
 
 namespace Presentation.Controllers;
 
+
 public class HomeController : Controller
 {
     #region Ctor
@@ -26,6 +27,10 @@ public class HomeController : Controller
 
 			return View();
 
+	}
+	public IActionResult Test()
+	{
+		return View();
 	}
 	#endregion
 

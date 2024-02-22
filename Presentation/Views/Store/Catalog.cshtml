@@ -2,6 +2,10 @@
 @{
     var platformlist = ViewData["Platform"] as List<Domain.entities.GamePart.Paltform.Platform>;
     var genreList = ViewData["Genre"] as List<Domain.entities.GamePart.GemSelectedGenre.Genre>;
+    
+
+    Layout = "_Layout";
+
 }
 
 <div class="nk-main">
@@ -78,7 +82,7 @@
                     <div class="col-md-4">
                         <select class="form-control">
                             <option value="" disabled selected>Select Genre</option>
-                            @if (genreList != null )
+                            @if (genreList != null)
                             {
 
                                 @foreach (var item in genreList)
@@ -88,15 +92,15 @@
 
                                 }
                             }
-                         
-                     
-                            
+
+
+
                         </select>
                     </div>
                     <div class="col-md-4">
                         <select class="form-control">
                             <option value="" disabled selected>Select Platform</option>
-                            @if(platformlist != null )
+                            @if (platformlist != null)
                             {
                                 @foreach (var item in platformlist)
                                 {
@@ -109,7 +113,7 @@
                                 <option value="">NULL</option>
                             }
 
-                           
+
                         </select>
                     </div>
                     <div class="col-md-8">
@@ -125,19 +129,19 @@
                                     var maxprice = Model.Max(x => x.Price);
                                     var minprice = Model.Min(x => x.Price);
                                 }
-                               
-                                  
 
-                                    <div class="nk-input-slider-input">
-                                        <input type="text"
-                                        name="price-filter"
-                                        data-slider-min="@minprice"
-                                        data-slider-max="@maxprice"
-                                        data-slider-step="1"
-                                        data-slider-value="[@minprice, @maxprice]"
-                                        data-slider-tooltip="hide">
-                                    </div>
-                                
+
+
+                                <div class="nk-input-slider-input">
+                                    <input type="text"
+                                           name="price-filter"
+                                           data-slider-min="@minprice"
+                                           data-slider-max="@maxprice"
+                                           data-slider-step="1"
+                                           data-slider-value="[@minprice, @maxprice]"
+                                           data-slider-tooltip="hide">
+                                </div>
+
                             </div>
                             <div>
                                 <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-white">Apply</a>
@@ -163,8 +167,8 @@
 
             @foreach (var game in Model)
             {
-               
-                @if(game != null)
+
+                @if (game != null)
                 {
                     <div class="col-lg-6">
                         <div class="nk-product-cat-2">
@@ -174,7 +178,7 @@
 
                                 <a class="nk-product-image" href="store-product.html">
                                     <img src="assets/images/GameImages/@firstscreenshot" alt="@game.Name" style="background: url('assets/images/@firstscreenshot') no-repeat center fixed; background-size:cover width: 205px; height: 160px;">
-                                 </a>
+                                </a>
                             }
                             <div class="nk-product-cont">
                                 <h3 class="nk-product-title h5"><a href="store-product.html">@game.Name</a></h3>
@@ -253,7 +257,7 @@
             }
             @foreach (var game in top6)
             {
-                if(game != null)
+                if (game != null)
                 {
                     <div class="col-lg-4 col-md-6">
                         <div class="nk-product-cat">
@@ -269,7 +273,7 @@
                                 <h3 class="nk-product-title h5"><a href="store-product.html">@game.Name</a></h3>
                                 <div class="nk-gap-1"></div>
                                 @{
-                                   
+
                                     int fullStars1 = (int)Math.Floor(game.Rating);
                                     bool hasHalfStar1 = game.Rating - fullStars1 >= 0.5;
                                 }
@@ -298,10 +302,10 @@
                     </div>
 
                 }
-               
+
             }
 
-         
+
 
         </div>
         <!-- END: Most Popular -->

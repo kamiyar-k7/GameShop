@@ -2,9 +2,7 @@
 
 @{
     Layout = "_Layout";
-    @using System.Drawing;
-    @using System.Drawing.Drawing2D;
-    @using System.IO;
+  
 }
 
 
@@ -35,7 +33,7 @@
                         <div class="nk-image-slider-content">
                             <h3 class="h4">@Game.Name</h3>
                             <p class="text-white">@Game.Description</p>
-                            <a asp-controller="Home" asp-action="gg" asp-route-Id="@Game.Id" class="nk-btn nk-btn-rounded nk-btn-color-white nk-btn-hover-color-main-1">Read More</a>
+                            <a asp-controller="Store" asp-action="Product" asp-route-Id="@Game.Id" class="nk-btn nk-btn-rounded nk-btn-color-white nk-btn-hover-color-main-1">Read More</a>
                         </div>
                     </div>
                 }

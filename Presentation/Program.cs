@@ -5,6 +5,7 @@ using Data.Repository.CatalogRepository;
 using Data.Repository.GenreRepository;
 using Data.Repository.HomeRepository;
 using Data.Repository.Platformrepository;
+using Data.Repository.ProductRepository;
 using Data.Repository.StoreRepository;
 using Data.ShopDbcontext;
 using Domain.IRepository.AccountRepositories;
@@ -12,6 +13,7 @@ using Domain.IRepository.CatalogRepository;
 using Domain.IRepository.GenreRepostoryInterface;
 using Domain.IRepository.HomeRepositoryInterface;
 using Domain.IRepository.PlatformRepositoryInterface;
+using Domain.IRepository.ProductRepositoryInterface;
 using Domain.IRepository.StoreRepositoryInterface;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +27,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IHomeRepository, HomeRepository>();
 builder.Services.AddScoped<IHomeService, HomeService>();
 
+#region Store part
 // Store
 builder.Services.AddScoped<IStoreRepositpory, StoreRepository>();
 builder.Services.AddScoped<IStoreService, StoreService>();
@@ -33,6 +36,10 @@ builder.Services.AddScoped<IStoreService, StoreService>();
 builder.Services.AddScoped<ICatalogRepository, CatalogRepository>();
 builder.Services.AddScoped<ICatalogService, CatalogService>();
 
+// Product 
+builder.Services.AddScoped<IProductRepository , ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+
 // Genre 
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<IGenreService, GenreService>();
@@ -40,6 +47,10 @@ builder.Services.AddScoped<IGenreService, GenreService>();
 // Platform
 builder.Services.AddScoped<IPlatformRepository, PlatformRepository>();
 builder.Services.AddScoped<IPlatformService, PlatformService>();
+
+#endregion
+
+
 
 #region Account 
 // sign up
@@ -75,9 +86,23 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "Areas",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
+    endpoints.MapControllerRoute(
+        name: "Default",
+        pattern: "{controller=Home}/{action=Index}/{id?}"
+    );
+});
+
+
+
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
 

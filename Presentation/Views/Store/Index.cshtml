@@ -1,6 +1,8 @@
 ﻿@model List<Application.DTOs.UserSide.StorePart.StoreDto>;
 
-
+@{
+    Layout = "_Layout";
+}
 
 
 <div class="nk-main">
@@ -99,7 +101,11 @@
 
                         <a href="store-product.html" class="nk-gallery-item">
                             <span class="nk-gallery-item-overlay"><span><span class="nk-icon-circles"></span></span></span>
+                            @if (game.Screenshots.Any())
+                            {
+                                
                             <img src="assets/images/GameImages/@game.Screenshots.First()" alt="none" style="background: url('assets/images/@game.Screenshots.First()') no-repeat center fixed; background-size:cover width: 400px; height: 399px;">
+                            }
                         </a>
                         <div class="nk-gallery-item-label">
                             <h4 class="mb-0">@game.Name</h4>
