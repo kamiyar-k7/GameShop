@@ -42,6 +42,10 @@ namespace Application.Services.implements
 
                     };
 
+                    foreach (var screenshots in game.Screenshots)
+                    {
+                        childmodel.Screenshots.Add(screenshots.AvararUrl);
+                    }
                   
                     model.Add(childmodel);
 
