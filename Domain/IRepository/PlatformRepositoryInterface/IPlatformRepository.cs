@@ -12,6 +12,7 @@ namespace Domain.IRepository.PlatformRepositoryInterface
         #region General
 
         Task<List<Platform>> GetPlatforms();
+        Task<List<Platform>> GetPlatformsById(int Id);
         #endregion
     }
 }

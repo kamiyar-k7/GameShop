@@ -1,9 +1,11 @@
 ﻿using Application.DTOs.AdminSide.Account;
-using Application.Services.implements;
+using Application.DTOs.UserSide.Account;
 using Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Diagnostics.Eventing.Reader;
+using System.Security.Claims;
+
 
 namespace Presentation.Controllers
 {
@@ -12,61 +14,133 @@ namespace Presentation.Controllers
 
         #region Ctor
         private readonly ISignUpService _signpService;
-		public AccountController(ISignUpService SignUpservice) 
+        private readonly ISignInService _signInService;
+        public AccountController(ISignUpService SignUpservice, ISignInService signInService)
         {
             _signpService = SignUpservice;
+            _signInService = signInService;
         }
 
         #endregion
 
         #region SignUp
         [HttpGet]
-		public async Task<IActionResult> SignUp()
-		{
+        public async Task<IActionResult> SignUp()
+        {
 
-			return View();
-		}
-		[HttpPost , ValidateAntiForgeryToken]
-		public async Task<IActionResult> SignUp(SignUpDto model , CancellationToken cancellation)
-		{
-            if(ModelState.IsValid)
+            return View();
+        }
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> SignUp(SignUpDto model, CancellationToken cancellation)
+        {
+            if (ModelState.IsValid)
             {
-             var user =   await  _signpService.AddToDataBase(model, cancellation);
+                var user = await _signpService.AddToDataBase(model, cancellation);
                 if (user)
                 {
-					return RedirectToAction("Index", "Home");
-				}
+                    return RedirectToAction("Index", "Home");
+                }
                 else
                 {
-					TempData["ErrorMessage"] = "This Phone or Email Already Exist";
-				}
-              
-               
+                    TempData["ErrorMessage"] = "This Phone or Email Already Exist";
+                }
+
+
             }
             else
             {
                 TempData["ErrorMessage"] = "Fill Fields Properly";
             }
-			return View();
-		}
-		#endregion
+            return View();
+        }
+        #endregion
 
-
-
-
-
-		public IActionResult SignIn()
+        #region SignIn
+        [HttpGet]
+        public async Task<IActionResult> SignIn()
         {
+
             return View();
         }
 
+
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> SignIn(SignInDto model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _signInService.FindUser(model);
+                if (user != null)
+                {
+                    var claims = new List<Claim>()
+                    {
+
+                        new (ClaimTypes.NameIdentifier ,user.UserName.ToString()),
+                         new (ClaimTypes.Email ,user.Email),
+
+                         new (ClaimTypes.MobilePhone ,user.PhoneNumber)
+                    };
+
+                    var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var principal = new ClaimsPrincipal(claimIdentity);
+
+                    var authProps = new AuthenticationProperties();
+                    // authProps.IsPersistent = model.Remmemberme;
+
+                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProps);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Email Or Password Are Incorecct!";
+                }
+
+                return View();
+
+            }
+            TempData["ErrorMessage"] = "Fill Fields Properly";
+            return View();
+        }
+       
+        #endregion
+
+        #region My Account(Index)
+        public IActionResult Index()
+        {
+            return View();
+        }
+        #endregion
+
+        #region My Cart
+        public async Task<IActionResult> MyCart()
+        {
+            return View();
+        }
+        #endregion
+
+        #region LogOut
         public IActionResult Logout()
         {
-            return RedirectToAction("Index" , "Home");
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+         
+            return RedirectToAction("Index", "Home");
         }
+        #endregion
+
+        #region DeleteAccount
+
         public IActionResult DeleteAccount()
         {
             return View();
         }
+        #endregion
+
+        #region ForgotPassword
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+        #endregion
     }
 }

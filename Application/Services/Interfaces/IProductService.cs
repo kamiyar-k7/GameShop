@@ -10,6 +10,7 @@ namespace Application.Services.Interfaces
     public interface IProductService
     {
         #region General
+       
         Task<ProductDto> GetProductById(int Id);
         #endregion
     }

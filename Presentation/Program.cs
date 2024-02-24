@@ -8,6 +8,7 @@ using Data.Repository.Platformrepository;
 using Data.Repository.ProductRepository;
 using Data.Repository.StoreRepository;
 using Data.ShopDbcontext;
+using Domain.IRepository.AccountRepositorieInterfaces;
 using Domain.IRepository.AccountRepositories;
 using Domain.IRepository.CatalogRepository;
 using Domain.IRepository.GenreRepostoryInterface;
@@ -15,6 +16,7 @@ using Domain.IRepository.HomeRepositoryInterface;
 using Domain.IRepository.PlatformRepositoryInterface;
 using Domain.IRepository.ProductRepositoryInterface;
 using Domain.IRepository.StoreRepositoryInterface;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -56,6 +58,10 @@ builder.Services.AddScoped<IPlatformService, PlatformService>();
 // sign up
 builder.Services.AddScoped<ISignUpRepository, SignUpRepository>();
 builder.Services.AddScoped<ISignUpService, SignUpService>();
+
+//Sign in
+builder.Services.AddScoped<ISignInService, SignInService>();
+builder.Services.AddScoped<ISignInRepository , SignInRepository>();
 #endregion
 
 
@@ -67,6 +73,25 @@ builder.Services.AddDbContext<GameShopDbContext>(
     option => option.UseSqlServer
     (builder.Configuration.GetConnectionString("GameShopDbContextConnectionString")));
 #endregion
+
+
+#region cookies
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+})
+         // Add Cookie settings
+         .AddCookie(options =>
+         {
+             options.LoginPath = "/Account/Signin";
+             options.LogoutPath = "/Signout";
+             options.ExpireTimeSpan = TimeSpan.FromDays(30);
+         });
+#endregion
+
 
 var app = builder.Build();
 

@@ -24,6 +24,12 @@ namespace Application.Services.implements
         {
             return await _platformInterface.GetPlatforms();
         }
+
+        public async Task<List<Platform>> GetPlatformsById(int Id)
+        {
+           return await _platformInterface.GetPlatformsById(Id);
+       
+        }
         #endregion
     }
 }

@@ -17,7 +17,7 @@ namespace Domain.entities.UserPart.Roles
 
         public bool IsDelete { get; set; }
 
-        #region Rols
+        #region Rels
         public ICollection<UserSelectedRole> UserSelectedRoles { get; set; }
         #endregion
 

@@ -28,7 +28,18 @@ namespace Domain.entities.UserPart.User
         public bool IsDelete { get; set; }
 
 
-
+        #region Rels
         public ICollection<UserSelectedRole> UserSelectedRoles { get; set; }
+        public ICollection<Cart> UserCart { get; set; }
+        #endregion
+
+    }
+
+    public class Cart
+    {
+        public int Id { get; set; }
+        public string GameName { get; set; }
+        public float Price { get; set; }
+        public int Quantity { get; set; }
     }
 }

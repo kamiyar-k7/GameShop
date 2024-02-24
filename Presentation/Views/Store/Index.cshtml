@@ -99,7 +99,7 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="nk-gallery-item-box">
 
-                        <a href="store-product.html" class="nk-gallery-item">
+                        <a asp-controller="Store" asp-action="Product" asp-route-Id="@game.Id" class="nk-gallery-item">
                             <span class="nk-gallery-item-overlay"><span><span class="nk-icon-circles"></span></span></span>
                             @if (game.Screenshots.Any())
                             {
@@ -127,7 +127,7 @@
         <!-- END: Top 10 Best Sellers -->
         <!-- START: Featured Games -->
         <div class="nk-gap-3"></div>
-        <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-main-1" style="width: 100%; padding:19px; display: block; ">More Games Here...</a>
+        <a asp-controller="Store" asp-action="Catalog" class="nk-btn nk-btn-rounded nk-btn-color-main-1" style="width: 100%; padding:19px; display: block; ">More Games Here...</a>
 
         <!-- END: Featured Games -->
         <!-- START: Most Popular -->
@@ -149,7 +149,7 @@
                         @if (Game.Screenshots.Any())
                         {
                             var firstscreenshot = Game.Screenshots.First();
-                            <a class="nk-product-image" href="store-product.html">
+                            <a class="nk-product-image" asp-controller="Store" asp-action="Product" asp-route-Id="@Game.Id">
                                 <img src="assets/images/GameImages/@firstscreenshot" alt="none" style="background: url('assets/images/@Game.Screenshots.First()') no-repeat center fixed; background-size:cover width: 200px; height: 205px;">
                             </a>
                         }

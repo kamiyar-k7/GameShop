@@ -24,6 +24,12 @@ namespace Data.Repository.Platformrepository
         {
             return await _gameShopDbContext.platforms.ToListAsync();
         }
+
+        public async Task<List<Platform>> GetPlatformsById(int Id)
+        {
+            var plats =  await _gameShopDbContext.selectedPlatforms.Where(x => x.GameId == Id).Select(x => x.Platform).ToListAsync();
+            return plats;
+        }
         #endregion
     }
 }

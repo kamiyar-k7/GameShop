@@ -1,4 +1,5 @@
 ﻿using Domain.entities.GamePart.GemSelectedGenre;
+using Domain.entities.Store.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace Domain.IRepository.GenreRepostoryInterface
     {
         #region General 
         Task<List<Genre>> GetGenre();
+        Task<List<Genre>> GetGenresById(int Id);
+        Task<List<Game>> GetGamesByGenres(List<Genre> genres);
         #endregion
     }
 }

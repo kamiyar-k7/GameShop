@@ -11,6 +11,7 @@ namespace Application.Services.Interfaces
     {
         #region General
         Task<List<Platform>> ShowPlatform();
+        Task<List<Platform>> GetPlatformsById(int Id);
         #endregion
     }
 }

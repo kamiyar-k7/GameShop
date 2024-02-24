@@ -78,7 +78,7 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PlatformUniqueJName")
+                    b.Property<string>("PlatformUniqueName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -112,6 +112,9 @@ namespace Data.Migrations
 
                     b.Property<float>("Price")
                         .HasColumnType("real");
+
+                    b.Property<int>("Quantitiy")
+                        .HasColumnType("int");
 
                     b.Property<float>("Rating")
                         .HasColumnType("real");
@@ -200,6 +203,34 @@ namespace Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("SelectedRole");
+                });
+
+            modelBuilder.Entity("Domain.entities.UserPart.User.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("GameName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Cart");
                 });
 
             modelBuilder.Entity("Domain.entities.UserPart.User.User", b =>
@@ -326,6 +357,13 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.entities.UserPart.User.Cart", b =>
+                {
+                    b.HasOne("Domain.entities.UserPart.User.User", null)
+                        .WithMany("UserCart")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("Screenshot", b =>
                 {
                     b.HasOne("Domain.entities.Store.Game.Game", "Game")
@@ -363,6 +401,8 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Domain.entities.UserPart.User.User", b =>
                 {
+                    b.Navigation("UserCart");
+
                     b.Navigation("UserSelectedRoles");
                 });
 #pragma warning restore 612, 618

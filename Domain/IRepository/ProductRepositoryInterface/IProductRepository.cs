@@ -10,7 +10,7 @@ namespace Domain.IRepository.ProductRepositoryInterface
     public interface IProductRepository
     {
         #region General
-
+        Task<List<Game>> GetGames();
         Task<Game> GetGameById(int Id);
         #endregion
     }

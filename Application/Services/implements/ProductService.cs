@@ -1,6 +1,8 @@
-﻿using Application.DTOs.UserSide.StorePart;
+﻿using Application.DTOs.UserSide.Home;
+using Application.DTOs.UserSide.StorePart;
 using Application.Services.Interfaces;
 using Domain.entities.Store.Game;
+using Domain.IRepository.HomeRepositoryInterface;
 using Domain.IRepository.ProductRepositoryInterface;
 using System;
 using System.Collections.Generic;
@@ -20,15 +22,16 @@ namespace Application.Services.implements
             _productRepository = productRepository;
         }
         #endregion
+
         #region General 
 
-    
+
 
         public async Task<ProductDto> GetProductById(int Id)
         {
 
             var Game = await _productRepository.GetGameById(Id);
-            if(Game != null)
+            if (Game != null)
             {
                 ProductDto productDto = new ProductDto()
                 {
@@ -41,9 +44,16 @@ namespace Application.Services.implements
                     Price = Game.Price,
                     SystemRequirements = Game.SystemRequirements,
                     Screenshots = new List<string>(),
-                    Trailer = Game.Trailer,
+                    Trailer = Game.Trailer
+
 
                 };
+                foreach (var scrennshot in Game.Screenshots)
+                {
+                    productDto.Screenshots.Add(scrennshot.AvararUrl);
+                }
+
+
                 return productDto;
             }
             else

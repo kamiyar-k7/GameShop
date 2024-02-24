@@ -21,6 +21,7 @@ namespace Data.ShopDbcontext
         }
 
         #region Dbsets
+
         #region User
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -34,6 +35,7 @@ namespace Data.ShopDbcontext
         public DbSet<GemeSelectedGenre> SelectedGenres { get; set; }
         public DbSet<GameSelectedPlatform> selectedPlatforms { get; set; }
         #endregion
+
         #endregion
     }
 }

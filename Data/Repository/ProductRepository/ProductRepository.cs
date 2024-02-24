@@ -16,15 +16,19 @@ namespace Data.Repository.ProductRepository
         private readonly GameShopDbContext _gameShopDbContext;
         public ProductRepository(GameShopDbContext gameShopDbContext)
         {
-                _gameShopDbContext = gameShopDbContext;
-                
+            _gameShopDbContext = gameShopDbContext;
+
         }
         #endregion
 
         #region General
+        public async Task<List<Game>> GetGames()
+        {
+            return await _gameShopDbContext.games.Include(x => x.Screenshots).Where(x => x.IsDelete == false).ToListAsync();
+        }
         public async Task<Game> GetGameById(int Id)
         {
-            return await _gameShopDbContext.games.FirstAsync(x => x.Id == Id);
+            return await _gameShopDbContext.games.Include(x => x.Screenshots).FirstAsync(x => x.Id == Id);
         }
         #endregion
 
