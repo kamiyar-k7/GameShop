@@ -53,7 +53,7 @@
     <!-- jQuery -->
     <script src="~/assets/vendor/jquery/dist/jquery.min.js"></script>
 
-
+  
 </head>
 
 
@@ -183,7 +183,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a asp-controller="Account" asp-action="Cart">
+                                        <a asp-controller="Account" asp-action="MyCart">
                                             My Cart
 
                                         </a>
@@ -238,6 +238,16 @@
                                 Contact Us
                             </a>
                         </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li>
+                                <a>
+                                  @User.Identity.Name
+                                </a>
+                            </li>
+                        }
+                        
+
                     </ul>
                     <ul class="nk-nav nk-nav-right nk-nav-icons">
 

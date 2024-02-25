@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Repository.CatalogRepository
+namespace Data.Repository.StoreRepository.CatalogRepository
 {
     public class CatalogRepository : ICatalogRepository
     {
@@ -16,7 +16,7 @@ namespace Data.Repository.CatalogRepository
         private readonly GameShopDbContext _gameShopDbContext;
         public CatalogRepository(GameShopDbContext gameShopDbContext)
         {
-            _gameShopDbContext = gameShopDbContext; 
+            _gameShopDbContext = gameShopDbContext;
         }
 
         #endregion
@@ -24,9 +24,9 @@ namespace Data.Repository.CatalogRepository
         #region General
         public async Task<List<Game>> GetListOfGames()
         {
-            return await _gameShopDbContext.games.Where(x=> x.IsDelete == false).
-                Include(x=>x.Screenshots ).
-                Include(x=> x.gameSelectedPlatforms).
+            return await _gameShopDbContext.games.Where(x => x.IsDelete == false).
+                Include(x => x.Screenshots).
+                Include(x => x.gameSelectedPlatforms).
                 Include(x => x.gemeSelectedGenres).
                 ToListAsync();
         }

@@ -5,7 +5,7 @@ using Domain.IRepository.GenreRepostoryInterface;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace Data.Repository.GenreRepository;
+namespace Data.Repository.StoreRepository.GenreRepository;
 
 public class GenreRepository : IGenreRepository
 {
@@ -20,12 +20,12 @@ public class GenreRepository : IGenreRepository
     #region general 
     public async Task<List<Genre>> GetGenre()
     {
-        return   await _gameShopDbContext.genres.ToListAsync();
-       
+        return await _gameShopDbContext.genres.ToListAsync();
+
     }
     public async Task<List<Genre>> GetGenresById(int Id)
     {
-        return await _gameShopDbContext.SelectedGenres.Where(x=> x.GameId == Id).Select(x=> x.Genre). ToListAsync();
+        return await _gameShopDbContext.SelectedGenres.Where(x => x.GameId == Id).Select(x => x.Genre).ToListAsync();
     }
     public async Task<List<Game>> GetGamesByGenres(List<Genre> genres)
     {

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Repository.ProductRepository
+namespace Data.Repository.StoreRepository.ProductRepository
 {
     public class ProductRepository : IProductRepository
     {
