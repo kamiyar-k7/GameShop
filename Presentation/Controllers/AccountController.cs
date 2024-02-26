@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Application.DTOs.UserSide.StorePart;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace Presentation.Controllers
@@ -80,7 +82,7 @@ namespace Presentation.Controllers
 
                         new (ClaimTypes.NameIdentifier ,user.UserName.ToString()),
                          new (ClaimTypes.Email ,user.Email),
-
+                         
                          new (ClaimTypes.MobilePhone ,user.PhoneNumber)
                     };
 
@@ -114,18 +116,8 @@ namespace Presentation.Controllers
         }
         #endregion
 
-        #region My Cart
-        public async Task<IActionResult> MyCart()
-        {
-            var cart = await _cartService.ListOfCart();
-            if (cart != null)
-            {
-                return View(cart);
-            }
+       
 
-            return View();
-        }
-        #endregion
 
         #region LogOut
         public IActionResult Logout()
@@ -149,6 +141,51 @@ namespace Presentation.Controllers
         {
             return View();
         }
+        #endregion
+
+        #region My Cart
+        [Authorize]
+        public async Task<IActionResult> MyCart()
+        {
+            var cart = await _cartService.ListOfCart();
+            if (cart != null)
+            {
+                return View(cart);
+            }
+
+            return View();
+        }
+        #endregion
+
+        #region Addd to cart
+        [HttpPost, ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> AddToCart(ProductDto model)
+        {
+            string userphone = User.FindFirstValue(ClaimTypes.MobilePhone);
+
+
+            if (ModelState.IsValid)
+            {
+               
+                await _cartService.AddToCAart(userphone, model);
+                return RedirectToAction("Product", "Store", new { id = model.Id });
+            }
+            return null;
+
+        }
+        #endregion
+
+        #region Delete Product From Cart
+       
+        public async Task<IActionResult>  DeleteCart(int Id) 
+        {
+            string userphone = User.FindFirstValue(ClaimTypes.MobilePhone);
+            await _cartService.DeleteCart(userphone, Id);
+            return RedirectToAction(nameof(MyCart));
+           
+        }
+
         #endregion
     }
 }

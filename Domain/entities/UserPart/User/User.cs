@@ -25,7 +25,7 @@ public class User
 
     #region Rels
     public ICollection<UserSelectedRole> UserSelectedRoles { get; set; }
-    public ICollection<Cart> UserCart { get; set; }
+    public ICollection<Cart> UserCart { get; set; } = new List<Cart>();
     #endregion
 
 }
@@ -33,6 +33,8 @@ public class User
 public class Cart
 {
     public int Id { get; set; }
+    public  int GameId { get; set; }
+    public string Platform { get; set; }
     public string GameName { get; set; }
     public float Price { get; set; }
     public int Quantity { get; set; }

@@ -79,7 +79,7 @@
                                     }
                                     <strong>€ @total</strong>
                                 </td>
-                                <td class="nk-product-cart-remove"><a href="#"><span class="ion-android-close"></span></a></td>
+                                <td class="nk-product-cart-remove"><a asp-controller="Account" asp-action="DeleteCart" asp-route-Id="@cart.Id"  type="button" onclick="return confirm('are you sure you want delete this game from your cart??')"><span class="ion-android-close"></span></a></td>
                             </tr>
                         }
 
@@ -94,10 +94,66 @@
             <div class="nk-gap-1"></div>
             <a class="nk-btn nk-btn-rounded nk-btn-color-white float-right m-20" asp-controller="Store" asp-action="Index" >Update Cart</a>
            
+            
+
+
+
+            <div class="clearfix"></div>
+            <div class="nk-gap-2"></div>
+            <div class="vertical-gap">
+                    
+                <div class="col-md-6">
+                    <!-- START: Cart Totals -->
+                    <h3 class="nk-title h4">Cart Totals</h3>
+                    <table class="nk-table nk-table-sm">
+                        <tbody>
+
+                            @{
+                                var totalquantity = 0;
+                                float totalprice = 0;
+                                foreach (var item in Model)
+                                {
+                                    
+                                    for (int i = 0; i < 1 ; i++)
+                                    {
+                                        totalquantity += item.Quantity;
+                                        totalprice += item.Price * item.Quantity;
+                                    }
+
+                                }
+                            }
+                              
+                                    <tr class="nk-store-cart-totals-subtotal">
+                                        <td>
+                                            Quantity:
+                                        </td>
+                                        <td>
+                                        @totalquantity
+                                        </td>
+                                    </tr>
+
+                                    <tr class="nk-store-cart-totals-total">
+                                        <td>
+                                            Total Price:
+                                        </td>
+                                        <td>
+                                            € @totalprice
+                                        </td>
+                                    </tr>
+                             
+                                
+                              
+                            
+                         
+                        </tbody>
+                    </table>
+                    <!-- END: Cart Totals -->
+                </div>
+            </div>
+
+            <div class="nk-gap-2"></div>
             <a class="nk-btn nk-btn-rounded nk-btn-color-main-1 float-right m-20" asp-controller="Account" asp-action="CheckOut">Proceed to Checkout</a>
-
-           
-
+            <div class="clearfix"></div>
           
             <div class="clearfix"></div> 
         </div>
