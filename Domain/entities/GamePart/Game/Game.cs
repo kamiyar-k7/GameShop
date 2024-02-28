@@ -1,6 +1,6 @@
 ﻿using Domain.entities.GamePart.Paltform;
 using Domain.entities.Store.Game;
-using Domain.entities.Store.GemSelectedGenre;
+using Domain.entities.Store.GemGenreDto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +29,7 @@ namespace Domain.entities.Store.Game
 
         #region Rels
         public ICollection<Screenshot> Screenshots { get; set; }
-        public ICollection<GemSelectedGenre.GemeSelectedGenre> gemeSelectedGenres { get; set; }
+        public ICollection<GemGenreDto.GameSelectedGenre> gameSelectedGenres { get; set; }
         public ICollection<GameSelectedPlatform> gameSelectedPlatforms { get; set; }
         #endregion
 

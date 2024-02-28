@@ -117,8 +117,6 @@ namespace Presentation.Controllers
         #endregion
 
        
-
-
         #region LogOut
         public IActionResult Logout()
         {
@@ -157,7 +155,7 @@ namespace Presentation.Controllers
         }
         #endregion
 
-        #region Addd to cart
+        #region Add to cart
         [HttpPost, ValidateAntiForgeryToken]
         [Authorize]
         public async Task<IActionResult> AddToCart(ProductDto model)
@@ -186,6 +184,14 @@ namespace Presentation.Controllers
            
         }
 
+        #endregion
+
+        #region CheckOut
+        [Authorize]
+        public async Task<IActionResult> CheckOut()
+        {
+            return View();
+        }
         #endregion
     }
 }

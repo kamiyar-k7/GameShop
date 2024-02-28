@@ -61,7 +61,7 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SelectedGenres",
+                name: "GenreDtos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -71,15 +71,15 @@ namespace Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SelectedGenres", x => x.Id);
+                    table.PrimaryKey("PK_GenreDtos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SelectedGenres_games_GameId",
+                        name: "FK_GenreDtos_games_GameId",
                         column: x => x.GameId,
                         principalTable: "games",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SelectedGenres_genres_GenreId",
+                        name: "FK_GenreDtos_genres_GenreId",
                         column: x => x.GenreId,
                         principalTable: "genres",
                         principalColumn: "Id",
@@ -113,13 +113,13 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_SelectedGenres_GameId",
-                table: "SelectedGenres",
+                name: "IX_GenreDtos_GameId",
+                table: "GenreDtos",
                 column: "GameId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SelectedGenres_GenreId",
-                table: "SelectedGenres",
+                name: "IX_GenreDtos_GenreId",
+                table: "GenreDtos",
                 column: "GenreId");
 
             migrationBuilder.CreateIndex(
@@ -137,7 +137,7 @@ namespace Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "SelectedGenres");
+                name: "GenreDtos");
 
             migrationBuilder.DropTable(
                 name: "selectedPlatforms");

@@ -1,7 +1,7 @@
-﻿using Domain.entities.GamePart.GemSelectedGenre;
+﻿using Domain.entities.GamePart.GemGenreDto;
 using Domain.entities.GamePart.Paltform;
 using Domain.entities.Store.Game;
-using Domain.entities.Store.GemSelectedGenre;
+using Domain.entities.Store.GemGenreDto;
 using Domain.entities.UserPart.Roles;
 using Domain.entities.UserPart.User;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +32,7 @@ namespace Data.ShopDbcontext
         public DbSet<Game> games { get; set; }
         public DbSet<Genre> genres { get; set; }
         public DbSet<Platform> platforms { get; set; }
-        public DbSet<GemeSelectedGenre> SelectedGenres { get; set; }
+        public DbSet<GameSelectedGenre> SelectedGenres { get; set; }
         public DbSet<GameSelectedPlatform> selectedPlatforms { get; set; }
         #endregion
 

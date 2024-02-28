@@ -25,7 +25,7 @@ namespace Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.entities.GamePart.GemSelectedGenre.Genre", b =>
+            modelBuilder.Entity("Domain.entities.GamePart.GemGenreDto.Genre", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -138,7 +138,7 @@ namespace Data.Migrations
                     b.ToTable("games");
                 });
 
-            modelBuilder.Entity("Domain.entities.Store.GemSelectedGenre.GemeSelectedGenre", b =>
+            modelBuilder.Entity("Domain.entities.Store.GemGenreDto.GemeGenreDto", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -158,7 +158,7 @@ namespace Data.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.ToTable("SelectedGenres");
+                    b.ToTable("GenreDtos");
                 });
 
             modelBuilder.Entity("Domain.entities.UserPart.Roles.Role", b =>
@@ -326,16 +326,16 @@ namespace Data.Migrations
                     b.Navigation("Platform");
                 });
 
-            modelBuilder.Entity("Domain.entities.Store.GemSelectedGenre.GemeSelectedGenre", b =>
+            modelBuilder.Entity("Domain.entities.Store.GemGenreDto.GemeGenreDto", b =>
                 {
                     b.HasOne("Domain.entities.Store.Game.Game", "Game")
-                        .WithMany("gemeSelectedGenres")
+                        .WithMany("gemeGenreDtos")
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.entities.GamePart.GemSelectedGenre.Genre", "Genre")
-                        .WithMany("gemeSelectedGenres")
+                    b.HasOne("Domain.entities.GamePart.GemGenreDto.Genre", "Genre")
+                        .WithMany("gemeGenreDtos")
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -382,9 +382,9 @@ namespace Data.Migrations
                     b.Navigation("Game");
                 });
 
-            modelBuilder.Entity("Domain.entities.GamePart.GemSelectedGenre.Genre", b =>
+            modelBuilder.Entity("Domain.entities.GamePart.GemGenreDto.Genre", b =>
                 {
-                    b.Navigation("gemeSelectedGenres");
+                    b.Navigation("gemeGenreDtos");
                 });
 
             modelBuilder.Entity("Domain.entities.GamePart.Paltform.Platform", b =>
@@ -398,7 +398,7 @@ namespace Data.Migrations
 
                     b.Navigation("gameSelectedPlatforms");
 
-                    b.Navigation("gemeSelectedGenres");
+                    b.Navigation("gemeGenreDtos");
                 });
 
             modelBuilder.Entity("Domain.entities.UserPart.Roles.Role", b =>

@@ -51,10 +51,23 @@ public class StoreController : Controller
     {
         if (ModelState.IsValid)
         {
-            ViewData["Genre"] = await _genreService.ShowGenre();
+    
             ViewData["Platform"] = await _platformService.ShowPlatform();
             var games = await _catalogService.ShowGames();
+       
             return View(games);
+        }
+        return NotFound();
+    }
+
+    public async Task<IActionResult> Search(string search)
+    {
+        if (ModelState.IsValid)
+        {
+
+        
+
+            return View(search);
         }
         return NotFound();
     }
@@ -68,12 +81,12 @@ public class StoreController : Controller
         {
      
             var game = await _productService.GetProductById(Id);
-            var ALL = await _storeService.ShowGames();           
+                   
 
             if (game != null)
             {
                 ViewData["Platforms"] = await _platformService.GetPlatformsById(Id);
-                ViewData["Genre"] = await _genreService.GetGenresById(Id);
+             
 
                 return View(game);
             }
@@ -84,6 +97,13 @@ public class StoreController : Controller
         }
         return NotFound();
 
+    }
+    #endregion
+
+    #region Search
+    public async Task<IActionResult> Search()
+    {
+        return View();
     }
     #endregion
 

@@ -1,5 +1,5 @@
 ﻿using Application.DTOs.UserSide.StorePart;
-using Domain.entities.GamePart.GemSelectedGenre;
+using Domain.entities.GamePart.GemGenreDto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +11,9 @@ namespace Application.Services.Interfaces
     public interface IGenreService
     {
         #region General
-        Task<List<Genre>> ShowGenre();
-        Task<List<Genre>> GetGenresById(int Id);
-        Task<List<StoreDto>> GetRelatedGamesByGenres(List<Domain.entities.GamePart.GemSelectedGenre.Genre> genres);
+        Task<List<GenreDto>> ShowGenre();
+        Task<List<GenreDto>> GetGenresById(int Id);
+        Task<List<StoreDto>> GetRelatedGamesByGenres(List<Domain.entities.GamePart.GemGenreDto.Genre> genres);
         #endregion
     }
 }

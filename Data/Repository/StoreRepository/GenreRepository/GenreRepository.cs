@@ -1,5 +1,5 @@
 ﻿using Data.ShopDbcontext;
-using Domain.entities.GamePart.GemSelectedGenre;
+using Domain.entities.GamePart.GemGenreDto;
 using Domain.entities.Store.Game;
 using Domain.IRepository.GenreRepostoryInterface;
 using Microsoft.EntityFrameworkCore;
@@ -30,8 +30,8 @@ public class GenreRepository : IGenreRepository
     public async Task<List<Game>> GetGamesByGenres(List<Genre> genres)
     {
         var games = await _gameShopDbContext.games
-       .Where(game => game.gemeSelectedGenres
-           .Any(selectedGenre => genres.Select(g => g.Id).Contains(selectedGenre.GenreId)))
+       .Where(game => game.gameSelectedGenres
+           .Any(GenreDto => genres.Select(g => g.Id).Contains(GenreDto.GenreId)))
        .ToListAsync();
         return games;
     }

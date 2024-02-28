@@ -20,8 +20,24 @@ public class SignInRepository : ISignInRepository
     #region General 
     public async Task<User?> FindUser(User user)
     {
-       return await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == user.Email && x.Password == user.Password);
-    }
+        var us = await _dbContext.Users.Where(x => x.Email == user.Email && x.Password == user.Password).Select(x => new User(){
 
+            Id = x.Id,
+            Email  = x.Email,
+            Created = x.Created,
+            IsAdmin = x.IsAdmin,
+            PhoneNumber = x.PhoneNumber,
+            SuperAdmin = x.SuperAdmin,
+            UserCart = x.UserCart,
+            UserName = x.UserName,
+            UserSelectedRoles = x.UserSelectedRoles,
+
+        }).FirstOrDefaultAsync();
+
+        return us;
+
+
+    
+     }
     #endregion
 }

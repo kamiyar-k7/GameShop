@@ -1,6 +1,6 @@
 ﻿@model Application.DTOs.UserSide.StorePart.ProductDto;
 @{
-    var GenreList = ViewData["Genre"] as List<Domain.entities.GamePart.GemSelectedGenre.Genre>;
+   
     var platformlist = ViewData["Platforms"] as List<Domain.entities.GamePart.Paltform.Platform>;
 
 }
@@ -44,7 +44,9 @@
                 <div class="nk-store-product">
 
 
-
+                   @*  <!-- START: Related Products -->
+                    @await Component.InvokeAsync("RelatedGames")
+                    <!-- END: Related Products --> *@
 
                     <form asp-controller="Account" asp-action="AddToCart" method="post" class="nk-product-addtocart">
                         <div class="row vertical-gap">
@@ -123,17 +125,7 @@
                                 <!-- END: Add to Cart -->
                                 <!-- START: Meta -->
                                 <div class="nk-product-meta">
-                                    @if (GenreList != null)
-                                    {
-                                        <div>
-
-                                            <strong>Categories</strong>:  @foreach (var item in GenreList)
-                                            {
-                                                <p>@item.GenreName ,</p>
-                                            }
-
-                                        </div>
-                                    }
+                                  @*   @await Component.InvokeAsync("GenresByIdViewComponent", new { Id = Model.Id }) *@
 
                                     <div><strong>Compony</strong>: <a href="#">@Model.Company</a></div>
                                 </div>
@@ -194,10 +186,7 @@
                                         <div class="nk-gap"></div>
                                         <strong class="text-white">Genre:</strong>
                                         <div class="nk-gap"></div>
-                                        @foreach (var Genre in GenreList)
-                                        {
-                                            <p> @Genre.GenreName </p>
-                                        }
+                                     @*    @await Component.InvokeAsync("GenresByIdViewComponent", new { Id = Model.Id }); *@
                                         <div class="nk-gap"></div>
                                     </div>
                                     <div class="col-md-4">

@@ -40,7 +40,7 @@ namespace Application.Services.implements
                     Id = user.Id,
                     UserName = user.UserName,
                     IsAdmin = user.IsAdmin,
-                    PhoneNumber = user.PhoneNumber,
+                    PhoneNumber = user.PhoneNumber.Trim(),
                     Password = user.Password,
                     Email = user.Email,
                     //Role = model.Role,

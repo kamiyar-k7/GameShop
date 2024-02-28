@@ -1,4 +1,4 @@
-﻿using Domain.entities.GamePart.GemSelectedGenre;
+﻿using Domain.entities.GamePart.GemGenreDto;
 using Domain.entities.Store.Game;
 using System;
 using System.Collections.Generic;

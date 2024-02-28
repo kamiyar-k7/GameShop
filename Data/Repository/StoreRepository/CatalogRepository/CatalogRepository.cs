@@ -27,7 +27,7 @@ namespace Data.Repository.StoreRepository.CatalogRepository
             return await _gameShopDbContext.games.Where(x => x.IsDelete == false).
                 Include(x => x.Screenshots).
                 Include(x => x.gameSelectedPlatforms).
-                Include(x => x.gemeSelectedGenres).
+                Include(x => x.gameSelectedGenres).
                 ToListAsync();
         }
         #endregion

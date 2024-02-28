@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,5 +19,28 @@ namespace Application.DTOs.UserSide.StorePart
         public DateOnly ReleaseDate { get; set; }
         public List<string> Screenshots { get; set; }
         #endregion
+
+        #region Rels
+        public ICollection<GenreDto> genreDto { get; set; }
+        public ICollection<SelectedPlatform> SelectedPlatforms { get; set; }
+        #endregion
+    }
+
+    public class GenreDto
+    {
+
+        public int Id { get; set; }
+        public string GenreName { get; set; }
+        public string GenreUniqueName { get; set; }
+
+     
+
+    }
+    public class SelectedPlatform
+    {
+        public string PS4 { get; set; }
+        public string PS5 { get; set; }
+        public string XBOX { get; set; }
+        public string PC { get; set; }
     }
 }

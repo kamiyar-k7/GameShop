@@ -28,11 +28,11 @@ public class HomeController : Controller
 			return View();
 
 	}
-	public IActionResult Test()
+	
+	#endregion
+	public async Task<IActionResult> ContactUs()
 	{
 		return View();
 	}
-	#endregion
-
 
 }
