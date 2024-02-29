@@ -22,7 +22,98 @@ namespace Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.entities.GamePart.GemSelectedGenre.Genre", b =>
+            modelBuilder.Entity("CartUser", b =>
+                {
+                    b.Property<int>("CartsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CartsId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CartUser");
+                });
+
+            modelBuilder.Entity("Domain.entities.GamePart.Game.Game", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Company")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Quantitiy")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Rating")
+                        .HasColumnType("real");
+
+                    b.Property<DateOnly>("ReleaseDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("SystemRequirements")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Trailer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.ToTable("games");
+                });
+
+            modelBuilder.Entity("Domain.entities.GamePart.Genre.GemeSelectedGenre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("GenreId");
+
+                    b.ToTable("SelectedGenres");
+                });
+
+            modelBuilder.Entity("Domain.entities.GamePart.Genre.Genre", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -43,7 +134,7 @@ namespace Data.Migrations
                     b.ToTable("genres");
                 });
 
-            modelBuilder.Entity("Domain.entities.GamePart.Paltform.GameSelectedPlatform", b =>
+            modelBuilder.Entity("Domain.entities.GamePart.Platform.GameSelectedPlatform", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -66,7 +157,7 @@ namespace Data.Migrations
                     b.ToTable("selectedPlatforms");
                 });
 
-            modelBuilder.Entity("Domain.entities.GamePart.Paltform.Platform", b =>
+            modelBuilder.Entity("Domain.entities.GamePart.Platform.Platform", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -85,77 +176,6 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("platforms");
-                });
-
-            modelBuilder.Entity("Domain.entities.Store.Game.Game", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Company")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDelete")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
-
-                    b.Property<int>("Quantitiy")
-                        .HasColumnType("int");
-
-                    b.Property<float>("Rating")
-                        .HasColumnType("real");
-
-                    b.Property<DateOnly>("ReleaseDate")
-                        .HasColumnType("date");
-
-                    b.Property<string>("SystemRequirements")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Trailer")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("games");
-                });
-
-            modelBuilder.Entity("Domain.entities.Store.GemSelectedGenre.GemeSelectedGenre", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GenreId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GameId");
-
-                    b.HasIndex("GenreId");
-
-                    b.ToTable("SelectedGenres");
                 });
 
             modelBuilder.Entity("Domain.entities.UserPart.Roles.Role", b =>
@@ -213,24 +233,33 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
                     b.Property<string>("GameName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
+                    b.Property<string>("Platform")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
+                    b.Property<string>("Screenshot")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Cart");
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("Domain.entities.UserPart.User.User", b =>
@@ -300,34 +329,37 @@ namespace Data.Migrations
                     b.ToTable("Screenshot");
                 });
 
-            modelBuilder.Entity("Domain.entities.GamePart.Paltform.GameSelectedPlatform", b =>
+            modelBuilder.Entity("CartUser", b =>
                 {
-                    b.HasOne("Domain.entities.Store.Game.Game", "Game")
-                        .WithMany("gameSelectedPlatforms")
-                        .HasForeignKey("GameId")
+                    b.HasOne("Domain.entities.UserPart.User.Cart", null)
+                        .WithMany()
+                        .HasForeignKey("CartsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.entities.GamePart.Paltform.Platform", "Platform")
-                        .WithMany("gameSelectedPlatforms")
-                        .HasForeignKey("PlatformId")
+                    b.HasOne("Domain.entities.UserPart.User.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Game");
-
-                    b.Navigation("Platform");
                 });
 
-            modelBuilder.Entity("Domain.entities.Store.GemSelectedGenre.GemeSelectedGenre", b =>
+            modelBuilder.Entity("Domain.entities.GamePart.Game.Game", b =>
                 {
-                    b.HasOne("Domain.entities.Store.Game.Game", "Game")
+                    b.HasOne("Domain.entities.UserPart.User.Cart", null)
+                        .WithMany("Game")
+                        .HasForeignKey("CartId");
+                });
+
+            modelBuilder.Entity("Domain.entities.GamePart.Genre.GemeSelectedGenre", b =>
+                {
+                    b.HasOne("Domain.entities.GamePart.Game.Game", "Game")
                         .WithMany("gemeSelectedGenres")
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.entities.GamePart.GemSelectedGenre.Genre", "Genre")
+                    b.HasOne("Domain.entities.GamePart.Genre.Genre", "Genre")
                         .WithMany("gemeSelectedGenres")
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -336,6 +368,25 @@ namespace Data.Migrations
                     b.Navigation("Game");
 
                     b.Navigation("Genre");
+                });
+
+            modelBuilder.Entity("Domain.entities.GamePart.Platform.GameSelectedPlatform", b =>
+                {
+                    b.HasOne("Domain.entities.GamePart.Game.Game", "Game")
+                        .WithMany("gameSelectedPlatforms")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.entities.GamePart.Platform.Platform", "Platform")
+                        .WithMany("gameSelectedPlatforms")
+                        .HasForeignKey("PlatformId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+
+                    b.Navigation("Platform");
                 });
 
             modelBuilder.Entity("Domain.entities.UserPart.Roles.UserSelectedRole", b =>
@@ -357,16 +408,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.entities.UserPart.User.Cart", b =>
-                {
-                    b.HasOne("Domain.entities.UserPart.User.User", null)
-                        .WithMany("UserCart")
-                        .HasForeignKey("UserId");
-                });
-
             modelBuilder.Entity("Screenshot", b =>
                 {
-                    b.HasOne("Domain.entities.Store.Game.Game", "Game")
+                    b.HasOne("Domain.entities.GamePart.Game.Game", "Game")
                         .WithMany("Screenshots")
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -375,17 +419,7 @@ namespace Data.Migrations
                     b.Navigation("Game");
                 });
 
-            modelBuilder.Entity("Domain.entities.GamePart.GemSelectedGenre.Genre", b =>
-                {
-                    b.Navigation("gemeSelectedGenres");
-                });
-
-            modelBuilder.Entity("Domain.entities.GamePart.Paltform.Platform", b =>
-                {
-                    b.Navigation("gameSelectedPlatforms");
-                });
-
-            modelBuilder.Entity("Domain.entities.Store.Game.Game", b =>
+            modelBuilder.Entity("Domain.entities.GamePart.Game.Game", b =>
                 {
                     b.Navigation("Screenshots");
 
@@ -394,15 +428,28 @@ namespace Data.Migrations
                     b.Navigation("gemeSelectedGenres");
                 });
 
+            modelBuilder.Entity("Domain.entities.GamePart.Genre.Genre", b =>
+                {
+                    b.Navigation("gemeSelectedGenres");
+                });
+
+            modelBuilder.Entity("Domain.entities.GamePart.Platform.Platform", b =>
+                {
+                    b.Navigation("gameSelectedPlatforms");
+                });
+
             modelBuilder.Entity("Domain.entities.UserPart.Roles.Role", b =>
                 {
                     b.Navigation("UserSelectedRoles");
                 });
 
+            modelBuilder.Entity("Domain.entities.UserPart.User.Cart", b =>
+                {
+                    b.Navigation("Game");
+                });
+
             modelBuilder.Entity("Domain.entities.UserPart.User.User", b =>
                 {
-                    b.Navigation("UserCart");
-
                     b.Navigation("UserSelectedRoles");
                 });
 #pragma warning restore 612, 618

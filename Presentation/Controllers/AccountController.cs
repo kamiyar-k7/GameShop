@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Application.DTOs.UserSide.StorePart;
 
 
 namespace Presentation.Controllers
@@ -14,10 +16,12 @@ namespace Presentation.Controllers
         #region Ctor
         private readonly ISignUpService _signpService;
         private readonly ISignInService _signInService;
-        public AccountController(ISignUpService SignUpservice, ISignInService signInService)
+        private readonly ICartService _cartService;
+        public AccountController(ISignUpService SignUpservice, ISignInService signInService , ICartService cartService)
         {
             _signpService = SignUpservice;
             _signInService = signInService;
+            _cartService = cartService;
         }
 
         #endregion
@@ -75,9 +79,9 @@ namespace Presentation.Controllers
                     var claims = new List<Claim>()
                     {
 
-                        new (ClaimTypes.NameIdentifier ,user.UserName.ToString()),
+                        new (ClaimTypes.NameIdentifier ,user.Id.ToString()),
                          new (ClaimTypes.Email ,user.Email),
-
+                          new (ClaimTypes.Name , user.UserName),
                          new (ClaimTypes.MobilePhone ,user.PhoneNumber)
                     };
 
@@ -112,9 +116,43 @@ namespace Presentation.Controllers
         #endregion
 
         #region My Cart
+        [Authorize]
         public async Task<IActionResult> MyCart()
         {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (int.TryParse(userid, out int id))
+            {
+                var cart = await _cartService.GetUserCart(id);
+                return View(cart);
+             
+            }
+
             return View();
+        }
+        #endregion
+
+        #region Add Cart
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> AddToCart(ProductDto model)
+        
+        {
+            
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (int.TryParse(userid, out int id))
+                {
+                     await _cartService.AddToCart(model,id );
+                }
+                return RedirectToAction("Product" , "Store" , );
+                 
+          
+        }
+        #endregion
+
+        #region Delete Cart'
+        public async Task<IActionResult> DeleteCart()
+        {
+
         }
         #endregion
 

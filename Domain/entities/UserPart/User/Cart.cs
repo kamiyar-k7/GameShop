@@ -16,9 +16,9 @@ public class Cart
     public int Quantity { get; set; }
     public decimal Price { get; set; }
     public string Screenshot { get; set; }
-
+    public string Platform { get; set; }
     #region rels
-    public User User { get; set; }
+    public List<User> User { get; set; }
     public List<Game> Game { get; set; }
     #endregion
 }

@@ -1,6 +1,6 @@
 ﻿@model Application.DTOs.UserSide.StorePart.ProductDto;
 @{
-    // var GenreList = ViewData["Genre"] as List<Genre>;
+    var GenreList = ViewData["Genre"] as List<Domain.entities.GamePart.Genre.Genre>;
     var platformlist = ViewData["Platforms"] as List<Domain.entities.GamePart.Platform.Platform>;
 
 }
@@ -42,93 +42,103 @@
         <div class="row vertical-gap">
             <div class="col-lg-8">
                 <div class="nk-store-product">
-                    <div class="row vertical-gap">
-                        <div class="col-md-6">
-                            <!-- START: Product Photos -->
-                            <div class="nk-popup-gallery">
-                                @if (Model.Trailer != null)
-                                {
-                                    <div class="nk-gallery-item-box">
-                                        <a href="~/assets/trailers/@Model.Trailer">
-                                            <video src="~/assets/Trailers/@Model.Trailer" alt="" controls style="width: 100%; height: 100%;"></video>
-                                        </a>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <p>There is no Trailer</p>
-                                }
-
-
-                                <div class="nk-gap-1"></div>
-                                <div class="row vertical-gap sm-gap">
-                                    @foreach (var screenshot in Model.Screenshots)
+                    <form asp-controller="Account" asp-action="AddToCart" method="post" class="nk-product-addtocart">
+                        <div class="row vertical-gap">
+                            <input type="type" hidden asp-for="Id" />
+                            <input type="type" hidden asp-for="Name" />
+                            <div class="col-md-6">
+                                <!-- START: Product Photos -->
+                                <div class="nk-popup-gallery">
+                                    @if (Model.Trailer != null)
                                     {
-                                        <div class="col-6 col-md-4">
-                                            <div class="nk-gallery-item-box">
-                                                <a href="~/assets/images/GameImages/@screenshot" class="nk-gallery-item" data-size="622x942">
-                                                    <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
-                                                    <img src="~/assets/images/GameImages/@screenshot" alt="" style="background: url('assets/images/@screenshot') no-repeat center fixed; background-size:cover width: 205px; height: 160px;">
-                                                </a>
-                                            </div>
+                                        <div class="nk-gallery-item-box">
+                                            <a href="~/assets/trailers/@Model.Trailer" >
+                                                <video src="~/assets/Trailers/@Model.Trailer" alt="" controls style="width: 100%; height: 100%;"></video>
+                                            </a>
                                         </div>
+                                    }
+                                    else
+                                    {
+                                        <p>There is no Trailer</p>
                                     }
 
 
-                                </div>
-
-                            </div>
-                            <!-- END: Product Photos -->
-                        </div>
-                        <div class="col-md-6">
-
-                            <h2 class="nk-product-title h3">@Model.Name </h2>
-
-                            <select class="form-control">
-                                <option value="" disabled selected>Select Platform</option>
-                                @foreach (var plats in platformlist)
-                                {
-
-                                    <option value="">@plats.Name</option>
-                                }
-
-                            </select>
-
-                            <div class="nk-product-description">
-                                <p>@Model.Description.</p>
-                            </div>
-
-                            <!-- START: Add to Cart -->
-                            <div class="nk-gap-2"></div>
-                            <form action="#" class="nk-product-addtocart">
-                                <div class="nk-product-price">€ @Model.Price</div>
-                                <div class="nk-gap-1"></div>
-                                <div class="input-group">
-                                    <input type="number" class="form-control" value="1" min="1" max="3" readonly>
-                                    <button class="nk-btn nk-btn-rounded nk-btn-color-main-1">Add to Cart</button>
-                                </div>
-                            </form>
-                            <div class="nk-gap-3"></div>
-                            <!-- END: Add to Cart -->
-                            <!-- START: Meta -->
-                            <div class="nk-product-meta">
-                     @*            @if (GenreList != null)
-                                {
-                                    <div>
-
-                                        <strong>Categories</strong>:  @foreach (var item in GenreList)
+                                    <div class="nk-gap-1"></div>
+                                    <div class="row vertical-gap sm-gap">
+                                        @foreach (var screenshot in Model.Screenshots)
                                         {
-                                            <p>@item.GenreName ,</p>
+                                            <div class="col-6 col-md-4">
+                                                <div class="nk-gallery-item-box">
+                                                    <a href="~/assets/images/GameImages/@screenshot" class="nk-gallery-item" data-size="622x942">
+                                                        <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
+                                                        <img src="~/assets/images/GameImages/@screenshot" alt="" style="background: url('assets/images/@screenshot') no-repeat center fixed; background-size:cover width: 205px; height: 160px;">
+                                                    </a>
+                                                </div>
+                                            </div>
                                         }
 
+
                                     </div>
-                                } *@
-                           
-                                <div><strong>Compony</strong>: <a href="#">@Model.Company</a></div>
+
+                                </div>
+                                <!-- END: Product Photos -->
                             </div>
-                            <!-- END: Meta -->
+                            <div class="col-md-6">
+
+                                <h2  class="nk-product-title h3" >  @Model.Name </h2>
+
+                                <select class="form-control">
+                                    <option value="" disabled selected>Select Platform</option>
+                                    @foreach (var plats in platformlist)
+                                    {
+
+                                        <option value="">@plats.Name</option>
+                                    }
+
+                                </select>
+
+                                <div class="nk-product-description">
+                                    <p>@Model.Description.</p>
+                                </div>
+
+                                <!-- START: Add to Cart -->
+                                <div class="nk-gap-2"></div>
+
+                                <div  class="nk-product-price">€  @Model.Price</div>
+                                <div class="nk-gap-1"></div>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" asp-for="Quantity" value="1" min="1" max="3">
+                                    <button class="nk-btn nk-btn-rounded nk-btn-color-main-1">Add to Cart</button>
+                                </div>
+
+                                <div class="nk-gap-3"></div>
+                                <!-- END: Add to Cart -->
+                                <!-- START: Meta -->
+                                <div class="nk-product-meta">
+                                    @if (GenreList != null)
+                                    {
+                                        <div>
+
+                                            <strong>Categories</strong>:  @foreach (var item in GenreList)
+                                            {
+                                                <p>@item.GenreName ,</p>
+                                            }
+
+                                        </div>
+                                    }
+
+                                    <div><strong>Compony</strong>: <a href="#">@Model.Company</a></div>
+                                </div>
+                                <!-- END: Meta -->
+                            </div>
                         </div>
-                    </div>
+
+
+
+
+                    </form>
+
+
 
                     <!-- START: Share -->
                     <div class="nk-gap-2"></div>
@@ -175,24 +185,24 @@
                                         <div class="nk-gap"></div>
                                         <strong class="text-white">Genre:</strong>
                                         <div class="nk-gap"></div>
-                                    @*    @foreach (var Genre in GenreList)
+                                        @foreach (var Genre in GenreList)
                                         {
                                             <p> @Genre.GenreName </p>
-                                        } *@
+                                        }
                                         <div class="nk-gap"></div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="nk-gap"></div>
                                         <strong class="text-white">Customer Rating:</strong>
                                         <div class="nk-gap"></div>
-                                     
-                                        @if(Model.Rating != 0)
+
+                                        @if (Model.Rating != 0)
                                         {
-                                               
+
                                             // Calculate the number of full stars and half star based on the Rating value
-                                            int fullStars = (int)Math.Floor(Model.Rating);
+                                            int fullStars = (int)Math.Floor((decimal)Model.Rating);
                                             bool hasHalfStar = Model.Rating - fullStars >= 0.5;
-                                        
+
                                             <div class="nk-product-rating" data-rating="@Model.Rating">
                                                 @for (int i = 0; i < 5; i++)
                                                 {
@@ -215,7 +225,7 @@
                                             </div>
                                         }
 
-                                  
+
                                         <div class="nk-gap"></div>
                                     </div>
                                 </div>

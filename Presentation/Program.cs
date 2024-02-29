@@ -1,6 +1,7 @@
 using Application.Services.implements;
 using Application.Services.Interfaces;
 using Data.Repository.AccountRepositories;
+using Data.Repository.CartRepository;
 using Data.Repository.CatalogRepository;
 using Data.Repository.GenreRepository;
 using Data.Repository.HomeRepository;
@@ -9,6 +10,7 @@ using Data.Repository.ProductRepository;
 using Data.Repository.StoreRepository;
 using Data.ShopDbcontext;
 using Domain.IRepository.AccountRepositorieInterfaces;
+using Domain.IRepository.CartRepositoryInterface;
 using Domain.IRepository.CatalogRepositoryInterface;
 using Domain.IRepository.GenreRepostoryInterface;
 using Domain.IRepository.HomeRepositoryInterface;
@@ -61,6 +63,10 @@ builder.Services.AddScoped<ISignUpService, SignUpService>();
 //Sign in
 builder.Services.AddScoped<ISignInService, SignInService>();
 builder.Services.AddScoped<ISignInRepository , SignInRepository>();
+
+// Cart 
+builder.Services.AddScoped<ICartRepository , CartRepository>();
+builder.Services.AddScoped<ICartService , CartService>();
 #endregion
 
 

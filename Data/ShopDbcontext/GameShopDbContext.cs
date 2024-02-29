@@ -21,6 +21,7 @@ public class GameShopDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<UserSelectedRole> SelectedRole { get; set; }
+    public DbSet<Cart>  Carts { get; set; }
     #endregion
 
     #region Game

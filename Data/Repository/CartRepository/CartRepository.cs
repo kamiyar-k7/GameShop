@@ -22,10 +22,21 @@ namespace Data.Repository.CartRepository
         #endregion
 
         #region General 
-        //public async Task<List<Cart>> GetListOfUserCart()
-        //{
-        //    return await _dbContext.Users.Include(x=> x.UserCart).Where(x=> x.).ToListAsync();
-        //}
+        public async Task<List<Cart>> GetListOfUserCart(int id)
+        {
+            return await _dbContext.Carts.Where(x=> x.UserId == id).ToListAsync();
+        }
+
+        public async Task AddToCart(Cart cart)
+        {
+            await _dbContext.Carts.AddAsync(cart);
+            await _dbContext.SaveChangesAsync();
+
+        }
+        public async Task DeleteCart()
+        {
+            await _dbContext.Carts.Where();
+        }
         #endregion
     }
 }

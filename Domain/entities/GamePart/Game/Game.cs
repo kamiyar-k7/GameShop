@@ -16,11 +16,10 @@ namespace Domain.entities.GamePart.Game
         public string Description { get; set; }
         public DateOnly ReleaseDate { get; set; }
         public string Company { get; set; }
-        public float Price { get; set; }
+        public decimal Price { get; set; }
         public int Quantitiy { get; set; }
         public float Rating { get; set; }
         public string Trailer { get; set; }
-
         public string SystemRequirements { get; set; }
         public bool IsDelete { get; set; } = false;
 
