@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Repository.StoreRepository.Platformrepository
+namespace Data.Repository.Platformrepository
 {
     public class PlatformRepository : IPlatformRepository
     {
@@ -16,7 +16,7 @@ namespace Data.Repository.StoreRepository.Platformrepository
         private readonly GameShopDbContext _gameShopDbContext;
         public PlatformRepository(GameShopDbContext gameShopDbContext)
         {
-            _gameShopDbContext = gameShopDbContext;
+                _gameShopDbContext = gameShopDbContext;
         }
         #endregion
         #region Genreal 
@@ -27,7 +27,7 @@ namespace Data.Repository.StoreRepository.Platformrepository
 
         public async Task<List<Platform>> GetPlatformsById(int Id)
         {
-            var plats = await _gameShopDbContext.selectedPlatforms.Where(x => x.GameId == Id).Select(x => x.Platform).ToListAsync();
+            var plats =  await _gameShopDbContext.selectedPlatforms.Where(x => x.GameId == Id).Select(x => x.Platform).ToListAsync();
             return plats;
         }
         #endregion

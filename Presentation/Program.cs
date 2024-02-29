@@ -1,18 +1,15 @@
 using Application.Services.implements;
 using Application.Services.Interfaces;
-#region Using
 using Data.Repository.AccountRepositories;
-using Data.Repository.CartRepository;
+using Data.Repository.CatalogRepository;
+using Data.Repository.GenreRepository;
 using Data.Repository.HomeRepository;
+using Data.Repository.Platformrepository;
+using Data.Repository.ProductRepository;
 using Data.Repository.StoreRepository;
-using Data.Repository.StoreRepository.CatalogRepository;
-using Data.Repository.StoreRepository.GenreRepository;
-using Data.Repository.StoreRepository.Platformrepository;
-using Data.Repository.StoreRepository.ProductRepository;
 using Data.ShopDbcontext;
 using Domain.IRepository.AccountRepositorieInterfaces;
 using Domain.IRepository.AccountRepositories;
-using Domain.IRepository.CartRepositoryInterface;
 using Domain.IRepository.CatalogRepository;
 using Domain.IRepository.GenreRepostoryInterface;
 using Domain.IRepository.HomeRepositoryInterface;
@@ -21,7 +18,6 @@ using Domain.IRepository.ProductRepositoryInterface;
 using Domain.IRepository.StoreRepositoryInterface;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-#endregion
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -66,10 +62,6 @@ builder.Services.AddScoped<ISignUpService, SignUpService>();
 //Sign in
 builder.Services.AddScoped<ISignInService, SignInService>();
 builder.Services.AddScoped<ISignInRepository , SignInRepository>();
-
-// Cart
-builder.Services.AddScoped<ICartRepository , CartRepository>();
-builder.Services.AddScoped<ICartService , CartService>();
 #endregion
 
 

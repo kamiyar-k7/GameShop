@@ -15,19 +15,17 @@ namespace Presentation.Controllers
         #region Ctor
         private readonly ISignUpService _signpService;
         private readonly ISignInService _signInService;
-        private readonly ICartService _cartService;
-        public AccountController(ISignUpService SignUpservice, ISignInService signInService, ICartService cartService)
+        public AccountController(ISignUpService SignUpservice, ISignInService signInService)
         {
             _signpService = SignUpservice;
             _signInService = signInService;
-            _cartService = cartService;
         }
 
         #endregion
 
         #region SignUp
         [HttpGet]
-        public  IActionResult SignUp()
+        public async Task<IActionResult> SignUp()
         {
 
             return View();
@@ -59,7 +57,7 @@ namespace Presentation.Controllers
 
         #region SignIn
         [HttpGet]
-        public  IActionResult SignIn()
+        public async Task<IActionResult> SignIn()
         {
 
             return View();
@@ -117,12 +115,6 @@ namespace Presentation.Controllers
         #region My Cart
         public async Task<IActionResult> MyCart()
         {
-            var cart = await _cartService.ListOfCart();
-            if (cart != null)
-            {
-                return View(cart);
-            }
-
             return View();
         }
         #endregion

@@ -1,5 +1,4 @@
-﻿using Domain.entities.UserPart.User;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +8,5 @@ namespace Domain.IRepository.CartRepositoryInterface
 {
     public interface ICartRepository
     {
-        Task<List<Cart>> GetListOfCart();
     }
 }
