@@ -1,5 +1,6 @@
 ﻿using Data.ShopDbcontext;
-using Domain.entities.Store.Game;
+using Domain.entities.GamePart.Game;
+
 using Domain.IRepository.ProductRepositoryInterface;
 using Microsoft.EntityFrameworkCore;
 using System;

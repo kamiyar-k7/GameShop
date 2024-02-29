@@ -1,6 +1,6 @@
 ﻿using Data.ShopDbcontext;
-using Domain.entities.GamePart.GemSelectedGenre;
-using Domain.entities.Store.Game;
+using Domain.entities.GamePart.Game;
+using Domain.entities.GamePart.Genre;
 using Domain.IRepository.GenreRepostoryInterface;
 using Microsoft.EntityFrameworkCore;
 

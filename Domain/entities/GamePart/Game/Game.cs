@@ -1,13 +1,13 @@
-﻿using Domain.entities.GamePart.Paltform;
-using Domain.entities.Store.Game;
-using Domain.entities.Store.GemSelectedGenre;
+﻿using Domain.entities.GamePart.Game;
+using Domain.entities.GamePart.Genre;
+using Domain.entities.GamePart.Platform;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.entities.Store.Game
+namespace Domain.entities.GamePart.Game
 {
     public class Game
     {
@@ -20,31 +20,31 @@ namespace Domain.entities.Store.Game
         public int Quantitiy { get; set; }
         public float Rating { get; set; }
         public string Trailer { get; set; }
-        
+
         public string SystemRequirements { get; set; }
         public bool IsDelete { get; set; } = false;
-       
+
 
 
 
         #region Rels
         public ICollection<Screenshot> Screenshots { get; set; }
-        public ICollection<GemSelectedGenre.GemeSelectedGenre> gemeSelectedGenres { get; set; }
+        public ICollection<GemeSelectedGenre> gemeSelectedGenres { get; set; }
         public ICollection<GameSelectedPlatform> gameSelectedPlatforms { get; set; }
         #endregion
 
 
     }
-  
+
 }
 
 public class Screenshot
 {
     public int Id { get; set; }
     public string AvararUrl { get; set; }
-   
+
 
     public int GameId { get; set; }
-    public Game Game { get; set; } 
+    public Game Game { get; set; }
 }
 

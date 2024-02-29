@@ -1,5 +1,4 @@
-﻿
-namespace Domain.entities.GamePart.Paltform;
+﻿namespace Domain.entities.GamePart.Platform;
 
 public class Platform
 {

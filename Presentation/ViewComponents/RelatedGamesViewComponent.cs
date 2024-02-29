@@ -1,7 +1,7 @@
 ﻿
 using Application.Services.implements;
 using Application.Services.Interfaces;
-using Domain.entities.Store.Game;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.ViewComponents;

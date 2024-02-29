@@ -1,6 +1,6 @@
 ﻿using Application.DTOs.UserSide.StorePart;
 using Application.Services.Interfaces;
-using Domain.IRepository.CatalogRepository;
+using Domain.IRepository.CatalogRepositoryInterface;
 using System;
 using System.Collections.Generic;
 using System.Linq;

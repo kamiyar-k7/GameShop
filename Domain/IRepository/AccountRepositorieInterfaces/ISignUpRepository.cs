@@ -5,16 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.IRepository.AccountRepositories
+namespace Domain.IRepository.AccountRepositorieInterfaces
 {
-	public interface ISignUpRepository
-	{
-		#region Admin Side
-		Task SaveChanges();
-		Task AddToDataBase(User user , CancellationToken cancellation);
-		Task<List<User>> GetListOfUsers(CancellationToken cancellationToken);
-		bool IsExist(string	PhoneNumbers , string email);
-		#endregion
+    public interface ISignUpRepository
+    {
+        #region Admin Side
+        Task SaveChanges();
+        Task AddToDataBase(User user, CancellationToken cancellation);
+        Task<List<User>> GetListOfUsers(CancellationToken cancellationToken);
+        bool IsExist(string PhoneNumbers, string email);
+        #endregion
 
-	}
+    }
 }

@@ -1,5 +1,5 @@
 ﻿using Application.Services.Interfaces;
-using Domain.entities.GamePart.Paltform;
+using Domain.entities.GamePart.Platform;
 using Domain.IRepository.PlatformRepositoryInterface;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿using Domain.entities.Store.Game;
+﻿using Domain.entities.GamePart.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;

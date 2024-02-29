@@ -1,5 +1,4 @@
-﻿using Application.DTOs.AdminSide.Account;
-using Application.DTOs.UserSide.Account;
+﻿using Application.DTOs.UserSide.Account;
 using Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;

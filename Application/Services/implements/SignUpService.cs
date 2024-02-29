@@ -1,8 +1,8 @@
-﻿using Application.DTOs.AdminSide.Account;
+﻿using Application.DTOs.UserSide.Account;
 using Application.Helpers;
 using Application.Services.Interfaces;
 using Domain.entities.UserPart.User;
-using Domain.IRepository.AccountRepositories;
+using Domain.IRepository.AccountRepositorieInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Application.Services.implements
 {
-	public class SignUpService  : ISignUpService
+    public class SignUpService  : ISignUpService
 	{
 		#region Ctor
 		private readonly ISignUpRepository _signUpRepository;

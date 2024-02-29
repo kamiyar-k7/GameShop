@@ -1,10 +1,4 @@
-﻿using Domain.entities.GamePart.GemSelectedGenre;
-using Domain.entities.GamePart.Paltform;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace Application.DTOs.UserSide.StorePart
 {

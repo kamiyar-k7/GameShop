@@ -1,6 +1,6 @@
 ﻿
 
-using Domain.entities.Store.Game;
+using Domain.entities.GamePart.Game;
 
 namespace Domain.IRepository.HomeRepositoryInterface;
 

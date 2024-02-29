@@ -1,5 +1,5 @@
 ﻿using Data.ShopDbcontext;
-using Domain.entities.GamePart.Paltform;
+using Domain.entities.GamePart.Platform;
 using Domain.IRepository.PlatformRepositoryInterface;
 using Microsoft.EntityFrameworkCore;
 using System;

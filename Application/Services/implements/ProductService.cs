@@ -1,14 +1,7 @@
-﻿using Application.DTOs.UserSide.Home;
-using Application.DTOs.UserSide.StorePart;
+﻿using Application.DTOs.UserSide.StorePart;
 using Application.Services.Interfaces;
-using Domain.entities.Store.Game;
-using Domain.IRepository.HomeRepositoryInterface;
 using Domain.IRepository.ProductRepositoryInterface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Application.Services.implements
 {

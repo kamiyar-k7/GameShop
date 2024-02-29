@@ -1,7 +1,7 @@
 ﻿@model Application.DTOs.UserSide.StorePart.ProductDto;
 @{
-    var GenreList = ViewData["Genre"] as List<Domain.entities.GamePart.GemSelectedGenre.Genre>;
-    var platformlist = ViewData["Platforms"] as List<Domain.entities.GamePart.Paltform.Platform>;
+    // var GenreList = ViewData["Genre"] as List<Genre>;
+    var platformlist = ViewData["Platforms"] as List<Domain.entities.GamePart.Platform.Platform>;
 
 }
 
@@ -112,7 +112,7 @@
                             <!-- END: Add to Cart -->
                             <!-- START: Meta -->
                             <div class="nk-product-meta">
-                                @if (GenreList != null)
+                     @*            @if (GenreList != null)
                                 {
                                     <div>
 
@@ -122,7 +122,7 @@
                                         }
 
                                     </div>
-                                }
+                                } *@
                            
                                 <div><strong>Compony</strong>: <a href="#">@Model.Company</a></div>
                             </div>
@@ -175,10 +175,10 @@
                                         <div class="nk-gap"></div>
                                         <strong class="text-white">Genre:</strong>
                                         <div class="nk-gap"></div>
-                                       @foreach (var Genre in GenreList)
+                                    @*    @foreach (var Genre in GenreList)
                                         {
                                             <p> @Genre.GenreName </p>
-                                        }
+                                        } *@
                                         <div class="nk-gap"></div>
                                     </div>
                                     <div class="col-md-4">

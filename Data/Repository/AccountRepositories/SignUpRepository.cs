@@ -1,5 +1,6 @@
 ﻿using Domain.entities.UserPart.User;
-using Domain.IRepository.AccountRepositories;
+using Domain.IRepository.AccountRepositorieInterfaces;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using System;

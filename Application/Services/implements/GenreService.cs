@@ -1,8 +1,7 @@
 ﻿using Application.DTOs.UserSide.Home;
 using Application.DTOs.UserSide.StorePart;
 using Application.Services.Interfaces;
-using Domain.entities.GamePart.GemSelectedGenre;
-
+using Domain.entities.GamePart.Genre;
 using Domain.IRepository.GenreRepostoryInterface;
 using Domain.IRepository.StoreRepositoryInterface;
 
@@ -30,7 +29,7 @@ public class GenreService : IGenreService
     {
         return await _genreRepository.GetGenresById(Id);
     }
-    public async Task<List<StoreDto>> GetRelatedGamesByGenres(List<Domain.entities.GamePart.GemSelectedGenre.Genre> genres)
+    public async Task<List<StoreDto>> GetRelatedGamesByGenres(List<Genre> genres)
     {
         var relatedGames = await _genreRepository.GetGamesByGenres(genres); 
     

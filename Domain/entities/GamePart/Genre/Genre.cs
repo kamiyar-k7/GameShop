@@ -1,6 +1,5 @@
-﻿using Domain.entities.Store.GemSelectedGenre;
-using System.Collections.ObjectModel;
-namespace Domain.entities.GamePart.GemSelectedGenre;
+﻿using System.Collections.ObjectModel;
+namespace Domain.entities.GamePart.Genre;
 
 public class Genre
 {
@@ -9,7 +8,7 @@ public class Genre
     public string GenreUniqueName { get; set; }
 
     #region Rels
-  
+
     public Collection<GemeSelectedGenre> gemeSelectedGenres { get; set; }
 
     #endregion
