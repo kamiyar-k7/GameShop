@@ -25,11 +25,11 @@ namespace Data.Repository.ProductRepository
         #region General
         public async Task<List<Game>> GetGames()
         {
-            return await _gameShopDbContext.games.Include(x => x.Screenshots).Where(x => x.IsDelete == false).ToListAsync();
+            return await _gameShopDbContext.Games.Include(x => x.Screenshots).Where(x => x.IsDelete == false).ToListAsync();
         }
         public async Task<Game> GetGameById(int Id)
         {
-            return await _gameShopDbContext.games.Include(x => x.Screenshots).FirstAsync(x => x.Id == Id);
+            return await _gameShopDbContext.Games.Include(x => x.Screenshots).FirstAsync(x => x.Id == Id);
         }
         #endregion
 

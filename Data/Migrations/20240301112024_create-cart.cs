@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Data.Migrations
 {
     /// <inheritdoc />
-    public partial class newdatabase : Migration
+    public partial class createcart : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "genres",
+                name: "Genres",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -22,11 +22,11 @@ namespace Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_genres", x => x.Id);
+                    table.PrimaryKey("PK_Genres", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "platforms",
+                name: "Platforms",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -36,7 +36,7 @@ namespace Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_platforms", x => x.Id);
+                    table.PrimaryKey("PK_Platforms", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -76,27 +76,52 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Carts",
+                name: "Cart",
+                columns: table => new
+                {
+                    CartId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cart", x => x.CartId);
+                    table.ForeignKey(
+                        name: "FK_Cart_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Games",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    GameId = table.Column<int>(type: "int", nullable: false),
-                    GameName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReleaseDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    Company = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Screenshot = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Quantitiy = table.Column<int>(type: "int", nullable: false),
+                    Rating = table.Column<float>(type: "real", nullable: false),
+                    Trailer = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SystemRequirements = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsDelete = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Carts", x => x.Id);
+                    table.PrimaryKey("PK_Games", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Carts_Users_UserId",
+                        name: "FK_Games_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -116,41 +141,42 @@ namespace Data.Migrations
                         column: x => x.RoleId,
                         principalTable: "Roles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_SelectedRole_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "games",
+                name: "CartDeatails",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    CartDetailsId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ReleaseDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    Company = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<float>(type: "real", nullable: false),
-                    Quantitiy = table.Column<int>(type: "int", nullable: false),
-                    Rating = table.Column<float>(type: "real", nullable: false),
-                    Trailer = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SystemRequirements = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsDelete = table.Column<bool>(type: "bit", nullable: false),
-                    CartId = table.Column<int>(type: "int", nullable: true)
+                    CartId = table.Column<int>(type: "int", nullable: false),
+                    GameId = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Platform = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_games", x => x.Id);
+                    table.PrimaryKey("PK_CartDeatails", x => x.CartDetailsId);
                     table.ForeignKey(
-                        name: "FK_games_Carts_CartId",
+                        name: "FK_CartDeatails_Cart_CartId",
                         column: x => x.CartId,
-                        principalTable: "Carts",
-                        principalColumn: "Id");
+                        principalTable: "Cart",
+                        principalColumn: "CartId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CartDeatails_Games_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Games",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -166,11 +192,11 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_Screenshot", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Screenshot_games_GameId",
+                        name: "FK_Screenshot_Games_GameId",
                         column: x => x.GameId,
-                        principalTable: "games",
+                        principalTable: "Games",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -186,21 +212,21 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_SelectedGenres", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SelectedGenres_games_GameId",
+                        name: "FK_SelectedGenres_Games_GameId",
                         column: x => x.GameId,
-                        principalTable: "games",
+                        principalTable: "Games",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_SelectedGenres_genres_GenreId",
+                        name: "FK_SelectedGenres_Genres_GenreId",
                         column: x => x.GenreId,
-                        principalTable: "genres",
+                        principalTable: "Genres",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "selectedPlatforms",
+                name: "SelectedPlatforms",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -210,30 +236,40 @@ namespace Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_selectedPlatforms", x => x.Id);
+                    table.PrimaryKey("PK_SelectedPlatforms", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_selectedPlatforms_games_GameId",
+                        name: "FK_SelectedPlatforms_Games_GameId",
                         column: x => x.GameId,
-                        principalTable: "games",
+                        principalTable: "Games",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_selectedPlatforms_platforms_PlatformId",
+                        name: "FK_SelectedPlatforms_Platforms_PlatformId",
                         column: x => x.PlatformId,
-                        principalTable: "platforms",
+                        principalTable: "Platforms",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Carts_UserId",
-                table: "Carts",
+                name: "IX_Cart_UserId",
+                table: "Cart",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_games_CartId",
-                table: "games",
+                name: "IX_CartDeatails_CartId",
+                table: "CartDeatails",
                 column: "CartId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CartDeatails_GameId",
+                table: "CartDeatails",
+                column: "GameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Games_UserId",
+                table: "Games",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Screenshot_GameId",
@@ -251,13 +287,13 @@ namespace Data.Migrations
                 column: "GenreId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_selectedPlatforms_GameId",
-                table: "selectedPlatforms",
+                name: "IX_SelectedPlatforms_GameId",
+                table: "SelectedPlatforms",
                 column: "GameId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_selectedPlatforms_PlatformId",
-                table: "selectedPlatforms",
+                name: "IX_SelectedPlatforms_PlatformId",
+                table: "SelectedPlatforms",
                 column: "PlatformId");
 
             migrationBuilder.CreateIndex(
@@ -275,31 +311,34 @@ namespace Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "CartDeatails");
+
+            migrationBuilder.DropTable(
                 name: "Screenshot");
 
             migrationBuilder.DropTable(
                 name: "SelectedGenres");
 
             migrationBuilder.DropTable(
-                name: "selectedPlatforms");
+                name: "SelectedPlatforms");
 
             migrationBuilder.DropTable(
                 name: "SelectedRole");
 
             migrationBuilder.DropTable(
-                name: "genres");
+                name: "Cart");
 
             migrationBuilder.DropTable(
-                name: "games");
+                name: "Genres");
 
             migrationBuilder.DropTable(
-                name: "platforms");
+                name: "Games");
+
+            migrationBuilder.DropTable(
+                name: "Platforms");
 
             migrationBuilder.DropTable(
                 name: "Roles");
-
-            migrationBuilder.DropTable(
-                name: "Carts");
 
             migrationBuilder.DropTable(
                 name: "Users");

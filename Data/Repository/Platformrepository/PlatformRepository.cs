@@ -22,12 +22,12 @@ namespace Data.Repository.Platformrepository
         #region Genreal 
         public async Task<List<Platform>> GetPlatforms()
         {
-            return await _gameShopDbContext.platforms.ToListAsync();
+            return await _gameShopDbContext.Platforms.ToListAsync();
         }
 
         public async Task<List<Platform>> GetPlatformsById(int Id)
         {
-            var plats =  await _gameShopDbContext.selectedPlatforms.Where(x => x.GameId == Id).Select(x => x.Platform).ToListAsync();
+            var plats =  await _gameShopDbContext.SelectedPlatforms.Where(x => x.GameId == Id).Select(x => x.Platform).ToListAsync();
             return plats;
         }
         #endregion

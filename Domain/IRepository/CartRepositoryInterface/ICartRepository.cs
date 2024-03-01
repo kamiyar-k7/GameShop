@@ -1,4 +1,6 @@
-﻿using Domain.entities.UserPart.User;
+﻿using Domain.entities.Cart;
+using Domain.entities.GamePart.Game;
+using Domain.entities.UserPart.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,11 @@ namespace Domain.IRepository.CartRepositoryInterface
 {
     public interface ICartRepository
     {
-        Task<List<Cart>> GetListOfUserCart(int id);
-        Task AddToCart(Cart cart);
+        Task SaveChanges();
+        Task<List<Carts>> GetListOfUserCart(int id);
+        Task<Carts> GetcartByUserId(int userid);
+        Task AddToCart(CartDeatails cartDeatails);
+        //Task<Game> GetGameAsync(int id);
+        Task AddUserCartToCarts(Carts carts);
     }
 }

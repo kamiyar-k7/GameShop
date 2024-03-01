@@ -135,7 +135,6 @@ namespace Presentation.Controllers
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddToCart(ProductDto model)
-        
         {
             
                 var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -143,16 +142,17 @@ namespace Presentation.Controllers
                 {
                      await _cartService.AddToCart(model,id );
                 }
-                return RedirectToAction("Product" , "Store" , );
+                return RedirectToAction("Product" , "Store"  , new {id = model.Id});
                  
           
+
         }
         #endregion
 
-        #region Delete Cart'
+        #region Delete Cart
         public async Task<IActionResult> DeleteCart()
         {
-
+            return View();
         }
         #endregion
 

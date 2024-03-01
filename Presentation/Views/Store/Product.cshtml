@@ -42,10 +42,9 @@
         <div class="row vertical-gap">
             <div class="col-lg-8">
                 <div class="nk-store-product">
-                    <form asp-controller="Account" asp-action="AddToCart" method="post" class="nk-product-addtocart">
+                   
                         <div class="row vertical-gap">
-                            <input type="type" hidden asp-for="Id" />
-                            <input type="type" hidden asp-for="Name" />
+                     
                             <div class="col-md-6">
                                 <!-- START: Product Photos -->
                                 <div class="nk-popup-gallery">
@@ -106,11 +105,13 @@
 
                                 <div  class="nk-product-price">€  @Model.Price</div>
                                 <div class="nk-gap-1"></div>
+                                 <form asp-controller="Account" asp-action="AddToCart" method="post" class="nk-product-addtocart">
                                 <div class="input-group">
+                                    <input hidden asp-for="@Model.Id" />
                                     <input type="number" class="form-control" asp-for="Quantity" value="1" min="1" max="3">
                                     <button class="nk-btn nk-btn-rounded nk-btn-color-main-1">Add to Cart</button>
                                 </div>
-
+                                </form>
                                 <div class="nk-gap-3"></div>
                                 <!-- END: Add to Cart -->
                                 <!-- START: Meta -->
@@ -136,7 +137,7 @@
 
 
 
-                    </form>
+                
 
 
 

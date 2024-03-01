@@ -1,4 +1,6 @@
 ﻿using Data.ShopDbcontext;
+using Domain.entities.Cart;
+using Domain.entities.GamePart.Game;
 using Domain.entities.UserPart.User;
 using Domain.IRepository.CartRepositoryInterface;
 using Microsoft.EntityFrameworkCore;
@@ -17,26 +19,47 @@ namespace Data.Repository.CartRepository
 
         public CartRepository(GameShopDbContext gameShop)
         {
-                _dbContext = gameShop;
+            _dbContext = gameShop;
+        }
+        public async Task AddUserCartToCarts(Carts carts)
+        {
+            await _dbContext.Cart.AddAsync(carts);
+            await _dbContext.SaveChangesAsync();
+
+        }
+        public async Task AddToCart(CartDeatails cartDeatails )
+        {
+          await  _dbContext.CartDeatails.AddAsync(cartDeatails);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public Task AddToCart(Carts cart)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Carts> GetcartByUserId(int userid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Game> GetGameAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Carts>> GetListOfUserCart(int id)
+        {
+            throw new NotImplementedException();
         }
         #endregion
 
         #region General 
-        public async Task<List<Cart>> GetListOfUserCart(int id)
+        public async Task SaveChanges()
         {
-            return await _dbContext.Carts.Where(x=> x.UserId == id).ToListAsync();
-        }
-
-        public async Task AddToCart(Cart cart)
-        {
-            await _dbContext.Carts.AddAsync(cart);
             await _dbContext.SaveChangesAsync();
-
         }
-        public async Task DeleteCart()
-        {
-            await _dbContext.Carts.Where();
-        }
+      
         #endregion
     }
 }

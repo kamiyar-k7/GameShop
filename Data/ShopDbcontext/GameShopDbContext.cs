@@ -1,4 +1,5 @@
-﻿using Domain.entities.GamePart.Game;
+﻿using Domain.entities.Cart;
+using Domain.entities.GamePart.Game;
 using Domain.entities.GamePart.Genre;
 using Domain.entities.GamePart.Platform;
 using Domain.entities.UserPart.Roles;
@@ -21,16 +22,33 @@ public class GameShopDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<UserSelectedRole> SelectedRole { get; set; }
-    public DbSet<Cart>  Carts { get; set; }
+    public DbSet<Carts> Cart { get; set; }
+    public DbSet<CartDeatails> CartDeatails { get; set; }
     #endregion
 
     #region Game
-    public DbSet<Game> games { get; set; }
-    public DbSet<Genre> genres { get; set; }
-    public DbSet<Platform> platforms { get; set; }
+    public DbSet<Game> Games { get; set; }
+    public DbSet<Genre> Genres { get; set; }
+    public DbSet<Platform> Platforms { get; set; }
     public DbSet<GemeSelectedGenre> SelectedGenres { get; set; }
-    public DbSet<GameSelectedPlatform> selectedPlatforms { get; set; }
+    public DbSet<GameSelectedPlatform> SelectedPlatforms { get; set; }
     #endregion
 
     #endregion
+
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        var cascadeFKs = modelBuilder.Model.GetEntityTypes()
+            .SelectMany(t => t.GetForeignKeys())
+            .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
+
+        foreach (var fk in cascadeFKs)
+            fk.DeleteBehavior = DeleteBehavior.Restrict;
+
+
+        base.OnModelCreating(modelBuilder);
+    }
+
+
 }

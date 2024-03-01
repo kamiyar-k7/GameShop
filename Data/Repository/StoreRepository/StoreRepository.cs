@@ -20,7 +20,7 @@ namespace Data.Repository.StoreRepository
         #region general 
         public async Task<List<Game>> GetListOfGames()
         {
-            return await _gameShopDbContext.games.Where(x => x.IsDelete == false).Include(x=> x.Screenshots).ToListAsync();
+            return await _gameShopDbContext.Games.Where(x => x.IsDelete == false).Include(x=> x.Screenshots).ToListAsync();
              
         }
         #endregion

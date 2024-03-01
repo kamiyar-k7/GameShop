@@ -12,6 +12,7 @@ public class ProductDto
     public float? Rating { get; set; }
     public int Quantity { get; set; }
     public string? Trailer { get; set; }
+    public string Platform { get; set; }
     public string? SystemRequirements { get; set; }
     public List<string>Screenshots { get; set; }
 

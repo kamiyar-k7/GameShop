@@ -8,6 +8,7 @@ using Data.Repository.HomeRepository;
 using Data.Repository.Platformrepository;
 using Data.Repository.ProductRepository;
 using Data.Repository.StoreRepository;
+using Data.Repository.UserRepository;
 using Data.ShopDbcontext;
 using Domain.IRepository.AccountRepositorieInterfaces;
 using Domain.IRepository.CartRepositoryInterface;
@@ -17,6 +18,7 @@ using Domain.IRepository.HomeRepositoryInterface;
 using Domain.IRepository.PlatformRepositoryInterface;
 using Domain.IRepository.ProductRepositoryInterface;
 using Domain.IRepository.StoreRepositoryInterface;
+using Domain.IRepository.UserRepositoryInterface;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -56,6 +58,9 @@ builder.Services.AddScoped<IPlatformService, PlatformService>();
 
 
 #region Account 
+// User
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 // sign up
 builder.Services.AddScoped<ISignUpRepository, SignUpRepository>();
 builder.Services.AddScoped<ISignUpService, SignUpService>();

@@ -20,7 +20,7 @@ public class GenreRepository : IGenreRepository
     #region general 
     public async Task<List<Genre>> GetGenre()
     {
-        return   await _gameShopDbContext.genres.ToListAsync();
+        return   await _gameShopDbContext.Genres.ToListAsync();
        
     }
     public async Task<List<Genre>> GetGenresById(int Id)
@@ -29,7 +29,7 @@ public class GenreRepository : IGenreRepository
     }
     public async Task<List<Game>> GetGamesByGenres(List<Genre> genres)
     {
-        var games = await _gameShopDbContext.games
+        var games = await _gameShopDbContext.Games
        .Where(game => game.gemeSelectedGenres
            .Any(selectedGenre => genres.Select(g => g.Id).Contains(selectedGenre.GenreId)))
        .ToListAsync();

@@ -1,4 +1,6 @@
-﻿using Domain.entities.UserPart.Roles;
+﻿using Domain.entities.Cart;
+using Domain.entities.GamePart.Game;
+using Domain.entities.UserPart.Roles;
 
 using System.ComponentModel.DataAnnotations;
 
@@ -7,6 +9,7 @@ namespace Domain.entities.UserPart.User;
 
 public class User
 {
+    [Key]
     public int Id { get; set; }
     [Required]
     [StringLength(20)]
@@ -27,7 +30,8 @@ public class User
 
     #region Rels
     public ICollection<UserSelectedRole> UserSelectedRoles { get; set; }
-    public ICollection<Cart> Carts { get; set; }
+    public List<Carts> cart { get; set; }
+    public List<Game> games { get; set; }
     #endregion
 
 }
