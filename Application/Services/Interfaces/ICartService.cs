@@ -6,6 +6,8 @@ namespace Application.Services.Interfaces;
 
 public interface ICartService
 {
-    Task<List<CartDto>> GetUserCart(int id);
+
+    Task<List<CartDto>> ShowListOfCart(int userid);
     Task AddToCart(ProductDto model, int userid);
+    Task<bool> DeleteCart(int id);
 }

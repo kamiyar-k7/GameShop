@@ -1,26 +1,25 @@
+#region Usings
+
 using Application.Services.implements;
 using Application.Services.Interfaces;
 using Data.Repository.AccountRepositories;
 using Data.Repository.CartRepository;
 using Data.Repository.CatalogRepository;
+using Data.Repository.GameRepository;
 using Data.Repository.GenreRepository;
-using Data.Repository.HomeRepository;
 using Data.Repository.Platformrepository;
 using Data.Repository.ProductRepository;
-using Data.Repository.StoreRepository;
-using Data.Repository.UserRepository;
 using Data.ShopDbcontext;
 using Domain.IRepository.AccountRepositorieInterfaces;
 using Domain.IRepository.CartRepositoryInterface;
 using Domain.IRepository.CatalogRepositoryInterface;
+using Domain.IRepository.GameRepository;
 using Domain.IRepository.GenreRepostoryInterface;
-using Domain.IRepository.HomeRepositoryInterface;
 using Domain.IRepository.PlatformRepositoryInterface;
 using Domain.IRepository.ProductRepositoryInterface;
-using Domain.IRepository.StoreRepositoryInterface;
-using Domain.IRepository.UserRepositoryInterface;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+#endregion
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,12 +28,13 @@ builder.Services.AddControllersWithViews();
 
 #region ioc Container
 //Home
-builder.Services.AddScoped<IHomeRepository, HomeRepository>();
 builder.Services.AddScoped<IHomeService, HomeService>();
 
+
+// Game 
+builder.Services.AddScoped<IGameRepository, GameRepository>();
 #region Store part
 // Store
-builder.Services.AddScoped<IStoreRepositpory, StoreRepository>();
 builder.Services.AddScoped<IStoreService, StoreService>();
 
 // catalog 
@@ -58,16 +58,9 @@ builder.Services.AddScoped<IPlatformService, PlatformService>();
 
 
 #region Account 
-// User
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-
-// sign up
-builder.Services.AddScoped<ISignUpRepository, SignUpRepository>();
-builder.Services.AddScoped<ISignUpService, SignUpService>();
-
-//Sign in
-builder.Services.AddScoped<ISignInService, SignInService>();
-builder.Services.AddScoped<ISignInRepository , SignInRepository>();
+//Account 
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IAccountService , AccountService>();
 
 // Cart 
 builder.Services.AddScoped<ICartRepository , CartRepository>();

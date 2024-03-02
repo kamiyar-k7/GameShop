@@ -21,45 +21,64 @@ namespace Data.Repository.CartRepository
         {
             _dbContext = gameShop;
         }
-        public async Task AddUserCartToCarts(Carts carts)
-        {
-            await _dbContext.Cart.AddAsync(carts);
-            await _dbContext.SaveChangesAsync();
-
-        }
-        public async Task AddToCart(CartDeatails cartDeatails )
-        {
-          await  _dbContext.CartDeatails.AddAsync(cartDeatails);
-            await _dbContext.SaveChangesAsync();
-        }
-
-        public Task AddToCart(Carts cart)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Carts> GetcartByUserId(int userid)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Game> GetGameAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<Carts>> GetListOfUserCart(int id)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
+        #region General
 
-        #region General 
         public async Task SaveChanges()
         {
             await _dbContext.SaveChangesAsync();
         }
+        public async Task AddUserCartToCarts(Carts carts)
+        {
+            await _dbContext.Cart.AddAsync(carts);
+            await SaveChanges();
+
+        }
+
+        public async Task AddToCart(CartDeatails cartDeatails)
+        {
+            await _dbContext.CartDeatails.AddAsync(cartDeatails);
+            await SaveChanges();
+        }
+        public async Task AddOneMoreToCart(CartDeatails cartDeatails)
+        {
+             _dbContext.CartDeatails.Update(cartDeatails);
+            await SaveChanges();
+        }
+        public CartDeatails? IsGameExistInCart(int cartid,int? id, string? platform)
+        {
+            return _dbContext.CartDeatails.FirstOrDefault(x => x.CartId == cartid && x.Game.Id == id && x.Platform == platform);
+        }
+
+        public async Task<List<CartDeatails>> GetCartsAsync(int userid)
+        {
+
+            return await _dbContext.CartDeatails.Include(x => x.Game).Include(x => x.Game.Screenshots).Where(x => x.Cart.UserId == userid).ToListAsync();
+
+        }
+        public async Task<CartDeatails?> FindCartById(int id)
+        {
+            return await _dbContext.CartDeatails.FirstOrDefaultAsync(x => x.CartDetailsId == id);
+
+        }
+        public void DeleteCart(CartDeatails cartDeatails)
+        {
+            _dbContext.CartDeatails.Remove(cartDeatails);
+        }
+
       
         #endregion
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

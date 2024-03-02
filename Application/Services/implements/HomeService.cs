@@ -1,8 +1,7 @@
-﻿
-
-using Application.DTOs.UserSide.Home;
+﻿using Application.DTOs.UserSide.Home;
 using Application.Services.Interfaces;
-using Domain.IRepository.HomeRepositoryInterface;
+using Domain.IRepository.GameRepository;
+
 
 namespace Application.Services.implements;
 
@@ -11,15 +10,16 @@ namespace Application.Services.implements;
 public class HomeService : IHomeService
 {
     #region Ctor
-    private readonly IHomeRepository _homeRepository;
-    public HomeService(IHomeRepository homeRepository)
+    private readonly IGameRepository _gameRepository;
+    public HomeService(IGameRepository gameRepository)
     {
-            _homeRepository = homeRepository;
+
+        _gameRepository = gameRepository;
     }
     #endregion
     public async Task<List<HomeDto>> ShowGames()
     {
-        var listofgames = await _homeRepository.GetListOfGames();
+        var listofgames = await _gameRepository.GamesAsync();
         if (listofgames != null)
         {
             List<HomeDto> model = new List<HomeDto>();

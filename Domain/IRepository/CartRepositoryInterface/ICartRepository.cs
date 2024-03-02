@@ -12,10 +12,12 @@ namespace Domain.IRepository.CartRepositoryInterface
     public interface ICartRepository
     {
         Task SaveChanges();
-        Task<List<Carts>> GetListOfUserCart(int id);
-        Task<Carts> GetcartByUserId(int userid);
         Task AddToCart(CartDeatails cartDeatails);
-        //Task<Game> GetGameAsync(int id);
         Task AddUserCartToCarts(Carts carts);
+        Task<List<CartDeatails>> GetCartsAsync(int userid);
+        Task<CartDeatails?> FindCartById(int id);
+         void DeleteCart(CartDeatails cartDeatails);
+        CartDeatails? IsGameExistInCart(int cartid,int? id, string? platform);
+        Task AddOneMoreToCart(CartDeatails cartDeatails);
     }
 }

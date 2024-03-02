@@ -14,17 +14,17 @@ namespace Presentation.Controllers
     {
 
         #region Ctor
-        private readonly ISignUpService _signpService;
-        private readonly ISignInService _signInService;
+        private readonly IAccountService _accountService;
         private readonly ICartService _cartService;
-        public AccountController(ISignUpService SignUpservice, ISignInService signInService , ICartService cartService)
+        public AccountController( IAccountService accountService , ICartService cartService)
         {
-            _signpService = SignUpservice;
-            _signInService = signInService;
+           _accountService = accountService;
             _cartService = cartService;
         }
 
         #endregion
+
+
 
         #region SignUp
         [HttpGet]
@@ -38,7 +38,7 @@ namespace Presentation.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _signpService.AddToDataBase(model, cancellation);
+                var user = await _accountService.AddToDataBase(model, cancellation);
                 if (user)
                 {
                     return RedirectToAction("Index", "Home");
@@ -73,7 +73,7 @@ namespace Presentation.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _signInService.FindUser(model);
+                var user = await _accountService.FindUser(model);
                 if (user != null)
                 {
                     var claims = new List<Claim>()
@@ -105,7 +105,31 @@ namespace Presentation.Controllers
             TempData["ErrorMessage"] = "Fill Fields Properly";
             return View();
         }
-       
+
+        #endregion
+
+        #region LogOut
+        public IActionResult Logout()
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("Index", "Home");
+        }
+        #endregion
+
+        #region DeleteAccount
+
+        public IActionResult DeleteAccount()
+        {
+            return View();
+        }
+        #endregion
+
+        #region ForgotPassword
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
         #endregion
 
         #region My Account(Index)
@@ -115,6 +139,9 @@ namespace Presentation.Controllers
         }
         #endregion
 
+
+
+
         #region My Cart
         [Authorize]
         public async Task<IActionResult> MyCart()
@@ -122,7 +149,7 @@ namespace Presentation.Controllers
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (int.TryParse(userid, out int id))
             {
-                var cart = await _cartService.GetUserCart(id);
+                var cart = await _cartService.ShowListOfCart(id);
                 return View(cart);
              
             }
@@ -150,34 +177,21 @@ namespace Presentation.Controllers
         #endregion
 
         #region Delete Cart
-        public async Task<IActionResult> DeleteCart()
+        [Authorize]
+       
+        public async Task<IActionResult> DeleteCart(int Id)
         {
-            return View();
+
+          var del =  await _cartService.DeleteCart(Id);
+            if (del)
+            {
+                return RedirectToAction(nameof(MyCart));
+            }
+            TempData["error"] = "error";
+            return RedirectToAction(nameof(MyCart)); ;
         }
         #endregion
 
-        #region LogOut
-        public IActionResult Logout()
-        {
-            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-         
-            return RedirectToAction("Index", "Home");
-        }
-        #endregion
-
-        #region DeleteAccount
-
-        public IActionResult DeleteAccount()
-        {
-            return View();
-        }
-        #endregion
-
-        #region ForgotPassword
-        public IActionResult ForgotPassword()
-        {
-            return View();
-        }
-        #endregion
+     
     }
 }

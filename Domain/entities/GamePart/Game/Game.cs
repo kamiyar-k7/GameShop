@@ -17,8 +17,6 @@ public class Game
 {
     [Key]
     public int Id { get; set; }
-    [ForeignKey("User")]
-    public int UserId { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public DateOnly ReleaseDate { get; set; }
@@ -38,7 +36,7 @@ public class Game
     public ICollection<GemeSelectedGenre> gemeSelectedGenres { get; set; }
     public ICollection<GameSelectedPlatform> gameSelectedPlatforms { get; set; }
     public List<CartDeatails> CartDeatails { get; set; }
-    public User Users { get; set; }
+
     #endregion
 
 

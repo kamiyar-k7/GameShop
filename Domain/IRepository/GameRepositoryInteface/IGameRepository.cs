@@ -5,12 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.IRepository.CatalogRepositoryInterface
+namespace Domain.IRepository.GameRepository
 {
-    public interface ICatalogRepository
+    public interface IGameRepository
     {
-        #region General
-      
-        #endregion
+        Task<List<Game>> GamesAsync();
+        Task<Game?> GetGameById(int id);
     }
 }

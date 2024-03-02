@@ -1,6 +1,7 @@
 ﻿using Application.DTOs.UserSide.StorePart;
 using Application.Services.Interfaces;
 using Domain.IRepository.CatalogRepositoryInterface;
+using Domain.IRepository.GameRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +13,19 @@ namespace Application.Services.implements
     public class CatalogService : ICatalogService
     {
         #region Ctor
-        private readonly ICatalogRepository _catalogRepository;
-        public CatalogService(ICatalogRepository catalogRepository)
+ 
+        private readonly IGameRepository _gameRepository;
+        public CatalogService( IGameRepository gameRepository)
         {
-            _catalogRepository = catalogRepository;
+  
+            _gameRepository = gameRepository;
         }
         #endregion
 
         #region Genreal
         public async Task<List<CatalogDto>> ShowGames()
         {
-            var listofgames = await _catalogRepository.GetListOfGames();
+            var listofgames = await _gameRepository.GamesAsync();
             if (listofgames != null)
             {
                 List<CatalogDto> model = new List<CatalogDto>();

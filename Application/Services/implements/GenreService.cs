@@ -3,7 +3,7 @@ using Application.DTOs.UserSide.StorePart;
 using Application.Services.Interfaces;
 using Domain.entities.GamePart.Genre;
 using Domain.IRepository.GenreRepostoryInterface;
-using Domain.IRepository.StoreRepositoryInterface;
+
 
 
 namespace Application.Services.implements;
