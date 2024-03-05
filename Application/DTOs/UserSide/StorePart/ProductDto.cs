@@ -17,3 +17,8 @@ public class ProductDto
     public List<string>Screenshots { get; set; }
 
 }
+
+public class PlatformsdDto
+{
+
+}

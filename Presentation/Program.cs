@@ -33,6 +33,7 @@ builder.Services.AddScoped<IHomeService, HomeService>();
 
 // Game 
 builder.Services.AddScoped<IGameRepository, GameRepository>();
+
 #region Store part
 // Store
 builder.Services.AddScoped<IStoreService, StoreService>();
@@ -65,6 +66,9 @@ builder.Services.AddScoped<IAccountService , AccountService>();
 // Cart 
 builder.Services.AddScoped<ICartRepository , CartRepository>();
 builder.Services.AddScoped<ICartService , CartService>();
+
+//checkout 
+builder.Services.AddScoped<ICheckOutService , CheckOutService>();
 #endregion
 
 

@@ -11,5 +11,6 @@ namespace Domain.IRepository.GameRepository
     {
         Task<List<Game>> GamesAsync();
         Task<Game?> GetGameById(int id);
+        Task<List<Game>> GetRelatedGamesBtGenre(Game game);
     }
 }

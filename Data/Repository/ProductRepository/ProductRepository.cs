@@ -1,37 +1,33 @@
 ﻿using Data.ShopDbcontext;
 using Domain.entities.GamePart.Game;
-
 using Domain.IRepository.ProductRepositoryInterface;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Data.Repository.ProductRepository
+namespace Data.Repository.ProductRepository;
+
+public class ProductRepository : IProductRepository
 {
-    public class ProductRepository : IProductRepository
+    #region Ctor
+    private readonly GameShopDbContext _gameShopDbContext;
+    public ProductRepository(GameShopDbContext gameShopDbContext)
     {
-        #region Ctor
-        private readonly GameShopDbContext _gameShopDbContext;
-        public ProductRepository(GameShopDbContext gameShopDbContext)
-        {
-            _gameShopDbContext = gameShopDbContext;
-
-        }
-        #endregion
-
-        #region General
-        public async Task<List<Game>> GetGames()
-        {
-            return await _gameShopDbContext.Games.Include(x => x.Screenshots).Where(x => x.IsDelete == false).ToListAsync();
-        }
-        public async Task<Game> GetGameById(int Id)
-        {
-            return await _gameShopDbContext.Games.Include(x => x.Screenshots).FirstAsync(x => x.Id == Id);
-        }
-        #endregion
+        _gameShopDbContext = gameShopDbContext;
 
     }
+
+    public Task<Game> GetGameById(int Id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<Game>> GetGames()
+    {
+        throw new NotImplementedException();
+    }
+    #endregion
+
+    #region General
+
+
+    #endregion
+
 }

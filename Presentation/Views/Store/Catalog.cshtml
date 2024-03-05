@@ -1,12 +1,5 @@
-﻿@model List<Application.DTOs.UserSide.StorePart.CatalogDto>
-@{
-    var platformlist = ViewData["Platform"] as List<Domain.entities.GamePart.Platform.Platform>;
-    var genreList = ViewData["Genre"] as List<Domain.entities.GamePart.Genre.Genre>;
-    
+﻿@model Application.ViewModel.UserSide.CatalogViewModel
 
-    Layout = "_Layout";
-
-}
 
 <div class="nk-main">
 
@@ -82,10 +75,10 @@
                     <div class="col-md-4">
                         <select class="form-control">
                             <option value="" disabled selected>Select Genre</option>
-                            @if (genreList != null)
+                            @if (Model.Genres != null)
                             {
 
-                                @foreach (var item in genreList)
+                                @foreach (var item in Model.Genres)
                                 {
 
                                     <option value="@item.Id">@item.GenreName</option>
@@ -100,17 +93,15 @@
                     <div class="col-md-4">
                         <select class="form-control">
                             <option value="" disabled selected>Select Platform</option>
-                            @if (platformlist != null)
-                            {
-                                @foreach (var item in platformlist)
-                                {
-                                    <option value="@item.Id">@item.Name</option>
 
-                                }
+                            @foreach (var item in Model.platforms)
+                            {
+                                <option value="@item.Id">@item.PlatformUniqueName</option>
+
                             }
                             else
                             {
-                                <option value="">NULL</option>
+                            <option value="">NULL</option>
                             }
 
 
@@ -125,9 +116,10 @@
                                     -
                                     <strong class="text-main-1">€ <span class="nk-input-slider-value-1"></span></strong>
                                 </div>
+
                                 @{
-                                    var maxprice = Model.Max(x => x.Price);
-                                    var minprice = Model.Min(x => x.Price);
+                                    var maxprice = Model.games.Max(x => x.Price);
+                                    var minprice = Model.games.Min(x => x.Price);
                                 }
 
 
@@ -141,7 +133,6 @@
                                            data-slider-value="[@minprice, @maxprice]"
                                            data-slider-tooltip="hide">
                                 </div>
-
                             </div>
                             <div>
                                 <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-white">Apply</a>
@@ -165,21 +156,27 @@
         <!-- START: Products -->
         <div class="row vertical-gap">
 
-            @foreach (var game in Model)
+            @foreach (var game in Model.games)
             {
+
 
                 @if (game != null)
                 {
                     <div class="col-lg-6">
                         <div class="nk-product-cat-2">
-                            @if (game.Screenshots.Any())
+
+                            @if (game != null)
                             {
-                                var firstscreenshot = game.Screenshots.First();
+                                var firstscreenshot = game.Screenshots.First().AvararUrl;
 
                                 <a class="nk-product-image" href="store-product.html">
                                     <img src="~/assets/images/GameImages/@firstscreenshot" alt="@game.Name" style="background: url('~/assets/images/@firstscreenshot') no-repeat center fixed; background-size:cover width: 205px; height: 160px;">
                                 </a>
                             }
+
+
+
+
                             <div class="nk-product-cont">
                                 <h3 class="nk-product-title h5"><a href="store-product.html">@game.Name</a></h3>
                                 <div class="nk-gap-1"></div>
@@ -253,7 +250,7 @@
         <div class="row vertical-gap">
 
             @{
-                var top6 = Model.OrderByDescending(x => x.Rating).Take(6);
+                var top6 = Model.games.OrderByDescending(x => x.Rating).Take(6);
             }
             @foreach (var game in top6)
             {
@@ -261,7 +258,7 @@
                 {
                     <div class="col-lg-4 col-md-6">
                         <div class="nk-product-cat">
-                            @if (game.Screenshots.Any())
+                            @if (game.Screenshots != null)
                             {
                                 var firstscreenshot = game.Screenshots.First();
 
@@ -269,6 +266,7 @@
                                     <img src="~/assets/images/GameImages/@firstscreenshot" alt="@game.Name" style="background: url('~/assets/images/@firstscreenshot') no-repeat center fixed; background-size:cover width: 205px; height: 160px;">
                                 </a>
                             }
+
                             <div class="nk-product-cont">
                                 <h3 class="nk-product-title h5"><a href="store-product.html">@game.Name</a></h3>
                                 <div class="nk-gap-1"></div>
@@ -305,16 +303,11 @@
 
             }
 
-
-
         </div>
         <!-- END: Most Popular -->
     </div>
 
     <div class="nk-gap-2"></div>
-
-
-
 
 </div>
 

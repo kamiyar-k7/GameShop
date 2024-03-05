@@ -90,8 +90,8 @@ public class CartService : ICartService
                 {
                     CartId = cartid,
                     GameId = model.Id,
-                    Price = 33,
-                    Quantity = 2,
+                    Price = game.Price,
+                    Quantity = model.Quantity,
                     Platform = "kk",
 
 
@@ -100,9 +100,6 @@ public class CartService : ICartService
                 };
                 await _cartRepository.AddToCart(cartdetails);
             }
-            
-
-      
 
         }
     }

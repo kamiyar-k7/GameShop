@@ -1,11 +1,6 @@
 ﻿@model List< Application.DTOs.UserSide.Account.CartDto>;
 
 
-
-
-
-
-
 <div class="nk-main">
 
     <!-- START: Breadcrumbs -->
@@ -70,14 +65,16 @@
                                     <div class="nk-gap-1"></div>
 
                                     <div class="nk-form">
-                                        <input type="number" class="form-control" value="@game.Quantity" min="1" max="3" readonly style="background-color: transparent">
+                                        <input type="number" class="form-control" value="@game.Quantity" min="1" max="100" readonly style="background-color: transparent">
                                     </div>
                                 </td>
                                 <td class="nk-product-cart-total">
-                                    <h5 class="h6">Total:</h5>
+                                    <h5 class="h6">Total: </h5>
                                     <div class="nk-gap-1"></div>
-
-                                    <strong>€ @game.Price</strong>
+                                    @{
+                                        var total = game.Price * game.Quantity;
+                                    }
+                                    <strong>€ @total</strong>
                                 </td>
                                 <td class="nk-product-cart-remove"> <a asp-controller="Account" asp-action="DeleteCart" asp-route-Id="@game.Id"> <span class="ion-android-close"></span> </a> </td>
                             </tr>
@@ -95,67 +92,51 @@
             <div class="clearfix"></div>
             <div class="nk-gap-2"></div>
             <div class="row vertical-gap">
-                <div class="col-md-6">
-
-                    <!-- START: Calculate Shipping -->
-                    <h3 class="nk-title h4">Calculate Shipping</h3>
-                 
-
-                        <div class="nk-gap-1"></div>
-                        <div class="row vertical-gap">
-                            <div class="col-sm-6">
-                                <label for="state">State / Country <span class="text-main-1">*</span>:</label>
-                                <input type="text" class="form-control required" name="state" id="state">
-                            </div>
-                            <div class="col-sm-6">
-                                <label for="zip">Postcode / ZIP <span class="text-main-1">*</span>:</label>
-                                <input type="tel" class="form-control required" name="zip" id="zip">
-                            </div>
-                        </div>
-
-                        <div class="nk-gap-1"></div>
-                        <a class="nk-btn nk-btn-rounded nk-btn-color-white float-right" href="#">Update Totals</a>
-             
-                    <!-- END: Calculate Shipping -->
-
-                </div>
+               
                 <div class="col-md-6">
                     <!-- START: Cart Totals -->
                     <h3 class="nk-title h4">Cart Totals</h3>
                     <table class="nk-table nk-table-sm">
                         <tbody>
-                            <tr class="nk-store-cart-totals-subtotal">
-                                <td>
-                                    Subtotal
-                                </td>
-                                <td>
-                                    € 52.00
-                                </td>
-                            </tr>
-                            <tr class="nk-store-cart-totals-shipping">
-                                <td>
-                                    Shipping
-                                </td>
-                                <td>
-                                    Free Shipping
-                                </td>
-                            </tr>
+                          
                             <tr class="nk-store-cart-totals-total">
                                 <td>
                                     Total
                                 </td>
-                                <td>
-                                    € 52.00
-                                </td>
+                                @{
+                                    decimal total1 = 0;
+                                    @foreach (var item in Model)
+                                    {
+
+                                        total1 += item.Price * item.Quantity;
+                                    }
+                                    <td>
+
+
+                                        € @total1
+                                    </td>
+                                }
+                            
+                             
+                                   
+                                
+                              
                             </tr>
                         </tbody>
+
                     </table>
                     <!-- END: Cart Totals -->
                 </div>
             </div>
 
             <div class="nk-gap-2"></div>
-            <a class="nk-btn nk-btn-rounded nk-btn-color-main-1 float-right" href="store-checkout.html">Proceed to Checkout</a>
+            
+                        
+
+                <a class="nk-btn nk-btn-rounded nk-btn-color-main-1 float-right" asp-controller="Account" asp-action="CheckOut" >Proceed to Checkout</a>
+            
+              
+           
             <div class="clearfix"></div>
         </div>
     </div>

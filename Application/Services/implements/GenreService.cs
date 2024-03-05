@@ -41,7 +41,7 @@ public class GenreService : IGenreService
          Price  = game.Price,
          Rating = game.Rating , 
          ReleaseDate = game.ReleaseDate ,
-        Screenshots = new List<string>(),
+         Screenshots = new List<string>(),
          Trailer = game.Trailer
          
          

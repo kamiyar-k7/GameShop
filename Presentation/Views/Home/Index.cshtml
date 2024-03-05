@@ -1,4 +1,4 @@
-﻿@model List<Application.DTOs.UserSide.Home.HomeDto>
+﻿@model List<Application.DTOs.UserSide.StorePart.StoreDto>
 
 @{
     Layout = "_Layout";
@@ -90,7 +90,7 @@
                                 {
                                     var firstscreenshot = Game.Screenshots.First();
                                     <a class="nk-product-image" href="store-product.html">
-                                        <img src="assets/images/@firstscreenshot" alt="none" style="background: url('assets/images/@firstscreenshot') no-repeat center fixed; background-size:cover width: 205px; height: 160px;">
+                                        <img src="assets/images/@firstscreenshot" alt="none" style="width:100%; height:205px" >
                                     </a>
                                 }
 
@@ -130,7 +130,8 @@
                                     <div class="nk-gap-1"></div>
                                     <div class="nk-product-price">€ @Game.Price</div>
                                     <div class="nk-gap-1"></div>
-                                    <a class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1" asp-controller="Store" asp-action="Product" asp-route-Id="@Game.Id">Show Game</a>
+                                     <a class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1" asp-controller="Store" asp-action="Product" asp-route-Id="@Game.Id">Show Game</a> 
+                                  
                                 </div>
                             </div>
                         </div>

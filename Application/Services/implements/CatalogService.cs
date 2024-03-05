@@ -1,63 +1,69 @@
 ﻿using Application.DTOs.UserSide.StorePart;
 using Application.Services.Interfaces;
+using Application.ViewModel.UserSide;
+using Domain.entities.GamePart.Game;
 using Domain.IRepository.CatalogRepositoryInterface;
 using Domain.IRepository.GameRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Domain.IRepository.GenreRepostoryInterface;
+using Domain.IRepository.PlatformRepositoryInterface;
 
-namespace Application.Services.implements
+
+namespace Application.Services.implements;
+
+public class CatalogService : ICatalogService
 {
-    public class CatalogService : ICatalogService
+    #region Ctor
+
+    private readonly IGameRepository _gameRepository;
+    private readonly IPlatformRepository _platformRepository;
+    private readonly IGenreRepository _genreRepository;
+    public CatalogService(IGameRepository gameRepository, IPlatformRepository platform , IGenreRepository genreRepository)
     {
-        #region Ctor
- 
-        private readonly IGameRepository _gameRepository;
-        public CatalogService( IGameRepository gameRepository)
-        {
-  
-            _gameRepository = gameRepository;
-        }
-        #endregion
 
-        #region Genreal
-        public async Task<List<CatalogDto>> ShowGames()
-        {
-            var listofgames = await _gameRepository.GamesAsync();
-            if (listofgames != null)
-            {
-                List<CatalogDto> model = new List<CatalogDto>();
-
-                foreach (var game in listofgames)
-                {
-                    CatalogDto childmodel = new CatalogDto()
-                    {
-                        Id = game.Id,
-                        Name = game.Name,
-                        Description = game.Description,
-                        Price = game.Price,
-                        Rating = game.Rating,
-                        ReleaseDate = game.ReleaseDate,
-                        Screenshots = new List<string>(),
-                      
-
-                    };
-
-                    foreach (var screenshots in game.Screenshots)
-                    {
-                        childmodel.Screenshots.Add(screenshots.AvararUrl);
-                    }
-                  
-                    model.Add(childmodel);
-
-
-                }
-                return model;
-            }
-            return null;
-        }
-        #endregion
+        _gameRepository = gameRepository;
+        _platformRepository = platform;
+        _genreRepository = genreRepository;
     }
+    #endregion
+
+
+
+    #region Genreal
+    public async Task<CatalogViewModel> GetCatalogAsync()
+    {
+        var listOfGames = await _gameRepository.GamesAsync();
+        var listOfPlatforms = await _platformRepository.GetPlatforms();
+        var genrelist = await _genreRepository.GetGenre();
+        if (listOfGames != null && listOfPlatforms != null)
+        {
+            var model = new CatalogViewModel
+            {
+                games = new List<Game>(),
+                platforms = listOfPlatforms.ToList(),
+                Genres = genrelist.ToList(),
+                
+            };
+
+            foreach (var game in listOfGames)
+            {
+                var gameModel = new Game
+                {
+                    Id = game.Id,
+                    Name = game.Name,
+                    Description = game.Description,
+                    Price = game.Price,
+                    Rating = game.Rating,
+                    ReleaseDate = game.ReleaseDate,
+                    Screenshots = game.Screenshots.ToList()
+                };
+                model.games.Add(gameModel);
+            }
+
+            return model;
+        }
+        return null;
+    }
+
+    #endregion
+
 }

@@ -114,11 +114,6 @@
                 </div>
                 <div class="nk-contacts-right">
                     <ul class="nk-contacts-icons">
-
-
-
-                  
-
                     </ul>
                 </div>
             </div>
@@ -142,9 +137,11 @@
 
                     <ul class="nk-nav nk-nav-right d-none d-lg-table-cell" data-nav-mobile="#nk-nav-mobile">
 
-                        
+                        <li >
+                            <a asp-controller="Home" asp-action="Index">Home </a>
+                        </li>
                         <li class=" nk-drop-item">
-                            <a >
+                            <a>
                                 Store
 
                             </a>
@@ -156,14 +153,14 @@
 
                                     </a>
                                 </li>
-                            
+
                                 <li>
                                     <a asp-controller="Store" asp-action="Catalog">
                                         Catalog
 
                                     </a>
                                 </li>
-                             
+
                             </ul>
                         </li>
 
@@ -178,7 +175,7 @@
 
                                     <li>
                                         <a asp-controller="Account" asp-action="MyAccount">
-                                            My Account  
+                                            My Account
 
                                         </a>
                                     </li>
@@ -189,9 +186,9 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a asp-controller="Account" asp-action="LogOut" type="button"  onclick="return confirm('are you sure you want log out ?')">
-                                           log Out
-                                          
+                                        <a asp-controller="Account" asp-action="LogOut" type="button" onclick="return confirm('are you sure you want log out ?')">
+                                            log Out
+
 
 
                                         </a>
@@ -225,8 +222,6 @@
                                 </ul>
                             </li>
                         }
-
-                    
 
                         <li>
                             <a>
@@ -286,11 +281,7 @@
         </div>
     </div>
     <!-- END: Navbar Mobile -->
-
-
-
-
-        @RenderBody()
+    @RenderBody()
 
 
 
@@ -351,8 +342,6 @@
         </div>
     </footer>
     <!-- END: Footer -->
-
-
     <!-- START: Page Background -->
 
     <img class="nk-page-background-top" src="~/assets/images/bg-top.png" alt="">
@@ -380,7 +369,6 @@
     </div>
     <!-- END: Search Modal -->
     <!-- START: Login Modal -->
-    
     <!-- END: Login Modal -->
     <!-- START: Scripts -->
     <!-- Object Fit Polyfill -->

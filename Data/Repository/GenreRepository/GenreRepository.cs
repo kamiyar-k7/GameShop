@@ -29,9 +29,7 @@ public class GenreRepository : IGenreRepository
     }
     public async Task<List<Game>> GetGamesByGenres(List<Genre> genres)
     {
-        var games = await _gameShopDbContext.Games
-       .Where(game => game.gemeSelectedGenres
-           .Any(selectedGenre => genres.Select(g => g.Id).Contains(selectedGenre.GenreId)))
+        var games = await _gameShopDbContext.Games.Where(game => game.gemeSelectedGenres.Any(selectedGenre => genres.Select(g => g.Id).Contains(selectedGenre.GenreId)))
        .ToListAsync();
         return games;
     }

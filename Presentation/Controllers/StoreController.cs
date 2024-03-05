@@ -1,7 +1,5 @@
-﻿using Application.DTOs.UserSide.StorePart;
-using Application.Services.Interfaces;
+﻿using Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace Presentation.Controllers;
 
@@ -45,44 +43,38 @@ public class StoreController : Controller
     }
     #endregion
 
+
     #region Catalog
     [HttpGet]
     public async Task<IActionResult> Catalog()
     {
         if (ModelState.IsValid)
         {
-            ViewData["Genre"] = await _genreService.ShowGenre();
-            ViewData["Platform"] = await _platformService.ShowPlatform();
-            var games = await _catalogService.ShowGames();
-            return View(games);
+
+            var model = await _catalogService.GetCatalogAsync();
+
+            return View(model);
         }
         return NotFound();
     }
     #endregion
 
+
     #region Product
     [HttpGet]
-    public async Task<IActionResult> Product(int Id)
+    public async Task<IActionResult> Product(int Id )
     {
-        if (ModelState.IsValid)
-        {
-     
-            var game = await _productService.GetProductById(Id);
-            var ALL = await _storeService.ShowGames();           
+        
+           var Product = await _productService.GetProductById(Id);
 
-            if (game != null)
+            if (Product != null)
             {
-                ViewData["Platforms"] = await _platformService.GetPlatformsById(Id);
-                ViewData["Genre"] = await _genreService.GetGenresById(Id);
-
-                return View(game);
+             
+                return View(Product);
             }
-            else
-            {
-                return NotFound();
-            }
-        }
-        return NotFound();
+         
+        
+            return NotFound();
 
     }
     #endregion

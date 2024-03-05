@@ -11,4 +11,5 @@ public class CartDto
     public decimal Price { get; set; }
     public string Screenshot { get; set; }
     public string Platform { get; set; }
+  
 }

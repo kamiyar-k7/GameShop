@@ -8,11 +8,13 @@ namespace Presentation.Controllers;
 public class HomeController : Controller
 {
     #region Ctor
-    private readonly IHomeService _homeService;
 
-    public HomeController( IHomeService homeService)
+	private readonly IStoreService _storeService;
+
+    public HomeController(  IStoreService storeService)
     {
-            _homeService = homeService;
+           
+		_storeService = storeService;
     }
 	#endregion
 
@@ -21,7 +23,7 @@ public class HomeController : Controller
 	{
 		if (ModelState.IsValid)
 		{
-			var games = await	_homeService.ShowGames();
+			var games = await	_storeService.ShowGames();
 			return View(games);
 		}
 

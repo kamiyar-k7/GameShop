@@ -16,10 +16,12 @@ namespace Presentation.Controllers
         #region Ctor
         private readonly IAccountService _accountService;
         private readonly ICartService _cartService;
-        public AccountController( IAccountService accountService , ICartService cartService)
+        private readonly ICheckOutService _checkOutService;
+        public AccountController( IAccountService accountService , ICartService cartService , ICheckOutService checkOutService)
         {
            _accountService = accountService;
             _cartService = cartService;
+            _checkOutService = checkOutService;
         }
 
         #endregion
@@ -41,7 +43,7 @@ namespace Presentation.Controllers
                 var user = await _accountService.AddToDataBase(model, cancellation);
                 if (user)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("SignIn", "Home");
                 }
                 else
                 {
@@ -65,8 +67,6 @@ namespace Presentation.Controllers
 
             return View();
         }
-
-
 
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> SignIn(SignInDto model)
@@ -167,6 +167,7 @@ namespace Presentation.Controllers
                 var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 if (int.TryParse(userid, out int id))
                 {
+                
                      await _cartService.AddToCart(model,id );
                 }
                 return RedirectToAction("Product" , "Store"  , new {id = model.Id});
@@ -192,6 +193,28 @@ namespace Presentation.Controllers
         }
         #endregion
 
-     
+        #region CheckOut
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> CheckOut()
+        {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (int.TryParse(userid, out int id))
+            {
+                var model =  await _checkOutService.ShowcCheckOut(id);
+                return View(model);
+            }
+            return NotFound();
+          
+        }
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> CheckOut(CheckOutDto model)
+        {
+
+            return View();
+        }
+        #endregion
+
     }
 }

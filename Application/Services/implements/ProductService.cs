@@ -1,60 +1,70 @@
 ﻿using Application.DTOs.UserSide.StorePart;
 using Application.Services.Interfaces;
+using Application.ViewModel.UserSide;
+using Domain.entities.GamePart.Game;
+using Domain.IRepository.GameRepository;
+using Domain.IRepository.GenreRepostoryInterface;
+using Domain.IRepository.PlatformRepositoryInterface;
 using Domain.IRepository.ProductRepositoryInterface;
 
 
-namespace Application.Services.implements
+namespace Application.Services.implements;
+
+public class ProductService : IProductService
 {
-    public class ProductService : IProductService
+    #region Ctor
+    private readonly IGameRepository _gamerepository;
+    private readonly IPlatformRepository _platformRepository;
+    private readonly IGenreRepository _genreRepository;
+
+    public ProductService(IGameRepository gameRepository, IPlatformRepository platformRepository, IGenreRepository genreRepository)
     {
-        #region Ctor
-        private readonly IProductRepository _productRepository;
-
-        public ProductService(IProductRepository productRepository)
-        {
-            _productRepository = productRepository;
-        }
-        #endregion
-
-        #region General 
-
-
-
-        public async Task<ProductDto> GetProductById(int Id)
-        {
-
-            var Game = await _productRepository.GetGameById(Id);
-            if (Game != null)
-            {
-                ProductDto productDto = new ProductDto()
-                {
-                    Id = Game.Id,
-                    Name = Game.Name,
-                    Description = Game.Description,
-                    Company = Game.Company,
-                    Rating = Game.Rating,
-                    ReleaseDate = Game.ReleaseDate,
-                    Price = Game.Price,
-                    SystemRequirements = Game.SystemRequirements,
-                    Screenshots = new List<string>(),
-                    Trailer = Game.Trailer
-
-
-                };
-                foreach (var scrennshot in Game.Screenshots)
-                {
-                    productDto.Screenshots.Add(scrennshot.AvararUrl);
-                }
-
-
-                return productDto;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        #endregion
+        _gamerepository = gameRepository;
+        _platformRepository = platformRepository;
+        _genreRepository = genreRepository;
     }
+    #endregion
+
+    #region General 
+
+
+
+    public async Task<ProductViewModel> GetProductById(int Id)
+    {
+
+        var Game = await _gamerepository.GetGameById(Id);
+        var platforms = await _platformRepository.GetPlatformsById(Id);
+        var Genres = await _genreRepository.GetGenresById(Id);
+        var related = await _gamerepository.GetRelatedGamesBtGenre(Game);
+
+        if (Game != null)
+        {
+
+            ProductViewModel model = new ProductViewModel()
+            {
+                Games = Game,
+                Platforms = platforms,
+                Genres = Genres,
+                RelatedGames = new List<Game>()
+
+            };
+            foreach (var item in Game.Screenshots)
+            {
+                model.Games.Screenshots.Add(item);
+
+            }
+            if(related != null)
+            {
+               
+              
+                model.RelatedGames.AddRange(related);
+            }
+       
+            return model;
+
+        }
+        return null;
+    }
+
+    #endregion
 }

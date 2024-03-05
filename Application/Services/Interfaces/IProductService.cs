@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.UserSide.StorePart;
+using Application.ViewModel.UserSide;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Application.Services.Interfaces
     {
         #region General
        
-        Task<ProductDto> GetProductById(int Id);
+        Task<ProductViewModel> GetProductById(int Id);
         #endregion
     }
 }
