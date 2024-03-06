@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Application.DTOs.UserSide.StorePart;
+using Application.ViewModel.UserSide;
 
 
 namespace Presentation.Controllers
@@ -161,7 +162,7 @@ namespace Presentation.Controllers
         #region Add Cart
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> AddToCart(ProductDto model)
+        public async Task<IActionResult> AddToCart(ProductViewModel model)
         {
             
                 var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -170,7 +171,7 @@ namespace Presentation.Controllers
                 
                      await _cartService.AddToCart(model,id );
                 }
-                return RedirectToAction("Product" , "Store"  , new {id = model.Id});
+                return RedirectToAction("Product" , "Store"  , new {id = model.Games.Id});
                  
           
 

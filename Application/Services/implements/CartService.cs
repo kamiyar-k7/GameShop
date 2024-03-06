@@ -1,10 +1,12 @@
 ﻿using Application.DTOs.UserSide.Account;
 using Application.DTOs.UserSide.StorePart;
 using Application.Services.Interfaces;
+using Application.ViewModel.UserSide;
 using Domain.entities.Cart;
 using Domain.IRepository.AccountRepositorieInterfaces;
 using Domain.IRepository.CartRepositoryInterface;
 using Domain.IRepository.GameRepository;
+using Domain.IRepository.PlatformRepositoryInterface;
 
 
 namespace Application.Services.implements;
@@ -15,11 +17,16 @@ public class CartService : ICartService
     private readonly ICartRepository _cartRepository;
     private readonly IAccountRepository _accountRepository;
     private readonly IGameRepository _gameRepository;
-    public CartService(ICartRepository cartRepository, IAccountRepository accountRepository, IGameRepository gameRepository)
+    private readonly IPlatformRepository _platformRepository;
+    public CartService(ICartRepository cartRepository, 
+        IAccountRepository accountRepository,
+        IGameRepository gameRepository, 
+        IPlatformRepository platformRepository)
     {
         _cartRepository = cartRepository;
         _accountRepository = accountRepository;
         _gameRepository = gameRepository;
+        _platformRepository = platformRepository;
     }
     #endregion
 
@@ -38,7 +45,7 @@ public class CartService : ICartService
                     Id = item.CartDetailsId,
                     GameId = item.GameId,
                     GameName = item.Game.Name,
-                    Platform = item.Platform,
+                   Platform = item.Platform,
                     Quantity = item.Quantity,
                     Price = item.Game.Price,
                     Screenshot = item.Game.Screenshots.First().AvararUrl,
@@ -52,7 +59,7 @@ public class CartService : ICartService
     }
 
 
-    public async Task AddToCart(ProductDto model, int userid)
+    public async Task AddToCart(ProductViewModel model, int userid)
     {
         if (model != null)
         {
@@ -77,8 +84,10 @@ public class CartService : ICartService
             }
 
             var cartid = user.cart.First().CartId;
-            var game = await _gameRepository.GetGameById(model.Id);
-              var exist =  _cartRepository.IsGameExistInCart(cartid, game.Id , model.Platform );
+            var game = await _gameRepository.GetGameById(model.Games.Id);
+            var platform = await _platformRepository.GetSelectedPlatform(model.Platformid);
+            var exist =  _cartRepository.IsGameExistInCart(cartid, game.Id , platform.Name);
+            
             if (exist != null)
             {
                 exist.Quantity += model.Quantity;
@@ -89,10 +98,10 @@ public class CartService : ICartService
                 CartDeatails cartdetails = new CartDeatails()
                 {
                     CartId = cartid,
-                    GameId = model.Id,
+                    GameId = model.Games.Id,
                     Price = game.Price,
                     Quantity = model.Quantity,
-                    Platform = "kk",
+                    Platform = platform.PlatformUniqueName
 
 
 

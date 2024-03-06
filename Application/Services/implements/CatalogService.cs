@@ -38,31 +38,47 @@ public class CatalogService : ICatalogService
         {
             var model = new CatalogViewModel
             {
-                games = new List<Game>(),
+                games =  new List<Game>(),
                 platforms = listOfPlatforms.ToList(),
                 Genres = genrelist.ToList(),
                 
             };
 
-            foreach (var game in listOfGames)
-            {
-                var gameModel = new Game
-                {
-                    Id = game.Id,
-                    Name = game.Name,
-                    Description = game.Description,
-                    Price = game.Price,
-                    Rating = game.Rating,
-                    ReleaseDate = game.ReleaseDate,
-                    Screenshots = game.Screenshots.ToList()
-                };
-                model.games.Add(gameModel);
-            }
+            //foreach (var game in listOfGames)
+            //{
+            //    var gameModel = new Game
+            //    {
+            //        Id = game.Id,
+            //        Name = game.Name,
+            //        Description = game.Description,
+            //        Price = game.Price,
+            //        Rating = game.Rating,
+            //        ReleaseDate = game.ReleaseDate,
+            //        Screenshots = game.Screenshots.ToList()
+            //    };
+            //    model.games.Add(gameModel);
+            //}
 
             return model;
         }
         return null;
     }
+
+    #region Search
+    public async Task<CatalogViewModel> CatalogSearch(CatalogViewModel model)
+    {
+        var games = await _gameRepository.FilterGames(model.Search , model.PlatfromId , model.GenreId ,model.MaxPrice , model.MinPrice);
+        if(games.Count > 0)
+        {
+            CatalogViewModel searchmodel = new CatalogViewModel()
+            {
+                games = games,
+            };
+            return searchmodel;
+        }
+        return null;
+    }
+    #endregion
 
     #endregion
 

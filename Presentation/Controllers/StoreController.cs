@@ -1,4 +1,5 @@
 ﻿using Application.Services.Interfaces;
+using Application.ViewModel.UserSide;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers;
@@ -10,19 +11,15 @@ public class StoreController : Controller
     private readonly IStoreService _storeService;
     private readonly IProductService _productService;
     private readonly ICatalogService _catalogService;
-    private readonly IPlatformService _platformService;
-    private readonly IGenreService _genreService;
+
     public StoreController(IStoreService storeService,
         IProductService productService,
-        ICatalogService catalogService,
-        IPlatformService platformService,
-        IGenreService genreService)
+        ICatalogService catalogService)
     {
         _storeService = storeService;
         _productService = productService;
         _catalogService = catalogService;
-        _platformService = platformService;
-        _genreService = genreService;
+       
     }
     #endregion
 
@@ -57,6 +54,14 @@ public class StoreController : Controller
         }
         return NotFound();
     }
+    #endregion
+
+    #region Search (catalog)
+    //[HttpGet]
+    //public async Task<IActionResult> Catalog(CatalogViewModel model)
+    //{
+    //    return View();
+    //}
     #endregion
 
 

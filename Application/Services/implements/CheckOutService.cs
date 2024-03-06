@@ -37,7 +37,7 @@ public class CheckOutService : ICheckOutService
                         CartId = item.CartId,
                         GameId = item.GameId,
                         GameName = item.Game.Name,
-                        Platform = item.Platform,
+                     //   Platform = item.Platform,
                         Price = item.Price,
                         Quantity = item.Quantity,
                         
