@@ -12,6 +12,7 @@ namespace Application.Services.Interfaces
     {
         #region General
         Task<CatalogViewModel> GetCatalogAsync();
+        Task<CatalogViewModel> SearchCatalog(CatalogViewModel searchViewModel);
         #endregion
     }
 }

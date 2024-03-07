@@ -19,7 +19,7 @@ public class StoreController : Controller
         _storeService = storeService;
         _productService = productService;
         _catalogService = catalogService;
-       
+
     }
     #endregion
 
@@ -54,32 +54,44 @@ public class StoreController : Controller
         }
         return NotFound();
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Catalog(CatalogViewModel viewModel)
+    {
+
+
+        var model = await _catalogService.SearchCatalog(viewModel);
+        if (model != null)
+        {
+            return View(model);
+
+        }
+        TempData["NotFound"] = "there is no game with yhis details...";
+        return View();
+
+    }
     #endregion
 
     #region Search (catalog)
-    //[HttpGet]
-    //public async Task<IActionResult> Catalog(CatalogViewModel model)
-    //{
-    //    return View();
-    //}
+
     #endregion
 
 
     #region Product
     [HttpGet]
-    public async Task<IActionResult> Product(int Id )
+    public async Task<IActionResult> Product(int Id)
     {
-        
-           var Product = await _productService.GetProductById(Id);
 
-            if (Product != null)
-            {
-             
-                return View(Product);
-            }
-         
-        
-            return NotFound();
+        var Product = await _productService.GetProductById(Id);
+
+        if (Product != null)
+        {
+
+            return View(Product);
+        }
+
+
+        return NotFound();
 
     }
     #endregion

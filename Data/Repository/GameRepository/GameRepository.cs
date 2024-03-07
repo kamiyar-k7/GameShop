@@ -19,7 +19,7 @@ public class GameRepository : IGameRepository
     #region General
     public async Task<List<Game>> GamesAsync()
     {
-        return await  _dbContext.Games.Include(x=> x.Screenshots).Where(x=> x.IsDelete == false).ToListAsync();
+        return await  _dbContext.Games.Include(x=> x.Screenshots).Include(x=> x.gameSelectedPlatforms).Include(x=> x.gemeSelectedGenres).Where(x=> x.IsDelete == false).ToListAsync();
     }
   
     public async Task<Game?> GetGameById(int Id)
