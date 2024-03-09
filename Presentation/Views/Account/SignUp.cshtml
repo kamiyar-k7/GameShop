@@ -6,12 +6,7 @@
 }
 
 
-@if (TempData.ContainsKey("ErrorMessage"))
-{
-    <div class="alert alert-danger">
-        @TempData["ErrorMessage"]
-    </div>
-}
+
 
 
 
@@ -25,6 +20,7 @@
         <div class="mail-form-agile">
             <form asp-controller="Account" asp-action="SignUp" method="post">
                 <input type="text" asp-for="UserName" placeholder="Enter UserName" class="padding" />
+                <span asp-validation-for="UserName"></span>
                 <input type="email" asp-for="Email" placeholder="MyEmail@Email.com" required="" class="padding">
                 <input type="tel" asp-for="PhoneNumber" placeholder="PhoneNumber" required class="padding" pattern="[0-9]+" title="Please enter numbers only">
                 <input type="password" asp-for="Password" class="padding" placeholder="Password" required="">
@@ -32,17 +28,23 @@
                 <input type="password" asp-for="RepeatPassword" class="padding" placeholder="Repeat Password" required="">
                 <span asp-validation-for="RepeatPassword"></span>
 
-
+                @if (TempData.ContainsKey("ErrorMessage"))
+                {
+                    <div class="mail-form-agile" style="padding:5px; color:red;">
+                        @TempData["ErrorMessage"]
+                    </div>
+                }
                 <div>
                     <label class="padding" style="color:white"><a href="#">Forgot Password?</a></label>
                     <br />
                     <br />
-                    <label class="padding" style="color:white">Already Have An Account? <a href="#">Sign In</a></label>
+                    <label class="padding" style="color:white">Already Have An Account? <a asp-action="SignIn" asp-controller="Account">Sign In</a></label>
                 </div>
                 <br />
                 <input type="submit" value="Submit" class="padding">
             </form>
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+         
+            @Html.ValidationSummary(true, "", new { @class = "mail-form-agile" })
 
         </div>
 

@@ -11,4 +11,5 @@ public interface ICartService
     Task<List<CartDto>> ShowListOfCart(int userid);
     Task AddToCart(ProductViewModel model, int userid);
     Task<bool> DeleteCart(int id);
+     Task<CheckOutViewModel> CheckOut(int user);
 }

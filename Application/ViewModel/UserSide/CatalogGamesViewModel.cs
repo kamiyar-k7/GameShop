@@ -4,9 +4,9 @@ namespace Application.ViewModel.UserSide;
 
 public class CatalogViewModel
 {
-   public  List<CatalogGamesViewModel> Games { get; set; }
-    public List<CatalogPlatformsViewModel> Platforms { get; set; }
-    public List<CatalogGenreViewModel> Genre { get; set; }
+   public  List<CatalogGamesViewModel?> Games { get; set; }
+    public List<CatalogPlatformsViewModel?> Platforms { get; set; }
+    public List<CatalogGenreViewModel?> Genre { get; set; }
     public CatalogSearchViewModel? search { get; set; }  
 
 }
@@ -49,6 +49,6 @@ public class CatalogSearchViewModel
     public string? SearchString { get; set; }
     public int? PlatfromId { get; set; }
     public int? GenreId { get; set; }
-    public int? MaxPrice { get; set; }
-    public int? MinPrice { get; set; } 
+    public decimal? MinPrice { get; set; }
+    public decimal? MaxPrice { get; set; }
 }

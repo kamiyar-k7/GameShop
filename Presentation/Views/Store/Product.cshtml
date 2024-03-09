@@ -31,7 +31,7 @@
     </div>
     <div class="nk-gap-1"></div>
     <!-- END: Breadcrumbs -->
-
+    <div class="nk-gap-1"></div>
 
 
 
@@ -79,7 +79,8 @@
                                 </div>
                                 <!-- END: Product Photos -->
                             </div>
-                        <form asp-controller="Account" asp-action="AddToCart" method="post" class="nk-product-addtocart">
+                 
+                        <form asp-controller="Order" asp-action="AddToCart" method="post" class="nk-product-addtocart">
                             <div class="col-md-6">
 
                                 <h2 class="nk-product-title h3">  @Model.Games.Name </h2>

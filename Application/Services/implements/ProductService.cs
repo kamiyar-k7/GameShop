@@ -2,7 +2,7 @@
 using Application.Services.Interfaces;
 using Application.ViewModel.UserSide;
 using Domain.entities.GamePart.Game;
-using Domain.IRepository.GameRepository;
+using Domain.IRepository.GameRepositoryInteface;
 using Domain.IRepository.GenreRepostoryInterface;
 using Domain.IRepository.PlatformRepositoryInterface;
 using Domain.IRepository.ProductRepositoryInterface;

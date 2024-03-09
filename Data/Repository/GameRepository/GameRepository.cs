@@ -1,7 +1,7 @@
 ﻿
 using Data.ShopDbcontext;
 using Domain.entities.GamePart.Game;
-using Domain.IRepository.GameRepository;
+using Domain.IRepository.GameRepositoryInteface;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repository.GameRepository;

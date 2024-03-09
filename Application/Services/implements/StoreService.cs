@@ -1,6 +1,6 @@
 ﻿using Application.DTOs.UserSide.StorePart;
 using Application.Services.Interfaces;
-using Domain.IRepository.GameRepository;
+using Domain.IRepository.GameRepositoryInteface;
 
 
 namespace Application.Services.implements

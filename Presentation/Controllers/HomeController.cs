@@ -1,6 +1,7 @@
 using Application.Services.Interfaces;
+using Application.ViewModel.UserSide;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+
 
 namespace Presentation.Controllers;
 
@@ -10,10 +11,11 @@ public class HomeController : Controller
     #region Ctor
 
 	private readonly IStoreService _storeService;
+	private readonly IHomeService _homeService;
 
-    public HomeController(  IStoreService storeService)
+    public HomeController(  IStoreService storeService , IHomeService homeService)
     {
-           
+           _homeService = homeService;
 		_storeService = storeService;
     }
 	#endregion
@@ -30,11 +32,40 @@ public class HomeController : Controller
 			return View();
 
 	}
-	public IActionResult Test()
-	{
-		return View();
-	}
+
 	#endregion
 
 
+	#region AboutUs  / contact us
+	[HttpGet]
+    public async Task<IActionResult> AboutUs()
+    {
+		var about = await _homeService.ShowAbout();
+		if(about != null)
+		{
+			return View(about);
+		}
+        return View();
+    }
+	[HttpPost]
+	[ValidateAntiForgeryToken]
+	public async Task<IActionResult> AboutUs(AboutPageViewModel model)
+	{
+		if (ModelState.IsValid)
+		{
+			var result = await _homeService.AddMessage(model.ContactUsViewModel);
+			if(result)
+			{
+                TempData["Succsefull"] = "done ";
+                return	RedirectToAction(nameof(AboutUs));
+
+			}
+            TempData["Error"] = "not done ";
+           return RedirectToAction(nameof(AboutUs));
+        }
+        TempData["Error"] = "fill the fields  ";
+       return RedirectToAction(nameof(AboutUs));
+		TempData.Remove("Succsefull");
+    }
+    #endregion
 }

@@ -64,7 +64,7 @@ public class AccountService : IAccountService
         user.UserName = model.UserName;
         user.Email = model.Email;
         user.Password = PassHelper.EncodePasswordMd5(model.Password);
-        user.PhoneNumber = model.PhoneNumber;
+        user.PhoneNumber = model.PhoneNumber.Trim();
 
         return user;
     }

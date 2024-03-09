@@ -18,5 +18,6 @@ namespace Application.DTOs.UserSide.StorePart
         public DateOnly ReleaseDate { get; set; }
         public List<string> Screenshots { get; set; }
         #endregion
+        public string search {  get; set; }
     }
 }

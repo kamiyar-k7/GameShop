@@ -17,12 +17,12 @@ namespace Presentation.Controllers
         #region Ctor
         private readonly IAccountService _accountService;
         private readonly ICartService _cartService;
-        private readonly ICheckOutService _checkOutService;
-        public AccountController( IAccountService accountService , ICartService cartService , ICheckOutService checkOutService)
+
+        public AccountController( IAccountService accountService , ICartService cartService )
         {
            _accountService = accountService;
             _cartService = cartService;
-            _checkOutService = checkOutService;
+    
         }
 
         #endregion
@@ -33,7 +33,6 @@ namespace Presentation.Controllers
         [HttpGet]
         public async Task<IActionResult> SignUp()
         {
-
             return View();
         }
         [HttpPost, ValidateAntiForgeryToken]
@@ -44,7 +43,7 @@ namespace Presentation.Controllers
                 var user = await _accountService.AddToDataBase(model, cancellation);
                 if (user)
                 {
-                    return RedirectToAction("SignIn", "Home");
+                    return RedirectToAction("SignIn", "Account");
                 }
                 else
                 {
@@ -95,16 +94,15 @@ namespace Presentation.Controllers
                     HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProps);
                     return RedirectToAction("Index", "Home");
                 }
-                else
-                {
+               
                     TempData["ErrorMessage"] = "Email Or Password Are Incorecct!";
-                }
+                      return RedirectToAction(nameof(SignIn));
 
-                return View();
+
 
             }
             TempData["ErrorMessage"] = "Fill Fields Properly";
-            return View();
+            return RedirectToAction(nameof(SignIn));
         }
 
         #endregion
@@ -143,79 +141,7 @@ namespace Presentation.Controllers
 
 
 
-        #region My Cart
-        [Authorize]
-        public async Task<IActionResult> MyCart()
-        {
-            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (int.TryParse(userid, out int id))
-            {
-                var cart = await _cartService.ShowListOfCart(id);
-                return View(cart);
-             
-            }
-
-            return View();
-        }
-        #endregion
-
-        #region Add Cart
-        [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> AddToCart(ProductViewModel model)
-        {
-            
-                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                if (int.TryParse(userid, out int id))
-                {
-                
-                     await _cartService.AddToCart(model,id );
-                }
-                return RedirectToAction("Product" , "Store"  , new {id = model.Games.Id});
-                 
-          
-
-        }
-        #endregion
-
-        #region Delete Cart
-        [Authorize]
        
-        public async Task<IActionResult> DeleteCart(int Id)
-        {
-
-          var del =  await _cartService.DeleteCart(Id);
-            if (del)
-            {
-                return RedirectToAction(nameof(MyCart));
-            }
-            TempData["error"] = "error";
-            return RedirectToAction(nameof(MyCart)); ;
-        }
-        #endregion
-
-        #region CheckOut
-        [Authorize]
-        [HttpGet]
-        public async Task<IActionResult> CheckOut()
-        {
-            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (int.TryParse(userid, out int id))
-            {
-                var model =  await _checkOutService.ShowcCheckOut(id);
-                return View(model);
-            }
-            return NotFound();
-          
-        }
-        [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> CheckOut(CheckOutDto model)
-        {
-
-            return View();
-        }
-        #endregion
 
     }
 }

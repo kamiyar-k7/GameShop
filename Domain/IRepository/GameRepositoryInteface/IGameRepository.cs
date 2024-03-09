@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.IRepository.GameRepository
+namespace Domain.IRepository.GameRepositoryInteface
 {
     public interface IGameRepository
     {

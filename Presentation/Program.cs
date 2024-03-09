@@ -7,14 +7,16 @@ using Data.Repository.CartRepository;
 using Data.Repository.CatalogRepository;
 using Data.Repository.GameRepository;
 using Data.Repository.GenreRepository;
+using Data.Repository.HomeRepsitory;
 using Data.Repository.Platformrepository;
 using Data.Repository.ProductRepository;
 using Data.ShopDbcontext;
 using Domain.IRepository.AccountRepositorieInterfaces;
 using Domain.IRepository.CartRepositoryInterface;
 using Domain.IRepository.CatalogRepositoryInterface;
-using Domain.IRepository.GameRepository;
+using Domain.IRepository.GameRepositoryInteface;
 using Domain.IRepository.GenreRepostoryInterface;
+using Domain.IRepository.HomeRepositoryInterface;
 using Domain.IRepository.PlatformRepositoryInterface;
 using Domain.IRepository.ProductRepositoryInterface;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -29,6 +31,7 @@ builder.Services.AddControllersWithViews();
 #region ioc Container
 //Home
 builder.Services.AddScoped<IHomeService, HomeService>();
+builder.Services.AddScoped<IHomeRepository , HomeRepository>();
 
 
 // Game 
@@ -67,8 +70,7 @@ builder.Services.AddScoped<IAccountService , AccountService>();
 builder.Services.AddScoped<ICartRepository , CartRepository>();
 builder.Services.AddScoped<ICartService , CartService>();
 
-//checkout 
-builder.Services.AddScoped<ICheckOutService , CheckOutService>();
+
 #endregion
 
 

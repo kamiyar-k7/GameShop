@@ -9,6 +9,7 @@ namespace Application.DTOs.UserSide.Account
 {
     public class SignUpDto
     {
+        [MaxLength(30)]
         public string UserName { get; set; }
 
         public string Email { get; set; }

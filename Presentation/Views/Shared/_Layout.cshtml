@@ -53,7 +53,7 @@
     <!-- jQuery -->
     <script src="~/assets/vendor/jquery/dist/jquery.min.js"></script>
 
-
+    
 </head>
 
 
@@ -180,7 +180,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a asp-controller="Account" asp-action="MyCart">
+                                        <a asp-controller="Order" asp-action="MyCart">
                                             My Cart
 
                                         </a>
@@ -208,7 +208,7 @@
 
                                     <li>
                                         <a asp-controller="Account" asp-action="SignUp">
-                                            SignUp
+                                            Sign Up
 
                                         </a>
                                     </li>
@@ -224,15 +224,11 @@
                         }
 
                         <li>
-                            <a>
+                            <a asp-controller="Home" asp-action="AboutUs">
                                 About Us
                             </a>
                         </li>
-                        <li>
-                            <a>
-                                Contact Us
-                            </a>
-                        </li>
+                     
                     </ul>
                     <ul class="nk-nav nk-nav-right nk-nav-icons">
 

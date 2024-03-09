@@ -13,36 +13,74 @@
 
 
     <div class="container">
-
         <!-- START: Image Slider -->
-        <div class="nk-image-slider" data-autoplay="8000">
-            @{
-                var topten = Model.OrderByDescending(x => x.ReleaseDate).Take(5);
-            }
-            @foreach (var Game in topten)
-            {
-
-
-                if (Game.Screenshots.Any())
+        <div style="height:360px">
+            <div class="nk-image-slider" data-autoplay="8000">
+                @{
+                    var topten = Model.OrderByDescending(x => x.ReleaseDate).Take(5);
+                }
+                @foreach (var Game in topten)
                 {
 
-                    var firstScreenshot = Game.Screenshots.First();
-                    <div class="nk-image-slider-item" style="background: url('assets/images/@firstScreenshot') no-repeat center ; background-size:auto;">
-                        <img src="/assets/images/GameImages/@firstScreenshot" alt="" class="nk-image-slider-img" data-thumb="/assets/images/@firstScreenshot" style="background: url('assets/images/@firstScreenshot') no-repeat center ; background-size:auto;">
-                    
-                        <div class="nk-image-slider-content">
-                            <h3 class="h4">@Game.Name</h3>
-                            <p class="text-white">@Game.Description</p>
-                            <a asp-controller="Store" asp-action="Product" asp-route-Id="@Game.Id" class="nk-btn nk-btn-rounded nk-btn-color-white nk-btn-hover-color-main-1">Read More</a>
+
+                    if (Game.Screenshots.Any())
+                    {
+
+                        var firstScreenshot = Game.Screenshots.First();
+                        <div class="nk-image-slider-bg" style="background: url('/assets/images/GameImages/@firstScreenshot') no-repeat center; background-size: cover;">
+                            <img src="/assets/images/GameImages/@firstScreenshot" alt="" class="nk-image-slider-img" data-thumb="/assets/images/GameImages/@firstScreenshot" style="">
+
+                            <div class="nk-image-slider-content">
+                                <h3 class="h4">@Game.Name</h3>
+                                <p class="text-white">@Game.Description</p>
+                                <a asp-controller="Store" asp-action="Product" asp-route-Id="@Game.Id" class="nk-btn nk-btn-rounded nk-btn-color-white nk-btn-hover-color-main-1">Read More</a>
+                            </div>
                         </div>
-                    </div>
+                    }
                 }
-            }
 
 
+            </div>
         </div>
+        
+        
         <!-- END: Image Slider -->
         <!-- START: Categories -->
+        <div class="row vertical-gap">
+            <div class="col-lg-4">
+                <div class="nk-feature-1">
+                    <div class="nk-feature-icon">
+                        <img src="~/assets/images/icon-mouse.png" alt="">
+                    </div>
+                    <div class="nk-feature-cont">
+                        <h3 class="nk-feature-title"><a asp-controller="Store" asp-action="Catalog">Games</a></h3>
+                        <h3 class="nk-feature-title text-main-1"><a asp-controller="Store" asp-action="Catalog">View Games</a></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="nk-feature-1">
+                    <div class="nk-feature-icon">
+                        <img src="~/assets/images/icon-gamepad.png" alt="">
+                    </div>
+                    <div class="nk-feature-cont">
+                        <h3 class="nk-feature-title"><a asp-controller="Home" asp-action="ContactUs">Contact</a></h3>
+                        <h3 class="nk-feature-title text-main-1"><a asp-controller="Home" asp-action="ContactUs">Contact Us</a></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="nk-feature-1">
+                    <div class="nk-feature-icon">
+                        <img src="~/assets/images/icon-gamepad-2.png" alt="">
+                    </div>
+                    <div class="nk-feature-cont">
+                        <h3 class="nk-feature-title"><a asp-action="SignUp" asp-controller="Account">Sign Up</a></h3>
+                        <h3 class="nk-feature-title text-main-1"><a asp-action="SignUp" asp-controller="Account">Lets Go</a></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- END: Categories -->
         <!-- START: Latest News -->
         <!-- END: Latest News -->
@@ -62,9 +100,9 @@
 
                 <div class="nk-widget">
                     <div class="nk-widget-content">
-                        <form action="#" class="nk-form nk-form-style-1" novalidate="novalidate">
+                        <form method="post" asp-controller="Store" asp-action="Catalog" class="nk-form nk-form-style-1" novalidate="novalidate">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Type something...">
+                                <input type="text" class="form-control" placeholder="Type something..." name="search" >
                                 <button class="nk-btn nk-btn-color-main-1"><span class="ion-search"></span></button>
                             </div>
                         </form>
@@ -89,8 +127,8 @@
                                 @if (Game.Screenshots.Any())
                                 {
                                     var firstscreenshot = Game.Screenshots.First();
-                                    <a class="nk-product-image" href="store-product.html">
-                                        <img src="assets/images/@firstscreenshot" alt="none" style="width:100%; height:205px" >
+                                    <a class="nk-product-image" asp-controller="Store" asp-action="Product" asp-route-Id="@Game.Id">
+                                        <img src="assets/images/GameImages/@firstscreenshot" alt="@Game.Name" style="width:100%; height:205px" >
                                     </a>
                                 }
 
@@ -216,8 +254,8 @@
                                     @if (Game.Screenshots.Any())
                                     {
                                         var firstscreenshot = Game.Screenshots.First();
-                                        <a href="store-product.html" class="nk-post-image">
-                                            <img src="assets/images/@firstscreenshot" alt="none" style="background: url('assets/images/@firstscreenshot') no-repeat center fixed; background-size:cover width: 205px; height: 160px;">
+                                        <a asp-controller="Store" asp-action="Product" asp-route-Id="@Game.Id" class="nk-post-image">
+                                            <img src="assets/images/GameImages/@firstscreenshot" alt="none" style="width:100%; height:205px">
                                         </a>
                                     }
 
@@ -271,11 +309,10 @@
 
     <div class="nk-gap-4"></div>
 
-
-
-
-
-
 </div>
+
+
+                                      
+
 
 

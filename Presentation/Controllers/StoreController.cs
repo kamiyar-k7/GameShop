@@ -43,38 +43,51 @@ public class StoreController : Controller
 
     #region Catalog
     [HttpGet]
-    public async Task<IActionResult> Catalog()
+    public async Task<IActionResult> Catalog(string searchString, int? platformId, int? genreId)
     {
-        if (ModelState.IsValid)
+ 
+        var model = await _catalogService.SearchCatalog(new CatalogViewModel
         {
+             search = new CatalogSearchViewModel
+             {
+                SearchString = searchString,
+              PlatfromId = platformId,
+              GenreId = genreId
+             }
+        });
 
-            var model = await _catalogService.GetCatalogAsync();
-
+        if(model.Games.Count != 0)
+        {
             return View(model);
         }
-        return NotFound();
+
+        TempData["NullRefrence"] = "We Couldent Find Any Game By This Information in Our Stuck";
+        return View(model);
+
+   
     }
+
+
 
     [HttpPost]
-    public async Task<IActionResult> Catalog(CatalogViewModel viewModel)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Catalog(CatalogViewModel viewModel , string search)
     {
-
-
-        var model = await _catalogService.SearchCatalog(viewModel);
-        if (model != null)
+        // Capture the search parameters
+      
+        var searchString = viewModel.search?.SearchString;
+        var platformId = viewModel.search?.PlatfromId;
+        var genreId = viewModel.search?.GenreId;
+        if (search != null)
         {
-            return View(model);
-
+            searchString = search;
         }
-        TempData["NotFound"] = "there is no game with yhis details...";
-        return View();
 
+        
+        return RedirectToAction("Catalog", new { searchString, platformId, genreId });
     }
     #endregion
 
-    #region Search (catalog)
-
-    #endregion
 
 
     #region Product

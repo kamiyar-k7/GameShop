@@ -1,0 +1,109 @@
+﻿@model Application.ViewModel.UserSide.AboutPageViewModel;
+
+
+<div class="nk-gap"></div>
+<div class="container">
+    <div class="nk-gap"></div>
+    <div class="row vertical-gap">
+        <div class="col-lg-6">
+
+            <h3 class="nk-decorated-h"><span><span class="text-main-1">About</span> Us</span></h3>
+
+            <h1>@Model.AboutUsViewModel.Title</h1>
+            <p class="lead"><strong>@Model.AboutUsViewModel.Title</strong> @Model.AboutUsViewModel.Description</p>
+            <h3>@Model.AboutUsViewModel.Author</h3>
+            <h3>@Model.AboutUsViewModel.AuthorUrl</h3>
+        </div>
+
+        <div class="col-lg-6">
+            <h3 class="nk-decorated-h"><span><span class="text-main-1">Contact</span> Us</span></h3>
+
+            <div class="nk-gap"></div>
+           <form method="post" asp-action="AboutUs" asp-controller="Home">
+                <div class="cont"  >
+                    <div class="col-md-6">
+                        <input type="text" class="form-control required" asp-for="@Model.ContactUsViewModel.Name" placeholder="Name *">
+                    </div>
+                    <div class="nk-gap"></div>
+                    <div class="col-md-6">
+                        <input type="email" class="form-control required" asp-for="@Model.ContactUsViewModel.Email" placeholder="Email *">
+                    </div>
+                    <div class="nk-gap"></div>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control required" asp-for="@Model.ContactUsViewModel.Title" placeholder="Title *">
+                    </div>
+
+                    <div class="nk-gap"></div>
+                    <textarea class="form-control required" asp-for="@Model.ContactUsViewModel.Message" rows="5" placeholder="Message *"></textarea>
+                    <div class="nk-gap-1"></div>
+                   
+                </div>
+                <button class="nk-btn nk-btn-rounded nk-btn-color-dark-3">
+                    <span>Send</span>
+                    <span class="icon"><i class="ion-paper-airplane"></i></span>
+                </button>
+            
+            </form>
+          
+
+            @if (TempData["Successful"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["Successful"]
+                    @TempData.Values.ToString();
+                </div>
+            }
+            else if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["Error"]
+                </div>
+            }
+
+            <div class="nk-gap-2"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<style>
+     .cont{
+         display:flex;
+        flex-direction:column;
+        flex-wrap:wrap;
+        align-items: flex-start;
+        justify-content:center;
+        align-content:center;
+
+     }
+
+        .cont .col-md-6 {
+            padding-left: 0;
+            padding-right: 0;
+            max-width:100%;
+            width:100%;
+        }
+
+    /* Styles for success message */
+    .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+
+    /* Styles for error message */
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+
+
+</style>

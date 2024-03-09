@@ -4,6 +4,7 @@ using Domain.entities.GamePart.Genre;
 using Domain.entities.GamePart.Platform;
 using Domain.entities.UserPart.Roles;
 using Domain.entities.UserPart.User;
+using Domain.entities.WebSite;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -17,6 +18,11 @@ public class GameShopDbContext : DbContext
     }
 
     #region Dbsets
+
+    #region WebSite
+    public DbSet<ContactUs> ContactUs { get; set; }
+    public DbSet<AboutUs> AboutUs { get; set; }
+    #endregion
 
     #region User
     public DbSet<User> Users { get; set; }
