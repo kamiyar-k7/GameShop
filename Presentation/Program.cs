@@ -5,20 +5,20 @@ using Application.Services.Interfaces;
 using Data.Repository.AccountRepositories;
 using Data.Repository.CartRepository;
 using Data.Repository.CatalogRepository;
+using Data.Repository.CommentRepository;
 using Data.Repository.GameRepository;
 using Data.Repository.GenreRepository;
 using Data.Repository.HomeRepsitory;
 using Data.Repository.Platformrepository;
-using Data.Repository.ProductRepository;
 using Data.ShopDbcontext;
 using Domain.IRepository.AccountRepositorieInterfaces;
 using Domain.IRepository.CartRepositoryInterface;
 using Domain.IRepository.CatalogRepositoryInterface;
+using Domain.IRepository.CommentRepositoryInterface;
 using Domain.IRepository.GameRepositoryInteface;
 using Domain.IRepository.GenreRepostoryInterface;
 using Domain.IRepository.HomeRepositoryInterface;
 using Domain.IRepository.PlatformRepositoryInterface;
-using Domain.IRepository.ProductRepositoryInterface;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 #endregion
@@ -46,8 +46,8 @@ builder.Services.AddScoped<ICatalogRepository, CatalogRepository>();
 builder.Services.AddScoped<ICatalogService, CatalogService>();
 
 // Product 
-builder.Services.AddScoped<IProductRepository , ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICommentRepository , CommentRepository>();   
 
 // Genre 
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
@@ -72,6 +72,7 @@ builder.Services.AddScoped<ICartService , CartService>();
 
 
 #endregion
+
 
 
 

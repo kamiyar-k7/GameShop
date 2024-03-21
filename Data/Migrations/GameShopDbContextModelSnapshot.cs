@@ -76,6 +76,43 @@ namespace Data.Migrations
                     b.ToTable("Cart");
                 });
 
+            modelBuilder.Entity("Domain.entities.Comments.Comments", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Ratings")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("Domain.entities.GamePart.Game.Game", b =>
                 {
                     b.Property<int>("Id")
@@ -419,6 +456,25 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.entities.Comments.Comments", b =>
+                {
+                    b.HasOne("Domain.entities.GamePart.Game.Game", "Game")
+                        .WithMany("Comments")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.entities.UserPart.User.User", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Domain.entities.GamePart.Game.Game", b =>
                 {
                     b.HasOne("Domain.entities.UserPart.User.User", null)
@@ -503,6 +559,8 @@ namespace Data.Migrations
                 {
                     b.Navigation("CartDeatails");
 
+                    b.Navigation("Comments");
+
                     b.Navigation("Screenshots");
 
                     b.Navigation("gameSelectedPlatforms");
@@ -527,6 +585,8 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Domain.entities.UserPart.User.User", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("UserSelectedRoles");
 
                     b.Navigation("cart");

@@ -1,4 +1,5 @@
 ﻿using Domain.entities.Cart;
+using Domain.entities.Comments;
 using Domain.entities.GamePart.Game;
 using Domain.entities.GamePart.Genre;
 using Domain.entities.GamePart.Platform;
@@ -38,6 +39,7 @@ public class GameShopDbContext : DbContext
     public DbSet<Platform> Platforms { get; set; }
     public DbSet<GemeSelectedGenre> SelectedGenres { get; set; }
     public DbSet<GameSelectedPlatform> SelectedPlatforms { get; set; }
+    public DbSet<Comments> Comments { get; set; }   
     #endregion
 
     #endregion

@@ -44,6 +44,8 @@ public class CatalogService : ICatalogService
     }
 
 
+
+
     #region Search
     public async Task<CatalogViewModel> SearchCatalog(CatalogViewModel searchViewModel)
     {
@@ -62,6 +64,7 @@ public class CatalogService : ICatalogService
 
 
     }
+
     private List<Game> SearchGames(List<Game> games, CatalogViewModel? searchViewModel)
     {
         var searchstring = searchViewModel.search.SearchString;

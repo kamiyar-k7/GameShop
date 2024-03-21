@@ -44,7 +44,7 @@ public class OrderController : Controller
 
             await _cartService.AddToCart(model, id);
         }
-        return RedirectToAction("Product", "Store", new { id = model.Games.Id });
+        return RedirectToAction("Product", "Store", new { id = model.Game.Id });
 
 
 

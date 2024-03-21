@@ -1,6 +1,8 @@
 ﻿using Application.Services.Interfaces;
 using Application.ViewModel.UserSide;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Presentation.Controllers;
 
@@ -45,18 +47,18 @@ public class StoreController : Controller
     [HttpGet]
     public async Task<IActionResult> Catalog(string searchString, int? platformId, int? genreId)
     {
- 
+
         var model = await _catalogService.SearchCatalog(new CatalogViewModel
         {
-             search = new CatalogSearchViewModel
-             {
+            search = new CatalogSearchViewModel
+            {
                 SearchString = searchString,
-              PlatfromId = platformId,
-              GenreId = genreId
-             }
+                PlatfromId = platformId,
+                GenreId = genreId
+            }
         });
 
-        if(model.Games.Count != 0)
+        if (model.Games.Count != 0)
         {
             return View(model);
         }
@@ -64,17 +66,17 @@ public class StoreController : Controller
         TempData["NullRefrence"] = "We Couldent Find Any Game By This Information in Our Stuck";
         return View(model);
 
-   
+
     }
 
 
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Catalog(CatalogViewModel viewModel , string search)
+    public async Task<IActionResult> Catalog(CatalogViewModel viewModel, string search)
     {
-        // Capture the search parameters
-      
+        
+
         var searchString = viewModel.search?.SearchString;
         var platformId = viewModel.search?.PlatfromId;
         var genreId = viewModel.search?.GenreId;
@@ -83,7 +85,7 @@ public class StoreController : Controller
             searchString = search;
         }
 
-        
+
         return RedirectToAction("Catalog", new { searchString, platformId, genreId });
     }
     #endregion
@@ -106,6 +108,39 @@ public class StoreController : Controller
 
         return NotFound();
 
+    }
+
+    [HttpPost, ValidateAntiForgeryToken, Authorize]
+    public async Task<IActionResult> Product([FromForm] ProductViewModel model)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (int.TryParse(userId, out int id))
+        {
+            // Map ProductViewModel to your service model
+            var serviceModel = new CommentsViewModelProduct
+            {
+                UserId = id,
+                GameId = model.Game.Id, 
+                Title = model.Title,
+                Comment = model.Comment,
+                Ratings = model.Rating 
+            };
+
+           
+            var success = await _productService.SubmitComment(serviceModel);
+
+            if (success)
+            {
+            
+                return RedirectToAction("Product", new { Id = model.Game.Id });
+            }
+
+        }
+    
+
+        
+        return View(model);
     }
     #endregion
 

@@ -14,6 +14,9 @@ namespace Domain.IRepository.AccountRepositorieInterfaces
         Task AddToDataBase(User user, CancellationToken cancellation);
         bool IsExist(string PhoneNumbers, string email);
         Task<User?> GetUserByIdAsync(int id);
-        
+        void Update(User user);
+
+
+
     }
 }

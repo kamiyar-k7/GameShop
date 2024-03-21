@@ -13,10 +13,11 @@ public class HomeController : Controller
 	private readonly IStoreService _storeService;
 	private readonly IHomeService _homeService;
 
-    public HomeController(  IStoreService storeService , IHomeService homeService)
+    public HomeController(  IStoreService storeService , IHomeService homeService )
     {
            _homeService = homeService;
 		_storeService = storeService;
+		
     }
 	#endregion
 
@@ -40,23 +41,26 @@ public class HomeController : Controller
 	[HttpGet]
     public async Task<IActionResult> AboutUs()
     {
-		var about = await _homeService.ShowAbout();
-		if(about != null)
-		{
-			return View(about);
-		}
-        return View();
+        var about = await _homeService.ShowAbout();
+        if (about != null)
+        {
+            return View(about);
+
+        }
+		return null;
+       
     }
 	[HttpPost]
 	[ValidateAntiForgeryToken]
 	public async Task<IActionResult> AboutUs(AboutPageViewModel model)
 	{
-		if (ModelState.IsValid)
+    
+        if (ModelState.IsValid)
 		{
 			var result = await _homeService.AddMessage(model.ContactUsViewModel);
 			if(result)
 			{
-                TempData["Succsefull"] = "done ";
+				 ViewBag.SuccessMessage = "Message sent successfully.";
                 return	RedirectToAction(nameof(AboutUs));
 
 			}
@@ -65,7 +69,7 @@ public class HomeController : Controller
         }
         TempData["Error"] = "fill the fields  ";
        return RedirectToAction(nameof(AboutUs));
-		TempData.Remove("Succsefull");
+		
     }
     #endregion
 }

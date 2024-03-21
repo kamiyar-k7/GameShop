@@ -1,8 +1,11 @@
 ﻿using Application.DTOs.UserSide.Account;
 using Application.Helpers;
 using Application.Services.Interfaces;
+using Application.ViewModel.UserSide;
 using Domain.entities.UserPart.User;
 using Domain.IRepository.AccountRepositorieInterfaces;
+using Domain.IRepository.CommentRepositoryInterface;
+using Domain.IRepository.GameRepositoryInteface;
 
 
 namespace Application.Services.implements;
@@ -10,15 +13,22 @@ namespace Application.Services.implements;
 public class AccountService : IAccountService
 {
     #region Ctor
-     private readonly IAccountRepository _account;
-    public AccountService(IAccountRepository repository)
+    private readonly IAccountRepository _account;
+    private readonly IGameRepository _game;
+   
+    public AccountService(IAccountRepository repository , IGameRepository gameRepository)
     {
-      _account = repository;
+        _account = repository;
+        _game = gameRepository;
+     
     }
     #endregion
 
 
     #region General
+
+    #region SignIN
+
     public async Task<SignInDto> FindUser(SignInDto model)
     {
         User usercheck = new User()
@@ -49,8 +59,7 @@ public class AccountService : IAccountService
         }
         return null;
     }
-
-
+    #endregion
 
     #region ADD TO DATABASE
 
@@ -96,5 +105,90 @@ public class AccountService : IAccountService
     }
     #endregion
 
+    #region User Deatails 
+
+    public async Task<UserAccountViewModel> UserViewModel(int id)
+    {
+        var user = await _account.GetUserByIdAsync(id);
+      
+        List<UserCommentsViewModel> comments = new List<UserCommentsViewModel>();
+
+
+        if (user != null)
+        {
+
+              var  detailmodel = new UserDeatailViewModel()
+            { 
+                  UserId = id,
+                Name = user.UserName,
+                Avatar = user.UserAvatar,
+                DateTime = user.Created,
+                Email = user.Email,
+
+            };
+
+            foreach (var com in user.Comments)
+            {
+                var game = await _game.GetGameById(com.GameId);
+                var commentsmodel = new UserCommentsViewModel()
+                {
+                    Comment = com.Comment,
+                    CreatedAt = com.CreatedAt,
+                    GameName = game.Name,
+                    GameId = com.GameId,
+                    Ratings = com.Ratings,
+                    Title = com.Title,
+                };
+                comments.Add(commentsmodel);
+            }
+
+            UserAccountViewModel model = new UserAccountViewModel()
+            {
+                Deatail = detailmodel,
+                Comments = comments
+            };
+            return model;
+
+
+        }
+
+        return null;
+
+    }
+
+    #endregion
+
+    #region Edit Details 
+    public async Task<bool> UpdateDetails(UserDeatailViewModel model)
+    {
+        var user = await _account.GetUserByIdAsync(model.UserId);
+        if(user != null)
+        {
+            user.UserName = model.Name;
+            
+            if(model.AvatarForm != null)
+            {
+
+                //Save New Image
+                user.UserAvatar = NameGenerator.GenerateUniqCode() + Path.GetExtension(model.AvatarForm.FileName);
+
+                string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/images/UserAvatar", user.UserAvatar);
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    model.AvatarForm.CopyTo(stream);
+                }
+             
+            }
+
+            _account.Update(user);
+           await _account.SaveChanges();
+
+            return true;
+        }
+        return false;
+
+    }
+ 
+    #endregion
 }
 #endregion

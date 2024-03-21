@@ -5,7 +5,6 @@
   
 }
 
-
 <div class="nk-main">
 
     <div class="nk-gap-2"></div>
@@ -14,36 +13,12 @@
 
     <div class="container">
         <!-- START: Image Slider -->
-        <div style="height:360px">
-            <div class="nk-image-slider" data-autoplay="8000">
-                @{
-                    var topten = Model.OrderByDescending(x => x.ReleaseDate).Take(5);
-                }
-                @foreach (var Game in topten)
-                {
+   
+   
 
-
-                    if (Game.Screenshots.Any())
-                    {
-
-                        var firstScreenshot = Game.Screenshots.First();
-                        <div class="nk-image-slider-bg" style="background: url('/assets/images/GameImages/@firstScreenshot') no-repeat center; background-size: cover;">
-                            <img src="/assets/images/GameImages/@firstScreenshot" alt="" class="nk-image-slider-img" data-thumb="/assets/images/GameImages/@firstScreenshot" style="">
-
-                            <div class="nk-image-slider-content">
-                                <h3 class="h4">@Game.Name</h3>
-                                <p class="text-white">@Game.Description</p>
-                                <a asp-controller="Store" asp-action="Product" asp-route-Id="@Game.Id" class="nk-btn nk-btn-rounded nk-btn-color-white nk-btn-hover-color-main-1">Read More</a>
-                            </div>
-                        </div>
-                    }
-                }
-
-
-            </div>
-        </div>
+       
         
-        
+        <div class="nk-gap"></div>
         <!-- END: Image Slider -->
         <!-- START: Categories -->
         <div class="row vertical-gap">
@@ -64,8 +39,8 @@
                         <img src="~/assets/images/icon-gamepad.png" alt="">
                     </div>
                     <div class="nk-feature-cont">
-                        <h3 class="nk-feature-title"><a asp-controller="Home" asp-action="ContactUs">Contact</a></h3>
-                        <h3 class="nk-feature-title text-main-1"><a asp-controller="Home" asp-action="ContactUs">Contact Us</a></h3>
+                        <h3 class="nk-feature-title"><a asp-controller="Home" asp-action="AboutUS">About Us</a></h3>
+                        <h3 class="nk-feature-title text-main-1"><a asp-controller="Home" asp-action="AboutUs">Contact Us</a></h3>
                     </div>
                 </div>
             </div>
@@ -119,6 +94,7 @@
                     @{
                         var ordered = Model.OrderByDescending(x => x.ReleaseDate).ToList();
                     }
+
                     @foreach (var Game in ordered)
                     {
 
@@ -174,10 +150,6 @@
                             </div>
                         </div>
                     }
-
-
-
-
 
 
 
@@ -298,9 +270,6 @@
 
 
 
-
-
-
                 </aside>
                 <!-- END: Sidebar -->
             </div>
@@ -310,9 +279,4 @@
     <div class="nk-gap-4"></div>
 
 </div>
-
-
-                                      
-
-
 

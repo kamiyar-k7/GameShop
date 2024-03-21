@@ -1,5 +1,4 @@
-﻿using Application.DTOs.UserSide.Home;
-using Application.DTOs.UserSide.StorePart;
+﻿using Application.DTOs.UserSide.StorePart;
 using Application.Services.Interfaces;
 using Domain.entities.GamePart.Genre;
 using Domain.IRepository.GenreRepostoryInterface;

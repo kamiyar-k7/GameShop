@@ -8,6 +8,7 @@ using Domain.IRepository.GameRepositoryInteface;
 using Domain.IRepository.PlatformRepositoryInterface;
 
 
+
 namespace Application.Services.implements;
 
 public class CartService : ICartService
@@ -83,7 +84,7 @@ public class CartService : ICartService
             }
 
             var cartid = user.cart.First().CartId;
-            var game = await _gameRepository.GetGameById(model.Games.Id);
+            var game = await _gameRepository.GetGameById(model.Game.Id);
             var platform = await _platformRepository.GetSelectedPlatform(model.Platformid);
             if (platform != null)
             {
@@ -99,7 +100,7 @@ public class CartService : ICartService
                     CartDeatails cartdetails = new CartDeatails()
                     {
                         CartId = cartid,
-                        GameId = model.Games.Id,
+                        GameId = model.Game.Id,
                         Price = game.Price,
                         Quantity = model.Quantity,
                         Platform = platform.PlatformUniqueName

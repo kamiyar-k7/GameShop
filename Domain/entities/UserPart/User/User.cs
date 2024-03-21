@@ -32,6 +32,7 @@ public class User
     public ICollection<UserSelectedRole> UserSelectedRoles { get; set; }
     public List<Carts> cart { get; set; }
     public List<Game> games { get; set; }
+    public ICollection<Comments.Comments> Comments { get; set; }
     #endregion
 
 }

@@ -41,7 +41,9 @@
                     <label class="padding" style="color:white">Need A New Account?<a asp-controller="Account" asp-action="SignUp">Create Account</a></label>
                 </div>
                 <br />
+                <input type="hidden" asp-for="ReturnUrl" />
                 <input type="submit" value="Submit" class="padding">
+
             </form>
         
 
