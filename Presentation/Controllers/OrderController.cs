@@ -6,6 +6,7 @@ using System.Security.Claims;
 
 namespace Presentation.Controllers;
 
+[Authorize]
 public class OrderController : Controller
 {
     #region Ctor
@@ -17,10 +18,11 @@ public class OrderController : Controller
     #endregion
 
     #region My Cart
-    [Authorize]
+     
     public async Task<IActionResult> MyCart()
     {
         var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
         if (int.TryParse(userid, out int id))
         {
             var cart = await _cartService.ShowListOfCart(id);
@@ -33,17 +35,19 @@ public class OrderController : Controller
     #endregion
 
     #region Add Cart
-    [Authorize]
+     
     [HttpPost]
     public async Task<IActionResult> AddToCart(ProductViewModel model)
     {
 
         var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
         if (int.TryParse(userid, out int id))
         {
 
             await _cartService.AddToCart(model, id);
         }
+
         return RedirectToAction("Product", "Store", new { id = model.Game.Id });
 
 
@@ -52,7 +56,7 @@ public class OrderController : Controller
     #endregion
 
     #region Delete Cart
-    [Authorize]
+     
 
     public async Task<IActionResult> DeleteCart(int Id)
     {
@@ -68,7 +72,7 @@ public class OrderController : Controller
     #endregion
 
     #region CheckOut
-    [Authorize]
+     
     [HttpGet]
     public async Task<IActionResult> CheckOut()
     {
@@ -81,7 +85,7 @@ public class OrderController : Controller
         return NotFound();
       
     }
-    [Authorize]
+     
     [HttpPost]
     public async Task<IActionResult> CheckOut(CheckOutViewModel viewModel)
     {

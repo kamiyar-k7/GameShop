@@ -40,7 +40,7 @@ public class AccountRepository : IAccountRepository
     }
     public async Task<User?> GetUserByIdAsync(int id)
     {
-        //return await _dbContext.Users.Include(x => x.cart).FirstOrDefaultAsync(x => x.Id == id);
+       
         return await _dbContext.Users.Include(x => x.cart).Include(x=> x.Comments).Include(x=> x.games) .Where(x => x.Id == id).Select(x => new User
         {
             Id = x.Id,
@@ -51,7 +51,7 @@ public class AccountRepository : IAccountRepository
             IsAdmin = x.IsAdmin,
              UserAvatar = x.UserAvatar,
              UserName = x.UserName ,
-             UserSelectedRoles = x.UserSelectedRoles,
+          
             
 
         }).FirstOrDefaultAsync();
@@ -66,6 +66,11 @@ public class AccountRepository : IAccountRepository
          _dbContext.Entry(user).Property(u => u.UserAvatar).IsModified = true;
         
 
+    }
+    public bool SuperAdmin(int id)
+    {
+      var user =  _dbContext.Users.Find(id).SuperAdmin;
+        return user;
     }
     #endregion
 }

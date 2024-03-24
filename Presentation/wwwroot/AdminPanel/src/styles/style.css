@@ -1,15 +1,5 @@
 @charset "utf-8";
 
-/*==============================================================
-
-	Name:style.css
-	Version:1.0.0
-
-==============================================================*/
-
-/*==============================================================
-	Common Styles Initials
-==============================================================*/
 html {
 	-webkit-text-size-adjust: none; /* Prevent font scaling in landscape */
 	width: 100%;
@@ -37,7 +27,7 @@ body {
 	color: #031e23;
 	width: 100%;
 	height: 100%;
-	background: #ecf0f4;
+	background: #031e23;
 }
 a {
 	outline: none;

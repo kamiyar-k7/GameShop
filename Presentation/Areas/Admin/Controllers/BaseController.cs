@@ -5,6 +5,7 @@ namespace Presentation.Areas.Admin.Controllers;
 
 [Authorize]
 [Area("Admin")]
+[AdminAttribute.CheckUserIsAdmin]
 public class BaseController : Controller
 {
 

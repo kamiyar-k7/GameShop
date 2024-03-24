@@ -94,7 +94,7 @@ public class AccountController : Controller
                 var principal = new ClaimsPrincipal(claimIdentity);
 
                 var authProps = new AuthenticationProperties();
-                // authProps.IsPersistent = model.Remmemberme;
+                 authProps.IsPersistent = model.RememberMe;
 
               await  HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProps);
                 if (!string.IsNullOrEmpty(model.ReturnUrl))

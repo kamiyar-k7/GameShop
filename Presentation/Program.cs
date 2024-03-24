@@ -10,6 +10,7 @@ using Data.Repository.GameRepository;
 using Data.Repository.GenreRepository;
 using Data.Repository.HomeRepsitory;
 using Data.Repository.Platformrepository;
+using Data.Repository.RolesRepository;
 using Data.ShopDbcontext;
 using Domain.IRepository.AccountRepositorieInterfaces;
 using Domain.IRepository.CartRepositoryInterface;
@@ -19,6 +20,7 @@ using Domain.IRepository.GameRepositoryInteface;
 using Domain.IRepository.GenreRepostoryInterface;
 using Domain.IRepository.HomeRepositoryInterface;
 using Domain.IRepository.PlatformRepositoryInterface;
+using Domain.IRepository.RoleRepositoryInterface;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 #endregion
@@ -32,7 +34,6 @@ builder.Services.AddControllersWithViews();
 //Home
 builder.Services.AddScoped<IHomeService, HomeService>();
 builder.Services.AddScoped<IHomeRepository , HomeRepository>();
-
 
 // Game 
 builder.Services.AddScoped<IGameRepository, GameRepository>();
@@ -65,6 +66,11 @@ builder.Services.AddScoped<IPlatformService, PlatformService>();
 //Account 
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IAccountService , AccountService>();
+
+//Role
+builder.Services.AddScoped<IRoleRepository , RolesRepository>();
+builder.Services.AddScoped<IRoleService ,  RoleService>();  
+
 
 // Cart 
 builder.Services.AddScoped<ICartRepository , CartRepository>();
@@ -134,10 +140,6 @@ app.UseEndpoints(endpoints =>
 });
 
 
-
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
 

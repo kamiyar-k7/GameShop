@@ -16,7 +16,7 @@ namespace Domain.IRepository.AccountRepositorieInterfaces
         Task<User?> GetUserByIdAsync(int id);
         void Update(User user);
 
-
+        bool SuperAdmin(int id);
 
     }
 }
