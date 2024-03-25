@@ -1,4 +1,4 @@
-using Application.Services.Interfaces;
+using Application.Services.Interfaces.UserSide;
 using Application.ViewModel.UserSide;
 using Microsoft.AspNetCore.Mvc;
 

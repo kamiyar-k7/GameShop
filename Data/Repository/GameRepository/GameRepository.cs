@@ -34,7 +34,17 @@ public class GameRepository : IGameRepository
              .Any(genre => genre.GenreId == game.gemeSelectedGenres.Select(g => g.GenreId).FirstOrDefault()))
          .ToListAsync();
     }
-  
-   
+
+
+    #endregion
+
+    //----------------------------------
+    #region Admin Side
+
+    public int GameCount()
+    {
+      var num =  _dbContext.Games.Count();
+        return num;
+    }
     #endregion
 }

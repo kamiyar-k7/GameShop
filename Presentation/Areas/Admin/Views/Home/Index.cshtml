@@ -1,228 +1,426 @@
-﻿@model Application.ViewModel.AdminSide.DashboardViewModel;
+﻿@model Application.ViewModel.AdminSide.AdminHomeViewModel;
 
 @{
 	Layout = "_AdminLayout";
-	
+
 }
 
-<div class="main-container">
-	<div class="pd-ltr-20">
-	
-		<div class="row">
 
-			<div class="col-xl-3 mb-30">
-				<div class="card-box height-100-p widget-style1">
-					<div class="d-flex flex-wrap align-items-center">
-						<div class="progress-data">
-							<div id="chart"></div>
-						</div>
-						<div class="widget-data">
-							<div class="h4 mb-0">2020</div>
-							<div class="weight-600 font-14">Users</div>
-						</div>
-					</div>
-				</div>
-			</div>
+<div class="section-admin container-fluid">
+    <div class="row admin text-center">
+        <div class="col-md-12">
+            <div class="row">
 
-			<div class="col-xl-3 mb-30">
-				<div class="card-box height-100-p widget-style1">
-					<div class="d-flex flex-wrap align-items-center">
-						<div class="progress-data">
-							<div id="chart2"></div>
-						</div>
-						<div class="widget-data">
-							<div class="h4 mb-0">400</div>
-							<div class="weight-600 font-14">Admins</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-3 mb-30">
-				<div class="card-box height-100-p widget-style1">
-					<div class="d-flex flex-wrap align-items-center">
-						<div class="progress-data">
-							<div id="chart3"></div>
-						</div>
-						<div class="widget-data">
-							<div class="h4 mb-0">350</div>
-							<div class="weight-600 font-14">Products</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-3 mb-30">
-				<div class="card-box height-100-p widget-style1">
-					<div class="d-flex flex-wrap align-items-center">
-						<div class="progress-data">
-							<div id="chart4"></div>
-						</div>
-						<div class="widget-data">
-							<div class="h4 mb-0">$6060</div>
-							<div class="weight-600 font-14">Orders</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xl-8 mb-30">
-				<div class="card-box height-100-p pd-20">
-					<h2 class="h4 mb-20">Orders Status</h2>
-					<div id="chart5"></div>
-				</div>
-			</div>
-			<div class="col-xl-4 mb-30">
-				<div class="card-box height-100-p pd-20">
-					<h2 class="h4 mb-20">Lead Target</h2>
-					<div id="chart6"></div>
-				</div>
-			</div>
-		</div>
-		<div class="card-box mb-30">
-			<h2 class="h4 pd-20">Latest Orders</h2>
-			<table class="data-table table nowrap">
-				<thead>
-					<tr>
-						<th class="table-plus datatable-nosort">Product</th>
-						<th>User Name</th>
-						<th>Date</th>
-						<th>Size</th>
-						<th>Price</th>
-						<th>Oty</th>
-						<th class="datatable-nosort">Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="table-plus">
-							<img src="vendors/images/product-1.jpg" width="70" height="70" alt="">
-						</td>
-						<td>
-							<h5 class="font-16">Shirt</h5>
-							by John Doe
-						</td>
-						<td>Black</td>
-						<td>M</td>
-						<td>$1000</td>
-						<td>1</td>
-						<td>
-							<div class="dropdown">
-								<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-									<i class="dw dw-more"></i>
-								</a>
-								<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-									<a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-									<a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-									<a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td class="table-plus">
-							<img src="vendors/images/product-2.jpg" width="70" height="70" alt="">
-						</td>
-						<td>
-							<h5 class="font-16">Boots</h5>
-							by Lea R. Frith
-						</td>
-						<td>brown</td>
-						<td>9UK</td>
-						<td>$900</td>
-						<td>1</td>
-						<td>
-							<div class="dropdown">
-								<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-									<i class="dw dw-more"></i>
-								</a>
-								<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-									<a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-									<a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-									<a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td class="table-plus">
-							<img src="vendors/images/product-3.jpg" width="70" height="70" alt="">
-						</td>
-						<td>
-							<h5 class="font-16">Hat</h5>
-							by Erik L. Richards
-						</td>
-						<td>Orange</td>
-						<td>M</td>
-						<td>$100</td>
-						<td>4</td>
-						<td>
-							<div class="dropdown">
-								<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-									<i class="dw dw-more"></i>
-								</a>
-								<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-									<a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-									<a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-									<a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td class="table-plus">
-							<img src="vendors/images/product-4.jpg" width="70" height="70" alt="">
-						</td>
-						<td>
-							<h5 class="font-16">Long Dress</h5>
-							by Renee I. Hansen
-						</td>
-						<td>Gray</td>
-						<td>L</td>
-						<td>$1000</td>
-						<td>1</td>
-						<td>
-							<div class="dropdown">
-								<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-									<i class="dw dw-more"></i>
-								</a>
-								<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-									<a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-									<a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-									<a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td class="table-plus">
-							<img src="vendors/images/product-5.jpg" width="70" height="70" alt="">
-						</td>
-						<td>
-							<h5 class="font-16">Blazer</h5>
-							by Vicki M. Coleman
-						</td>
-						<td>Blue</td>
-						<td>M</td>
-						<td>$1000</td>
-						<td>1</td>
-						<td>
-							<div class="dropdown">
-								<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-									<i class="dw dw-more"></i>
-								</a>
-								<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-									<a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-									<a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Edit</a>
-									<a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Delete</a>
-								</div>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="footer-wrap pd-20 mb-20 card-box">
-			DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya</a>
-		</div>
-	</div>
+                <!-- Users -->
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+
+                    <div class="admin-content analysis-progrebar-ctn res-mg-t-15">
+                        <h4 class="text-left text-uppercase"><b>Users</b></h4>
+                        <div class="row vertical-center-box vertical-center-box-tablet">
+
+                            <div class="col-xs-9a cus-gh-hd-pro">
+                                <h2 class="text-right no-margin">@Model.counts.UserCount</h2>
+                            </div>
+                        </div>
+                        <div class="progress progress-mini">
+                            <div style="width: 100%;" class="progress-bar bg-green"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--Users end-->
+
+                <!-- Admins -->
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom:1px;">
+                    <div class="admin-content analysis-progrebar-ctn res-mg-t-30">
+                        <h4 class="text-left text-uppercase"><b>Admins</b></h4>
+                        <div class="row vertical-center-box vertical-center-box-tablet">
+                         
+                            <div class="col-xs-9a cus-gh-hd-pro">
+                                <h2 class="text-right no-margin">@Model.counts.AdminCount</h2>
+                            </div>
+                        </div>
+                        <div class="progress progress-mini">
+                            <div style="width: 100%;" class="progress-bar progress-bar-danger bg-red"></div>
+                        </div>
+                    </div>
+                </div>
+                  <!--Admins end-->
+
+                <!-- Orders -->
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="admin-content analysis-progrebar-ctn res-mg-t-30">
+                        <h4 class="text-left text-uppercase"><b>Orders</b></h4>
+                        <div class="row vertical-center-box vertical-center-box-tablet">
+                           
+                            <div class="col-xs-9a cus-gh-hd-pro">
+                                <h2 class="text-right no-margin">@Model.counts.OrdersCount</h2>
+                            </div>
+                        </div>
+                        <div class="progress progress-mini">
+                            <div style="width: 100%;" class="progress-bar bg-blue"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Orders End -->
+
+                <!-- Games -->
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="admin-content analysis-progrebar-ctn res-mg-t-30">
+                        <h4 class="text-left text-uppercase"><b>Games</b></h4>
+                        <div class="row vertical-center-box vertical-center-box-tablet">
+                           
+                            <div class="col-xs-9a cus-gh-hd-pro">
+                                <h2 class="text-right no-margin">@Model.counts.GameCount</h2>
+                            </div>
+                        </div>
+                        <div class="progress progress-mini">
+                            <div style="width: 100%;" class="progress-bar bg-purple"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Games End -->
+
+            </div>
+        </div>
+    </div>
 </div>
+
+
+<div class="product-sales-area mg-tb-30">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                <div class="product-sales-chart">
+                    <div class="portlet-title">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="caption pro-sl-hd">
+                                    <span class="caption-subject text-uppercase"><b>Product Sales</b></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="actions graph-rp">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-grey active">
+                                            <input type="radio" name="options" class="toggle" id="option1" checked="">Today
+                                        </label>
+                                        <label class="btn btn-grey">
+                                            <input type="radio" name="options" class="toggle" id="option2">Week
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="sparklinehome" class="sparkline-container">Loading..</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="white-box analytics-info-cs mg-b-30 res-mg-t-30">
+                    <h3 class="box-title">Total Visit</h3>
+                    <ul class="list-inline two-part-sp">
+                        <li>
+                            <div id="sparklinedash"></div>
+                        </li>
+                        <li class="text-right sp-cn-r"><i class="fa fa-level-up" aria-hidden="true"></i> <span class="counter sales-sts-ctn">8659</span></li>
+                    </ul>
+                </div>
+                <div class="white-box analytics-info-cs mg-b-30">
+                    <h3 class="box-title">Total Page Views</h3>
+                    <ul class="list-inline two-part-sp">
+                        <li>
+                            <div id="sparklinedash2"></div>
+                        </li>
+                        <li class="text-right"><i class="fa fa-level-up" aria-hidden="true"></i> <span class="counter sales-sts-ctn">7469</span></li>
+                    </ul>
+                </div>
+                <div class="white-box analytics-info-cs mg-b-30">
+                    <h3 class="box-title">Unique Visitor</h3>
+                    <ul class="list-inline two-part-sp">
+                        <li>
+                            <div id="sparklinedash3"></div>
+                        </li>
+                        <li class="text-right"><i class="fa fa-level-up" aria-hidden="true"></i> <span class="counter sales-sts-ctn">6011</span></li>
+                    </ul>
+                </div>
+                <div class="white-box analytics-info-cs">
+                    <h3 class="box-title">Bounce Rate</h3>
+                    <ul class="list-inline two-part-sp">
+                        <li>
+                            <div id="sparklinedash4"></div>
+                        </li>
+                        <li class="text-right"><i class="fa fa-level-down" aria-hidden="true"></i> <span class="sales-sts-ctn">18%</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="traffic-analysis-area">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <div class="white-box tranffic-als-inner">
+                    <h3 class="box-title"><small class="pull-right m-t-10 last-month-sc cl-one"><i class="fa fa-sort-asc"></i> 18% last month</small> Site Traffic</h3>
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <h6>Overall Growth</h6>
+                            <b>80.40%</b>
+                        </div>
+                        <div class="stat-item">
+                            <h6>Montly</h6>
+                            <b>15.40%</b>
+                        </div>
+                        <div class="stat-item">
+                            <h6>Day</h6>
+                            <b>5.50%</b>
+                        </div>
+                    </div>
+                    <div id="sparkline8"></div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <div class="white-box tranffic-als-inner res-mg-t-30">
+                    <h3 class="box-title"><small class="pull-right m-t-10 last-month-sc cl-two"><i class="fa fa-sort-desc"></i> 18% last month</small>Site Traffic</h3>
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <h6>Overall Growth</h6>
+                            <b>80.40%</b>
+                        </div>
+                        <div class="stat-item">
+                            <h6>Montly</h6>
+                            <b>15.40%</b>
+                        </div>
+                        <div class="stat-item">
+                            <h6>Day</h6>
+                            <b>5.50%</b>
+                        </div>
+                    </div>
+                    <div id="sparkline9"></div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <div class="white-box tranffic-als-inner res-mg-t-30">
+                    <h3 class="box-title"><small class="pull-right m-t-10 last-month-sc cl-three"><i class="fa fa-sort-asc"></i> 18% last month</small>Site Traffic</h3>
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <h6>Overall Growth</h6>
+                            <b>80.40%</b>
+                        </div>
+                        <div class="stat-item">
+                            <h6>Montly</h6>
+                            <b>15.40%</b>
+                        </div>
+                        <div class="stat-item">
+                            <h6>Day</h6>
+                            <b>5.50%</b>
+                        </div>
+                    </div>
+                    <div id="sparkline10"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="product-new-list-area">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="single-new-trend mg-t-30">
+                    <a href="#"><img src="img/new-product/5.png" alt=""></a>
+                    <div class="overlay-content">
+                        <a href="#">
+                            <h2>$280</h2>
+                        </a>
+                        <a href="#" class="btn-small">Now</a>
+                        <div class="product-action">
+                            <ul>
+                                <li>
+                                    <a data-toggle="tooltip" title="Shopping" href="#"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tooltip" title="Quick view" href="#"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="#">
+                            <h4>Princes Diamond</h4>
+                        </a>
+                        <div class="pro-rating">
+                            <i class="fa fa-star color"></i>
+                            <i class="fa fa-star color"></i>
+                            <i class="fa fa-star color"></i>
+                            <i class="fa fa-star color"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="single-new-trend mg-t-30">
+                    <a href="#"><img src="img/new-product/5.png" alt=""></a>
+                    <div class="overlay-content">
+                        <a href="#">
+                            <h2>$280</h2>
+                        </a>
+                        <a href="#" class="btn-small">Now</a>
+                        <div class="product-action">
+                            <ul>
+                                <li>
+                                    <a data-toggle="tooltip" title="Shopping" href="#"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tooltip" title="Quick view" href="#"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="#">
+                            <h4>Princes Diamond</h4>
+                        </a>
+                        <div class="pro-rating">
+                            <i class="fa fa-star color"></i>
+                            <i class="fa fa-star color"></i>
+                            <i class="fa fa-star color"></i>
+                            <i class="fa fa-star color"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="single-new-trend mg-t-30">
+                    <a href="#"><img src="img/new-product/5.png" alt=""></a>
+                    <div class="overlay-content">
+                        <a href="#">
+                            <h2>$280</h2>
+                        </a>
+                        <a href="#" class="btn-small">Now</a>
+                        <div class="product-action">
+                            <ul>
+                                <li>
+                                    <a data-toggle="tooltip" title="Shopping" href="#"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tooltip" title="Quick view" href="#"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="#">
+                            <h4>Princes Diamond</h4>
+                        </a>
+                        <div class="pro-rating">
+                            <i class="fa fa-star color"></i>
+                            <i class="fa fa-star color"></i>
+                            <i class="fa fa-star color"></i>
+                            <i class="fa fa-star color"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="single-new-trend mg-t-30">
+                    <a href="#"><img src="img/new-product/5.png" alt=""></a>
+                    <div class="overlay-content">
+                        <a href="#">
+                            <h2>$280</h2>
+                        </a>
+                        <a href="#" class="btn-small">Now</a>
+                        <div class="product-action">
+                            <ul>
+                                <li>
+                                    <a data-toggle="tooltip" title="Shopping" href="#"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tooltip" title="Quick view" href="#"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="#">
+                            <h4>Princes Diamond</h4>
+                        </a>
+                        <div class="pro-rating">
+                            <i class="fa fa-star color"></i>
+                            <i class="fa fa-star color"></i>
+                            <i class="fa fa-star color"></i>
+                            <i class="fa fa-star color"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="product-sales-area mg-tb-30">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                <div class="product-sales-chart">
+                    <div class="portlet-title">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="caption pro-sl-hd">
+                                    <span class="caption-subject text-uppercase"><b>Order Statistic</b></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="actions graph-rp">
+                                    <a href="#" class="btn btn-dark-blue btn-circle active tip-top" data-toggle="tooltip" title="Upload">
+                                        <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-dark btn-circle active tip-top" data-toggle="tooltip" title="Refresh">
+                                        <i class="fa fa-reply" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-blue-grey btn-circle active tip-top" data-toggle="tooltip" title="Delete">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="line-chart" class="flot-chart flot-chart-sts line-chart-statistic"></div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="analytics-rounded mg-b-30 res-mg-t-30">
+                    <div class="analytics-rounded-content">
+                        <h5>Percentage distribution</h5>
+                        <h2><span class="counter">60</span>/20</h2>
+                        <div class="text-center">
+                            <div id="sparkline51"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="analytics-rounded">
+                    <div class="analytics-rounded-content">
+                        <h5>Percentage division</h5>
+                        <h2><span class="counter">150</span>/<span class="counter">54</span></h2>
+                        <div class="text-center">
+                            <div id="sparkline52"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="calender-area mg-tb-30">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="calender-inner">
+                    <div id='calendar'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+                            <style>
+    .col-xs-9a {
+        width: 95%
+    }
+                            </style>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Areas.Admin.Controllers;
@@ -8,5 +9,8 @@ namespace Presentation.Areas.Admin.Controllers;
 [AdminAttribute.CheckUserIsAdmin]
 public class BaseController : Controller
 {
+ 
+
+
 
 }

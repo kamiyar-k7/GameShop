@@ -18,5 +18,9 @@ namespace Domain.IRepository.AccountRepositorieInterfaces
 
         bool SuperAdmin(int id);
 
+        #region Admin Side
+        int CountUsers();
+        int CountAdmins();
+        #endregion
     }
 }

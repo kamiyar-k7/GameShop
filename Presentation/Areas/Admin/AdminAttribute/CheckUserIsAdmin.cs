@@ -1,5 +1,5 @@
-﻿using Application.Extensions;
-using Application.Services.Interfaces;
+﻿using Application.Helpers;
+using Application.Services.Interfaces.UserSide;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Presentation.Areas.Admin.AdminAttribute;

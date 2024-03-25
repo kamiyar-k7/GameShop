@@ -1,10 +1,10 @@
 ﻿using Application.DTOs.UserSide.Account;
-using Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Application.ViewModel.UserSide;
+using Application.Services.Interfaces.UserSide;
 
 
 

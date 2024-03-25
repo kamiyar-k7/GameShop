@@ -1,7 +1,9 @@
 #region Usings
 
-using Application.Services.implements;
-using Application.Services.Interfaces;
+using Application.Services.implements.AdminSide;
+using Application.Services.implements.UserSide;
+using Application.Services.Interfaces.AdminSide;
+using Application.Services.Interfaces.UserSide;
 using Data.Repository.AccountRepositories;
 using Data.Repository.CartRepository;
 using Data.Repository.CatalogRepository;
@@ -24,7 +26,6 @@ using Domain.IRepository.RoleRepositoryInterface;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 #endregion
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -80,7 +81,13 @@ builder.Services.AddScoped<ICartService , CartService>();
 #endregion
 
 
+#region Admin side
+// admin Layout
+builder.Services.AddScoped<ILayoutService , LayoutService>();
 
+// Dashboard 
+builder.Services.AddScoped<IAdminHomeService , AdminHomeService>();
+#endregion
 
 #endregion
 

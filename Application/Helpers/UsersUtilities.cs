@@ -1,9 +1,8 @@
-﻿
-using Domain.entities.UserPart.User;
+﻿using Domain.entities.UserPart.User;
 using System.Security.Claims;
 using System.Security.Principal;
 
-namespace Application.Extensions;
+namespace Application.Helpers;
 
 public static class UsersUtilities
 {

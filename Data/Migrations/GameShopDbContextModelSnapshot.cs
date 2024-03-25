@@ -156,12 +156,7 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Games");
                 });
@@ -405,6 +400,9 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -473,13 +471,6 @@ namespace Data.Migrations
                     b.Navigation("Game");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Domain.entities.GamePart.Game.Game", b =>
-                {
-                    b.HasOne("Domain.entities.UserPart.User.User", null)
-                        .WithMany("games")
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Domain.entities.GamePart.Game.Screenshot", b =>
@@ -590,8 +581,6 @@ namespace Data.Migrations
                     b.Navigation("UserSelectedRoles");
 
                     b.Navigation("cart");
-
-                    b.Navigation("games");
                 });
 #pragma warning restore 612, 618
         }

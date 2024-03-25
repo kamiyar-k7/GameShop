@@ -16,6 +16,9 @@ public class HomeRepository : IHomeRepository
     }
     #endregion
 
+    #region General
+
+  
     public async Task<AboutUs?> AboutUs()
     {
         return await _dbContext.AboutUs.FirstOrDefaultAsync();
@@ -26,7 +29,31 @@ public class HomeRepository : IHomeRepository
         await _dbContext.ContactUs.AddAsync(contactUs);
         await _dbContext.SaveChangesAsync();
     }
+    #endregion
 
-  
+    //-------------------------------
+    #region Admin Side
+
+    #region Contact
+    public async Task<List<ContactUs>> Messages()
+    {
+        return await _dbContext.ContactUs.OrderByDescending(x => x.DateTime).ToListAsync();
+    }
+    
+    public async Task<bool> DeleteMessage(int id )
+    {
+        var messageToDelete = await _dbContext.ContactUs.FindAsync(id);
+        if (messageToDelete != null)
+        {
+            _dbContext.ContactUs.Remove(messageToDelete);
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+        return false;
+    }
+    #endregion
+
+    #endregion
+
 }
 

@@ -41,7 +41,7 @@ public class AccountRepository : IAccountRepository
     public async Task<User?> GetUserByIdAsync(int id)
     {
        
-        return await _dbContext.Users.Include(x => x.cart).Include(x=> x.Comments).Include(x=> x.games) .Where(x => x.Id == id).Select(x => new User
+        return await _dbContext.Users.Include(x => x.cart).Include(x=> x.Comments).Where(x => x.Id == id).Select(x => new User
         {
             Id = x.Id,
             cart = x.cart,
@@ -71,6 +71,20 @@ public class AccountRepository : IAccountRepository
     {
       var user =  _dbContext.Users.Find(id).SuperAdmin;
         return user;
+    }
+    #endregion
+
+
+    //------------------------------------
+    #region Admin side
+    public int CountUsers()
+    {
+        return _dbContext.Users.Select(x=> x.IsDelete  == false).Count();
+    }
+    public int CountAdmins()
+    {
+        var adminRoleId =  _dbContext.Roles.FirstOrDefault(r => r.RoleUniqueName == "Admin")?.Id;
+        return _dbContext.SelectedRole.Count(ur => ur.RoleId == adminRoleId);
     }
     #endregion
 }
