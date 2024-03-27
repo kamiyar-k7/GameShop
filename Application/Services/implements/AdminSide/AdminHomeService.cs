@@ -14,17 +14,22 @@ public class AdminHomeService : IAdminHomeService
     private readonly IGameRepository _gameRepository;
     private readonly IAccountRepository _account;
     private readonly IHomeRepository _home;
+    private readonly ILayoutService _layoutService;
     public AdminHomeService(IGameRepository gameRepository ,
                             IAccountRepository accountRepository,
-                            IHomeRepository homeRepository)
+                            IHomeRepository homeRepository , 
+                            ILayoutService layoutService)
     {
         
         _gameRepository = gameRepository;
         _account = accountRepository;
         _home = homeRepository;
+        _layoutService = layoutService;
 
     }
     #endregion
+
+
 
     #region Dashboard
  
@@ -47,7 +52,21 @@ public class AdminHomeService : IAdminHomeService
 
         return countsViewModel;
     }
+
+    public async Task<AdminHomeViewModel> HomeAdminVeiwModel(int id)
+    {
+        var counts = DashboardView();
+
+        AdminHomeViewModel model = new AdminHomeViewModel()
+        {
+            Admin = await _layoutService.AdminInfo(id),
+            counts = counts
+        };
+        return model;
+    }
     #endregion
+
+
 
 
 
@@ -77,6 +96,16 @@ public class AdminHomeService : IAdminHomeService
 
         }
         return null;
+    }
+
+    public async Task<AdminHomeViewModel> ContactService(int id)
+    {
+        AdminHomeViewModel model = new AdminHomeViewModel()
+        {
+            Admin  = await _layoutService.AdminInfo(id),
+            contactMessages = await Messages()
+        };
+        return model;
     }
 
     public async Task<bool> DeleteMessage(int id)

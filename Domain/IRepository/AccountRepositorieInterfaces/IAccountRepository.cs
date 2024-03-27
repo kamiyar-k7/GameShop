@@ -21,6 +21,7 @@ namespace Domain.IRepository.AccountRepositorieInterfaces
         #region Admin Side
         int CountUsers();
         int CountAdmins();
+        Task<List<User>> GetUsersAsync();
         #endregion
     }
 }

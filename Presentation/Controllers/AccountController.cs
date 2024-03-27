@@ -26,8 +26,6 @@ public class AccountController : Controller
 
     #endregion
 
-
-
     #region SignUp
     [HttpGet]
     public async Task<IActionResult> SignUp()

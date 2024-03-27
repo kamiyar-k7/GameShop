@@ -48,7 +48,6 @@ public class AccountRepository : IAccountRepository
             Comments = x.Comments,
             Created = x.Created,
             Email = x.Email,    
-            IsAdmin = x.IsAdmin,
              UserAvatar = x.UserAvatar,
              UserName = x.UserName ,
           
@@ -77,15 +76,39 @@ public class AccountRepository : IAccountRepository
 
     //------------------------------------
     #region Admin side
+
+    #region Dashboard
     public int CountUsers()
     {
-        return _dbContext.Users.Select(x=> x.IsDelete  == false).Count();
+        return _dbContext.Users.Select(x => x.IsDelete == false).Count();
     }
     public int CountAdmins()
     {
-        var adminRoleId =  _dbContext.Roles.FirstOrDefault(r => r.RoleUniqueName == "Admin")?.Id;
+        var adminRoleId = _dbContext.Roles.FirstOrDefault(r => r.RoleUniqueName == "Admin")?.Id;
         return _dbContext.SelectedRole.Count(ur => ur.RoleId == adminRoleId);
     }
+    #endregion
+
+
+    #region Users
+    public async Task<List<User>> GetUsersAsync()
+    {
+        return await _dbContext.Users.Include(x => x.Comments).Include(x=> x.cart).Include(x=> x.UserSelectedRoles).Where(x=> x.IsDelete == false).Select(x=> new User()
+        {
+            Id = x.Id,
+            UserName = x.UserName ,
+            Email = x.Email ,
+            UserAvatar = x.UserAvatar ,
+            UserSelectedRoles = x.UserSelectedRoles,
+            cart = x.cart,
+            Comments = x.Comments,
+            Created = x.Created,
+            
+            
+        }).ToListAsync();
+    }
+    #endregion
+
     #endregion
 }
 

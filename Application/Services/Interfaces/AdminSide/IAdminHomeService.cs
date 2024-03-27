@@ -6,7 +6,8 @@ namespace Application.Services.Interfaces.AdminSide;
 
 public interface IAdminHomeService
 {
-    CountsViewModel DashboardView();
-    Task<List<ContactMessagesViewModel>> Messages();
+    
     Task<bool> DeleteMessage(int id);
+    Task<AdminHomeViewModel> HomeAdminVeiwModel(int id);
+    Task<AdminHomeViewModel> ContactService(int id);
 }

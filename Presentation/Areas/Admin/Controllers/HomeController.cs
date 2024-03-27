@@ -20,32 +20,15 @@ public class HomeController : BaseController
     }
     #endregion
 
-    public async Task <AdminBaseViewModel> layout()
-    {
 
-        var userid = (int)HttpContext.User.GetUserId();
-        var info = await _layoutService.AdminInfo(userid);
-        AdminBaseViewModel adminBaseViewModel = new AdminBaseViewModel()
-        {
-            Admin = info
-        };
-
-        return adminBaseViewModel;
-    }
 
     public async Task<IActionResult> Index()   
 	{
 
 
-         var admin = await layout();
 
-        AdminHomeViewModel model = new AdminHomeViewModel()
-        {
-            counts = _homeservices.DashboardView(),
-            Admin = admin.Admin,
-
-        };
-
+        var model = await _homeservices.HomeAdminVeiwModel((int)HttpContext.User.GetUserId());
+            
 
         ViewData["Title"] = "Dashboard";
 
@@ -53,18 +36,11 @@ public class HomeController : BaseController
 
 	}
 
+
     public async Task<IActionResult> ContactUs()
     {
-        var admin = await layout();
-        var contact = await _homeservices.Messages();
 
-        AdminHomeViewModel model = new AdminHomeViewModel()
-        {
-
-            Admin = admin.Admin,
-            contactMessages = contact
-
-        };
+        var model = await _homeservices.ContactService((int)HttpContext.User.GetUserId());
         
 
         ViewData["Title"] = "Contact Page";
@@ -79,13 +55,26 @@ public class HomeController : BaseController
         {
             return RedirectToAction(nameof(ContactUs));
         }
-        ViewData["ErrorMessage"] = "something Wrong Pleas Try Agin Later";
+        ViewData["ErrorMessage"] = "something Wrong Please Try Agin Later";
         return RedirectToAction(nameof(ContactUs));
     }
 
+
+    // not finished
     public async Task<IActionResult> AboutUs()
     {
-        return View();
+        var admin = await _layoutService.AdminInfo((int)HttpContext.User.GetUserId());
+        AdminHomeViewModel model = new AdminHomeViewModel()
+        {
+
+            Admin = admin,
+          
+        };
+
+        
+        ViewData["Title"] = "Contact Page";
+
+        return View(model);
     }
 
 }

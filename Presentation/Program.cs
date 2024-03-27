@@ -62,7 +62,6 @@ builder.Services.AddScoped<IPlatformService, PlatformService>();
 #endregion
 
 
-
 #region Account 
 //Account 
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
@@ -87,6 +86,11 @@ builder.Services.AddScoped<ILayoutService , LayoutService>();
 
 // Dashboard 
 builder.Services.AddScoped<IAdminHomeService , AdminHomeService>();
+
+#region Users
+builder.Services.AddScoped<IUserService, UsersService>();
+#endregion
+
 #endregion
 
 #endregion
