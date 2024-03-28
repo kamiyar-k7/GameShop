@@ -30,6 +30,6 @@ public class UsersController : BaseController
     public async Task<IActionResult> Admins()
     {
         
-
+        return View();
     }
 }

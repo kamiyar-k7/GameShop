@@ -1,7 +1,5 @@
 ﻿using Domain.entities.Cart;
-using Domain.entities.GamePart.Game;
 using Domain.entities.UserPart.Roles;
-
 using System.ComponentModel.DataAnnotations;
 
 
@@ -26,12 +24,12 @@ public class User
     public bool IsAdmin { get; set; }
     public bool SuperAdmin { get; set; }
     public bool IsDelete { get; set; }
-
+    public int? LocationId { get; set; }
 
     #region Rels
     public ICollection<UserSelectedRole> UserSelectedRoles { get; set; }
     public List<Carts> cart { get; set; }
-    //public List<Game> games { get; set; }
+    public Location? Location { get; set; }
     public ICollection<Comments.Comments> Comments { get; set; }
     #endregion
 

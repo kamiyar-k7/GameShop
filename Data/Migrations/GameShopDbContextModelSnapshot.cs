@@ -271,6 +271,33 @@ namespace Data.Migrations
                     b.ToTable("Platforms");
                 });
 
+            modelBuilder.Entity("Domain.entities.Order.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeliveryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("Domain.entities.UserPart.Roles.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -318,6 +345,50 @@ namespace Data.Migrations
                     b.ToTable("SelectedRole");
                 });
 
+            modelBuilder.Entity("Domain.entities.UserPart.User.Location", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderNote")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("PosstCode")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Locations");
+                });
+
             modelBuilder.Entity("Domain.entities.UserPart.User.User", b =>
                 {
                     b.Property<int>("Id")
@@ -339,6 +410,9 @@ namespace Data.Migrations
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("LocationId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -359,6 +433,10 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LocationId")
+                        .IsUnique()
+                        .HasFilter("[LocationId] IS NOT NULL");
 
                     b.ToTable("Users");
                 });
@@ -522,6 +600,17 @@ namespace Data.Migrations
                     b.Navigation("Platform");
                 });
 
+            modelBuilder.Entity("Domain.entities.Order.Order", b =>
+                {
+                    b.HasOne("Domain.entities.Cart.Carts", "Cart")
+                        .WithMany()
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+                });
+
             modelBuilder.Entity("Domain.entities.UserPart.Roles.UserSelectedRole", b =>
                 {
                     b.HasOne("Domain.entities.UserPart.Roles.Role", "Role")
@@ -539,6 +628,15 @@ namespace Data.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.entities.UserPart.User.User", b =>
+                {
+                    b.HasOne("Domain.entities.UserPart.User.Location", "Location")
+                        .WithOne("User")
+                        .HasForeignKey("Domain.entities.UserPart.User.User", "LocationId");
+
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("Domain.entities.Cart.Carts", b =>
@@ -572,6 +670,12 @@ namespace Data.Migrations
             modelBuilder.Entity("Domain.entities.UserPart.Roles.Role", b =>
                 {
                     b.Navigation("UserSelectedRoles");
+                });
+
+            modelBuilder.Entity("Domain.entities.UserPart.User.Location", b =>
+                {
+                    b.Navigation("User")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.entities.UserPart.User.User", b =>

@@ -68,8 +68,13 @@ public class AccountRepository : IAccountRepository
     }
     public bool SuperAdmin(int id)
     {
-      var user =  _dbContext.Users.Find(id).SuperAdmin;
-        return user;
+        if(id != null)
+        {
+            var user = _dbContext.Users.Find(id).SuperAdmin;
+            return user;
+        }
+        return false;
+   
     }
     #endregion
 
