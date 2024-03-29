@@ -1,9 +1,5 @@
 ﻿using Domain.entities.UserPart.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Domain.IRepository.AccountRepositorieInterfaces
 {
@@ -22,6 +18,9 @@ namespace Domain.IRepository.AccountRepositorieInterfaces
         int CountUsers();
         int CountAdmins();
         Task<List<User>> GetUsersAsync();
+        Task<List<User>> ListOfAdmins();
+      void  EditUser(User user);
+        User finduser(int id);
         #endregion
     }
 }

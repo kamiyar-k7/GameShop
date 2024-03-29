@@ -47,7 +47,7 @@ public class HomeController : Controller
             return View(about);
 
         }
-		return null;
+		return View();
        
     }
 	[HttpPost]

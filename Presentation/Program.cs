@@ -87,8 +87,13 @@ builder.Services.AddScoped<ILayoutService , LayoutService>();
 // Dashboard 
 builder.Services.AddScoped<IAdminHomeService , AdminHomeService>();
 
+
 #region Users
 builder.Services.AddScoped<IUserService, UsersService>();
+
+
+//admins 
+builder.Services.AddScoped<IAdminService , AdminService>();
 #endregion
 
 #endregion

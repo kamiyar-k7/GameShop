@@ -21,7 +21,8 @@ public class HomeRepository : IHomeRepository
   
     public async Task<AboutUs?> AboutUs()
     {
-        return await _dbContext.AboutUs.FirstOrDefaultAsync();
+         var a =  await _dbContext.AboutUs.FirstOrDefaultAsync();
+        return a;
     }
 
     public async Task ContactUs(ContactUs contactUs)

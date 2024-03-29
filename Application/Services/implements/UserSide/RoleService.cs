@@ -1,6 +1,5 @@
 ﻿using Application.Services.Interfaces.UserSide;
 using Domain.entities.UserPart.Roles;
-using Domain.entities.UserPart.User;
 using Domain.IRepository.AccountRepositorieInterfaces;
 using Domain.IRepository.RoleRepositoryInterface;
 
@@ -45,9 +44,6 @@ public class RoleService : IRoleService
             }
 
         }
-
-
-
 
         return false;
     }

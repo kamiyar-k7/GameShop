@@ -1,21 +1,15 @@
-﻿using Domain.entities.UserPart.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
-namespace Domain.entities.UserPart.Roles
+namespace Domain.entities.UserPart.Roles;
+
+public class UserSelectedRole
 {
-    public class UserSelectedRole
-    {
-        public int Id { get; set; }
-        public int UserId { get; set; }
-        public int RoleId { get; set; }
+    public int Id { get; set; }
+    public int UserId { get; set; }
+    public int RoleId { get; set; }
 
-        #region rels
-        public Role Role { get; set; }
-        public User.User User { get; set; }
-        #endregion
-    }
+    #region rels
+    public Role Role { get; set; }
+    public User.User User { get; set; }
+    #endregion
 }

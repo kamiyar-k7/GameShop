@@ -4,6 +4,7 @@ using Application.Helpers;
 using Application.Services.Interfaces.UserSide;
 using Application.ViewModel.AdminSide;
 using Application.ViewModel.UserSide;
+using Domain.entities.UserPart.Roles;
 using Domain.entities.UserPart.User;
 using Domain.IRepository.AccountRepositorieInterfaces;
 using Domain.IRepository.CommentRepositoryInterface;
@@ -76,8 +77,21 @@ public class AccountService : IAccountService
         user.Email = model.Email;
         user.Password = PassHelper.EncodePasswordMd5(model.Password);
         user.PhoneNumber = model.PhoneNumber.Trim();
+       
+
+        user.UserSelectedRoles = new List<UserSelectedRole>();
+
+        // Create a UserSelectedRole object and assign role ID
+        var userSelectedRole = new UserSelectedRole
+        {
+            RoleId = 3 // Assuming you want to assign the role with ID 3
+        };
+
+        // Add the UserSelectedRole object to the collection
+        user.UserSelectedRoles.Add(userSelectedRole);
 
         return user;
+
     }
 
     public async Task<bool> AddToDataBase(SignUpDto model, CancellationToken cancellation)

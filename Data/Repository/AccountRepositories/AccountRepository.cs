@@ -1,6 +1,7 @@
 ﻿using Data.ShopDbcontext;
 using Domain.entities.UserPart.User;
 using Domain.IRepository.AccountRepositorieInterfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -61,17 +62,24 @@ public class AccountRepository : IAccountRepository
         _dbContext.Attach(user);
 
         _dbContext.Entry(user).Property(u => u.UserName).IsModified = true;
-       
-         _dbContext.Entry(user).Property(u => u.UserAvatar).IsModified = true;
-        
+
+        _dbContext.Entry(user).Property(u => u.UserAvatar).IsModified = true;
+
+
 
     }
+  
     public bool SuperAdmin(int id)
     {
         if(id != null)
         {
+            
             var user = _dbContext.Users.Find(id).SuperAdmin;
+            if (user)
+            {
+
             return user;
+            }
         }
         return false;
    
@@ -108,10 +116,42 @@ public class AccountRepository : IAccountRepository
             cart = x.cart,
             Comments = x.Comments,
             Created = x.Created,
+        }).ToListAsync();
+    }
+
+    public User finduser(int id)
+    {
+       return _dbContext.Users.Find(id);
+    }
+    public void UpdateByAdmin(User user)
+    {
+        _dbContext.Users.Update(user);
+        _dbContext.SaveChanges();
+    }
+
+    public void EditUser(User user)
+    {
+        // Since you're updating multiple properties, you can directly update the entity
+        UpdateByAdmin(user);
+    }
+    #endregion
+
+    #region Admins
+
+    public async Task<List<User>> ListOfAdmins()
+    {
+        return await _dbContext.Users.Where(x=> x.IsDelete == false && x.UserSelectedRoles.Any(x=> x.Role.RoleUniqueName == "Admin")).Select(x=> new User()
+        {
+            Created = x.Created,
+            Id = x.Id,
+            Email = x.Email ,
+            UserAvatar= x.UserAvatar ,
+            UserName = x.UserName ,
             
             
         }).ToListAsync();
     }
+
     #endregion
 
     #endregion

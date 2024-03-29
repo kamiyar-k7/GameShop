@@ -26,7 +26,7 @@
                         <td>@users.Created</td>
                         <td>@users.Id</td>
                         <td>
-                            <button data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="Edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                            <a asp-area="Admin" asp-controller="Users" asp-action="UserDetails" asp-route-Id="@users.Id" data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="Edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                             <button data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="Trash"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                         </td>
                     </tr>
@@ -47,3 +47,4 @@
         </div>
     </div>
 </div>
+
