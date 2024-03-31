@@ -4,6 +4,10 @@ using Application.Services.Interfaces.UserSide;
 using Application.ViewModel.AdminSide;
 using Domain.IRepository.AccountRepositorieInterfaces;
 using Domain.entities.UserPart.User;
+using Domain.IRepository.RoleRepositoryInterface;
+using Domain.entities.UserPart.Roles;
+using Application.Helpers;
+using System.Reflection;
 
 namespace Application.Services.implements.AdminSide;
 
@@ -11,13 +15,15 @@ public class UsersService : IUserService
 {
     #region Ctor
     private readonly IAccountRepository _account;
+    private readonly IRoleRepository _roleRepository;
     private readonly ILayoutService _layoutService;
     private readonly IRoleService _roleservice;
-    public UsersService(IAccountRepository account, ILayoutService layoutService , IRoleService roleService)
+    public UsersService(IAccountRepository account, ILayoutService layoutService , IRoleService roleService , IRoleRepository roleRepository)
     {
         _account = account;
         _layoutService = layoutService;
         _roleservice = roleService;
+        _roleRepository = roleRepository;
 
     }
 
@@ -76,12 +82,31 @@ public class UsersService : IUserService
 
         return model;
     }
+
+    public List<AllRolesVeiwModel> allRoles()
+    {
+        var roles = _roleRepository.GetRoles();
+
+        List<AllRolesVeiwModel> model = new List<AllRolesVeiwModel>();
+
+        foreach (var item in roles)
+        {
+            AllRolesVeiwModel childmodel = new AllRolesVeiwModel()
+            {
+                Id = item.Id,
+                RoleName = item.RoleTitle,
+            };
+            model.Add(childmodel);  
+        }
+        return model;   
+    
+    }
     
     public async Task<List< UserRolesVeiwModel>> UserRoles(int id)
     {
 		var roles = await _roleservice.GetUserRoles(id);
         List<UserRolesVeiwModel> model = new List<UserRolesVeiwModel>();
-
+     
         foreach (var role1 in roles)
         {
 			UserRolesVeiwModel childmodel = new UserRolesVeiwModel()
@@ -102,24 +127,63 @@ public class UsersService : IUserService
         var admin = await _layoutService.AdminInfo(AdminId);
         var user = await FillUser(UserId);
         var roles = await UserRoles(UserId);
+        var allroles = allRoles();
         UserDetailViewModel model = new UserDetailViewModel()
         {
             Admin = admin,
             User = user,
           SelectedRoles = roles,
+          AllRoles =  allroles,
         };
 
         return model;
     }
 
-    public bool EditUser(OneUserViewModel details, List< UserRolesVeiwModel> roles)
+    public  bool EditUser(OneUserViewModel details, List<int> selectedroles)
     {
         var user =  _account.finduser(details.Id);
 
-           user.UserName = details.UserName;
-        user.Email = details.Email;    
-        
-        _account.EditUser(user);
+        user.UserName = details.UserName;
+        user.Email = details.Email;
+
+        #region Set new Image 
+        if (details.pictureFile != null)
+        {
+            //Save New Image
+            user.UserAvatar = NameGenerator.GenerateUniqCode() + Path.GetExtension(details.pictureFile.FileName);
+
+            string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/images/UserAvatar", user.UserAvatar);
+            using (var stream = new FileStream(imagePath, FileMode.Create))
+            {
+                details.pictureFile.CopyTo(stream);
+            }
+
+        }
+        #endregion
+        #region Update User Roles 
+
+        var userroles =  _roleRepository.listOfUserSelectedRoles(details.Id);
+        if(userroles != null && userroles.Any()) 
+        {
+            _roleRepository.DeleteSelectedroles(userroles);
+        }
+
+        if(selectedroles != null && selectedroles.Any())
+        {
+            foreach (var roleid in selectedroles)
+            {
+                UserSelectedRole userSelectedRole = new UserSelectedRole()
+                {
+                    RoleId = roleid,
+                    UserId = user.Id,
+                };
+                _roleRepository.AddUserSelectedrole(userSelectedRole);
+            }
+          
+        }
+        #endregion
+
+        _account.UpdateByAdmin(user);
         return true;
         
     }

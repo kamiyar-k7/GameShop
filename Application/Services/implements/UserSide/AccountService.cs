@@ -81,13 +81,12 @@ public class AccountService : IAccountService
 
         user.UserSelectedRoles = new List<UserSelectedRole>();
 
-        // Create a UserSelectedRole object and assign role ID
         var userSelectedRole = new UserSelectedRole
         {
-            RoleId = 3 // Assuming you want to assign the role with ID 3
+            RoleId = 3 
         };
 
-        // Add the UserSelectedRole object to the collection
+     
         user.UserSelectedRoles.Add(userSelectedRole);
 
         return user;

@@ -46,12 +46,12 @@ public class UsersController : BaseController
         return View(model);
     }
     [HttpPost , ValidateAntiForgeryToken]
-    public  IActionResult EditUser(UserDetailViewModel model)
+    public  IActionResult EditUser(UserDetailViewModel model , List<int> selectedroles  )
     {
         var details = model.User;
-        var roles = model.SelectedRoles;
+     
 
-        var update =   _userService.EditUser(details, roles);
+        var update =   _userService.EditUser(details,  selectedroles);
         if (update)
         {
             return RedirectToAction("UserDetails", new { id = details.Id });

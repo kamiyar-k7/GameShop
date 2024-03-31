@@ -18,11 +18,34 @@ public class RolesRepository  : IRoleRepository
     }
     #endregion
 
+    public  List<Role> GetRoles()
+    {
+        return _DbContext.Roles.ToList(); 
+    }
 
     public async Task<List<Role>> GetUserRolesById(int Id)
     {
-        var roles = await   _DbContext.SelectedRole.Where(x=> x.UserId == Id).Select(x=> x.Role).ToListAsync();
-       return roles;
-    } 
+        return await   _DbContext.SelectedRole.Where(x=> x.UserId == Id).Select(x=> x.Role).ToListAsync();
+     
+    }
+    public  List<UserSelectedRole> listOfUserSelectedRoles(int userid)
+    {
+        return _DbContext.SelectedRole.Where(x => x.UserId == userid).ToList();
+    }
+    
+    public  void DeleteSelectedroles(List<UserSelectedRole> userSelectedRoles) 
+    {
+        _DbContext.SelectedRole.RemoveRange(userSelectedRoles);
+    }
+    public void  AddUserSelectedrole(UserSelectedRole userSelectedRole)
+    {
+         _DbContext.SelectedRole.AddAsync(userSelectedRole); 
+    }
+    public void SaveChanges()
+    {
+        _DbContext.SaveChanges();
+    }
+
+
 }
 

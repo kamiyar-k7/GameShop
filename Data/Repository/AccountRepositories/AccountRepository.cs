@@ -1,7 +1,6 @@
 ﻿using Data.ShopDbcontext;
 using Domain.entities.UserPart.User;
 using Domain.IRepository.AccountRepositorieInterfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -119,7 +118,7 @@ public class AccountRepository : IAccountRepository
         }).ToListAsync();
     }
 
-    public User finduser(int id)
+    public User? finduser(int id)
     {
        return _dbContext.Users.Find(id);
     }
@@ -129,11 +128,7 @@ public class AccountRepository : IAccountRepository
         _dbContext.SaveChanges();
     }
 
-    public void EditUser(User user)
-    {
-        // Since you're updating multiple properties, you can directly update the entity
-        UpdateByAdmin(user);
-    }
+   
     #endregion
 
     #region Admins

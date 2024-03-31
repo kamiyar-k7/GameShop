@@ -19,8 +19,8 @@ namespace Domain.IRepository.AccountRepositorieInterfaces
         int CountAdmins();
         Task<List<User>> GetUsersAsync();
         Task<List<User>> ListOfAdmins();
-      void  EditUser(User user);
-        User finduser(int id);
+        void UpdateByAdmin(User user);
+        User? finduser(int id);
         #endregion
     }
 }

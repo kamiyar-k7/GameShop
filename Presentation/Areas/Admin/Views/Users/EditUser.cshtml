@@ -4,7 +4,7 @@
 	Layout = "_AdminLayout";
 }
 
-<form asp-area="Admin" asp-controller="Users" asp-action="EditUser"  method="post">
+<form asp-area="Admin" asp-controller="Users" asp-action="EditUser" enctype="multipart/form-data" method="post">
 
     <div class="single-product-tab-area mg-b-30">
         <!-- Single pro tab review Start-->
@@ -44,18 +44,27 @@
                                             </div>
                                         
                                             <div class="form-radio">
-                                              
-                                               @foreach (var item in Model.SelectedRoles)
+                                                @foreach (var role in Model.AllRoles)
                                                 {
-                                                    <div class="radio radiofill">
-                                                        <label>
-                                                            <input type="checkbox" checked name="imageSize" value="largest"><i class="helper"></i>@item.RoleName
-                                                        </label>
-                                                    </div>
-                                                }
-                                                  
-                                                 
+                                                    if(Model.SelectedRoles.Any(x => x.Id == role.Id))
+                                                    {
+                                                        <div class="radio radiofill">
+                                                            <label>
+                                                                <input type="checkbox" checked name="selectedroles" value="@role.Id"><i class="helper"></i>@role.RoleName
+                                                            </label>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="radio radiofill">
+                                                            <label>
+                                                                <input type="checkbox" name="selectedroles" value="@role.Id"><i class="helper"></i>@role.RoleName
+                                                            </label>
+                                                        </div>
+                                                    }
                                               
+                                                }
+
                                             </div>
                                           </div>
 
@@ -73,17 +82,29 @@
                                                 <div class="row">
                                                     <div class="col-lg-4">
                                                         <div class="pro-edt-img">
-                                                            <img src="~/adminpanel/img/new-product/5-small.jpg" alt="">
+                                                            <div id="imagePreview" class="mb-3 text-center">
+                                                                @if (string.IsNullOrEmpty(Model.User.UserAvatar))
+                                                                {
+                                                                    <img id="preview" src="" alt="none" >
+                                                                }
+                                                                else
+                                                                {
+                                                                    <img id="preview" src="~/assets/images/UserAvatar/@Model.User.UserAvatar" alt="Image Preview" >
+                                                                }
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-8">
                                                         <div class="row">
                                                             <div class="col-lg-12">
+
                                                                 <div class="product-edt-pix-wrap">
                                                                     <div class="input-group">
                                                                         <span class="input-group-addon">TT</span>
                                                                         <input type="text" class="form-control" placeholder="Edit User Avatar" readonly style="color:#152036; background-color:#152036;">
                                                                     </div>
+
+
                                                                     <div class="row">
 
                                                                         <div class="col-lg-6">
@@ -92,11 +113,14 @@
                                                                                     Remove
                                                                                     <i class="fa fa-times" aria-hidden="true"></i>
                                                                                 </button>
-                                                                                <button type="submit" class="btn btn-ctl-bt waves-effect waves-light">
+                                                                                <input type="file" asp-for="@Model.User.pictureFile" class="btn btn-ctl-bt waves-effect waves-light" id="formFile" onchange="previewImage(event)">
                                                                                     Change
                                                                                     <i class="fa fa-times" aria-hidden="true"></i>
-                                                                                </button>
+                                                                                </input>
                                                                             </div>
+
+                                                                           
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -143,3 +167,17 @@
 
 
 
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById('preview');
+        const file = input.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function () {
+            preview.src = reader.result;
+        };
+
+        reader.readAsDataURL(file);
+    }
+</script>
