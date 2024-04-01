@@ -49,7 +49,7 @@ public class UsersController : BaseController
     public  IActionResult EditUser(UserDetailViewModel model , List<int> selectedroles  )
     {
         var details = model.User;
-     
+        ViewData["Title"] = "EditUser";
 
         var update =   _userService.EditUser(details,  selectedroles);
         if (update)
@@ -57,6 +57,19 @@ public class UsersController : BaseController
             return RedirectToAction("UserDetails", new { id = details.Id });
         }
         return View(model);
+    }
+
+    public IActionResult DeleteUserAvatar(int id)
+    {
+        _userService.DeleteUserAvatar(id);
+
+        return RedirectToAction("userDetails" , new {id = id});
+    }
+    public async Task<IActionResult> DeleteUser(int Id)
+    {
+        await _userService.DeleteUser(Id);
+
+        return RedirectToAction(nameof(Users));
     }
     #endregion
 

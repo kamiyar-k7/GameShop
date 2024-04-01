@@ -7,7 +7,6 @@ using Domain.entities.UserPart.User;
 using Domain.IRepository.RoleRepositoryInterface;
 using Domain.entities.UserPart.Roles;
 using Application.Helpers;
-using System.Reflection;
 
 namespace Application.Services.implements.AdminSide;
 
@@ -18,7 +17,7 @@ public class UsersService : IUserService
     private readonly IRoleRepository _roleRepository;
     private readonly ILayoutService _layoutService;
     private readonly IRoleService _roleservice;
-    public UsersService(IAccountRepository account, ILayoutService layoutService , IRoleService roleService , IRoleRepository roleRepository)
+    public UsersService(IAccountRepository account, ILayoutService layoutService, IRoleService roleService, IRoleRepository roleRepository)
     {
         _account = account;
         _layoutService = layoutService;
@@ -55,7 +54,7 @@ public class UsersService : IUserService
 
     public async Task<UsersViewModel> UsersViewModel(int id)
     {
-       
+
         var users = await ListOFUers();
         UsersViewModel usersViewModel = new UsersViewModel()
         {
@@ -83,6 +82,7 @@ public class UsersService : IUserService
         return model;
     }
 
+    // move to roles
     public List<AllRolesVeiwModel> allRoles()
     {
         var roles = _roleRepository.GetRoles();
@@ -96,33 +96,35 @@ public class UsersService : IUserService
                 Id = item.Id,
                 RoleName = item.RoleTitle,
             };
-            model.Add(childmodel);  
+            model.Add(childmodel);
         }
-        return model;   
-    
+        return model;
+
     }
-    
-    public async Task<List< UserRolesVeiwModel>> UserRoles(int id)
+
+
+
+    public async Task<List<UserRolesVeiwModel>> UserRoles(int id)
     {
-		var roles = await _roleservice.GetUserRoles(id);
+        var roles = await _roleservice.GetUserRoles(id);
         List<UserRolesVeiwModel> model = new List<UserRolesVeiwModel>();
-     
+
         foreach (var role1 in roles)
         {
-			UserRolesVeiwModel childmodel = new UserRolesVeiwModel()
-			{
-				Id = role1.Id,
-				RoleName = role1.RoleTitle,
-			};
+            UserRolesVeiwModel childmodel = new UserRolesVeiwModel()
+            {
+                Id = role1.Id,
+                RoleName = role1.RoleTitle,
+            };
             model.Add(childmodel);
-		}
-	
+        }
+
 
         return model;
 
     }
 
-    public async Task<UserDetailViewModel > UserDetail(int AdminId , int UserId)
+    public async Task<UserDetailViewModel> UserDetail(int AdminId, int UserId)
     {
         var admin = await _layoutService.AdminInfo(AdminId);
         var user = await FillUser(UserId);
@@ -132,16 +134,16 @@ public class UsersService : IUserService
         {
             Admin = admin,
             User = user,
-          SelectedRoles = roles,
-          AllRoles =  allroles,
+            SelectedRoles = roles,
+            AllRoles = allroles,
         };
 
         return model;
     }
 
-    public  bool EditUser(OneUserViewModel details, List<int> selectedroles)
+    public bool EditUser(OneUserViewModel details, List<int> selectedroles)
     {
-        var user =  _account.finduser(details.Id);
+        var user = _account.Finduser(details.Id);
 
         user.UserName = details.UserName;
         user.Email = details.Email;
@@ -149,8 +151,16 @@ public class UsersService : IUserService
         #region Set new Image 
         if (details.pictureFile != null)
         {
+            // delete exist image 
+            string existimage = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/images/UserAvatar", user.UserAvatar);
+
+            if (File.Exists(existimage))
+            {
+                File.Delete(existimage);
+            }
             //Save New Image
             user.UserAvatar = NameGenerator.GenerateUniqCode() + Path.GetExtension(details.pictureFile.FileName);
+
 
             string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/images/UserAvatar", user.UserAvatar);
             using (var stream = new FileStream(imagePath, FileMode.Create))
@@ -162,13 +172,13 @@ public class UsersService : IUserService
         #endregion
         #region Update User Roles 
 
-        var userroles =  _roleRepository.listOfUserSelectedRoles(details.Id);
-        if(userroles != null && userroles.Any()) 
+        var userroles = _roleRepository.listOfUserSelectedRoles(details.Id);
+        if (userroles != null && userroles.Any())
         {
             _roleRepository.DeleteSelectedroles(userroles);
         }
 
-        if(selectedroles != null && selectedroles.Any())
+        if (selectedroles != null && selectedroles.Any())
         {
             foreach (var roleid in selectedroles)
             {
@@ -179,15 +189,33 @@ public class UsersService : IUserService
                 };
                 _roleRepository.AddUserSelectedrole(userSelectedRole);
             }
-          
+
         }
         #endregion
 
         _account.UpdateByAdmin(user);
         return true;
-        
-    }
-    
 
-    
+    }
+
+  public  void DeleteUserAvatar(int id)
+    {
+        
+        var user = _account.Finduser(id);
+
+        string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/images/UserAvatar", user.UserAvatar);
+
+        if (File.Exists(imagePath))
+        {
+            File.Delete(imagePath);
+        }
+        _account.DeleteUserAvatar(user);
+    }
+    public async Task DeleteUser(int userid)
+    {
+        await _account.DeleteUser(userid);
+   
+    }
+
+
 }

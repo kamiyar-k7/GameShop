@@ -44,7 +44,7 @@ font-family: "Asap-Regular";
 src:url(../fonts/Asap-Regular.ttf);
 }
 .padding-all{
-padding:100px;
+padding:50px;
 }
 
 .header {
@@ -57,6 +57,7 @@ width:7%;
 
 p ,a{
 font-family: "Asap-Regular";
+color:red;
 }
 .header h1 {
 font-size:50px;

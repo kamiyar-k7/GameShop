@@ -109,13 +109,14 @@
 
                                                                         <div class="col-lg-6">
                                                                             <div class="product-edt-remove">
-                                                                                <button type="button" class="btn btn-ctl-bt waves-effect waves-light">
+                                                                                <a asp-area="admin" asp-controller="Users" asp-action="DeleteUserAvatar" asp-route-Id="@Model.User.Id" style="margin-bottom: 20px; margin-top:20px;" type="button" class="btn btn-ctl-bt waves-effect waves-light">
                                                                                     Remove
                                                                                     <i class="fa fa-times" aria-hidden="true"></i>
-                                                                                </button>
+                                                                                </a>
+                                                                                <br />
                                                                                 <input type="file" asp-for="@Model.User.pictureFile" class="btn btn-ctl-bt waves-effect waves-light" id="formFile" onchange="previewImage(event)">
-                                                                                    Change
-                                                                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                                                               
+                                                                                    
                                                                                 </input>
                                                                             </div>
 

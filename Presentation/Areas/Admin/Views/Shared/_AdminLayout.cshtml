@@ -93,7 +93,7 @@
             <div class="left-custom-menu-adp-wrap comment-scrollbar">
                 <nav class="sidebar-nav left-sidebar-menu-pro">
                     <ul class="metismenu" id="menu1">
-                        <li class="active">
+                        <li class="">
                             <a class="has-arrow" href="index.html">
                                 <i class="icon nalika-home icon-wrap"></i>
                                 <span class="mini-click-non">Ecommerce</span>
@@ -189,6 +189,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                                         <div class="header-right-info">
                                             <ul class="nav navbar-nav mai-top-nav header-right-menu">
@@ -203,12 +204,12 @@
                                                     <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
                                                      
                                                         <li>
-                                                            <a href="#"><span class="icon nalika-user author-log-ic"></span> My Profile</a>
+                                                            <a  asp-controller="Users" asp-action="UserDetails" asp-route-Id="@Model.Admin.Id"><span class="icon nalika-user author-log-ic"></span> My Profile</a>
                                                         </li>
                                                        
                                                        
                                                         <li>
-                                                            <a href="login.html"><span class="icon nalika-unlocked author-log-ic"></span> Log Out</a>
+                                                            <a  asp-controller="Account" asp-action="Logout" asp-route-Id="@Model.Admin.Id"><span class="icon nalika-unlocked author-log-ic"></span> Log Out</a>
                                                         </li>
                                                     </ul>
                                                 </li>
@@ -230,7 +231,7 @@
                             <div class="mobile-menu">
                                 <nav id="dropdown">
                                     <ul class="mobile-menu-nav">
-                                        <li class="active">
+                                        <li class="">
                                             <a class="has-arrow" href="index.html">
                                                 <i class="icon nalika-home icon-wrap"></i>
                                                 <span class="mini-click-non">Ecommerce</span>

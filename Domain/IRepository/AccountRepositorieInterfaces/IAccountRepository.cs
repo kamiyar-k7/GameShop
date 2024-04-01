@@ -5,7 +5,7 @@ namespace Domain.IRepository.AccountRepositorieInterfaces
 {
     public interface IAccountRepository
     {
-        Task<User?> FindUser(User user);
+        Task<User?> FindUserSignIn(User user);
         Task SaveChanges();
         Task AddToDataBase(User user, CancellationToken cancellation);
         bool IsExist(string PhoneNumbers, string email);
@@ -20,7 +20,9 @@ namespace Domain.IRepository.AccountRepositorieInterfaces
         Task<List<User>> GetUsersAsync();
         Task<List<User>> ListOfAdmins();
         void UpdateByAdmin(User user);
-        User? finduser(int id);
+        User? Finduser(int id);
+        void DeleteUserAvatar(User user);
+        Task DeleteUser(int userid);
         #endregion
     }
 }

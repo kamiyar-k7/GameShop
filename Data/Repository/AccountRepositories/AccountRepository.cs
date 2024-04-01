@@ -23,9 +23,9 @@ public class AccountRepository : IAccountRepository
     {
         await _dbContext.SaveChangesAsync();
     }
-    public async Task<User?> FindUser(User user)
+    public async Task<User?> FindUserSignIn(User user)
     {
-        return await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == user.Email && x.Password == user.Password);
+        return await _dbContext.Users.Where(x=> x.IsDelete == false).FirstOrDefaultAsync(x => x.Email == user.Email && x.Password == user.Password);
     }
 
     public async Task AddToDataBase(User user, CancellationToken cancellation)
@@ -35,7 +35,7 @@ public class AccountRepository : IAccountRepository
 
     public bool IsExist(string PhoneNumber, string email)
     {
-        return _dbContext.Users.Any(x => x.PhoneNumber == PhoneNumber || x.Email == email);
+        return _dbContext.Users.Where(x=> x.IsDelete == false).Any(x => x.PhoneNumber == PhoneNumber || x.Email == email);
 
     }
     public async Task<User?> GetUserByIdAsync(int id)
@@ -92,12 +92,17 @@ public class AccountRepository : IAccountRepository
     #region Dashboard
     public int CountUsers()
     {
-        return _dbContext.Users.Select(x => x.IsDelete == false).Count();
+        return _dbContext.Users.Where(x => x.IsDelete == false).Count();
     }
     public int CountAdmins()
     {
         var adminRoleId = _dbContext.Roles.FirstOrDefault(r => r.RoleUniqueName == "Admin")?.Id;
-        return _dbContext.SelectedRole.Count(ur => ur.RoleId == adminRoleId);
+
+        // Count users where IsDelete is false and the associated role is "Admin"
+        var count = _dbContext.SelectedRole
+            .Count(ur => ur.RoleId == adminRoleId && !ur.User.IsDelete);
+
+        return count;
     }
     #endregion
 
@@ -118,7 +123,7 @@ public class AccountRepository : IAccountRepository
         }).ToListAsync();
     }
 
-    public User? finduser(int id)
+    public User? Finduser(int id)
     {
        return _dbContext.Users.Find(id);
     }
@@ -127,9 +132,27 @@ public class AccountRepository : IAccountRepository
         _dbContext.Users.Update(user);
         _dbContext.SaveChanges();
     }
+    public void DeleteUserAvatar (User user)
+    {
+      
+        user.UserAvatar = "";
+        UpdateByAdmin(user);    
+    }
+    public async Task DeleteUser(int userid)
+    {
 
+        var user = Finduser(userid);
+        user.IsDelete = true;
+        UpdateByAdmin(user);
+        
+
+    
+    }
    
     #endregion
+
+
+
 
     #region Admins
 

@@ -42,7 +42,7 @@ public class AccountService : IAccountService
         };
 
 
-        var user = await _account.FindUser(usercheck);
+        var user = await _account.FindUserSignIn(usercheck);
         if (user != null)
         {
             SignInDto signInDto = new SignInDto()
