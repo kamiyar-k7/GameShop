@@ -1,7 +1,7 @@
 ﻿using Domain.entities.UserPart.User;
 
 
-namespace Domain.IRepository.AccountRepositorieInterfaces
+namespace Domain.IRepository.UserPart
 {
     public interface IAccountRepository
     {

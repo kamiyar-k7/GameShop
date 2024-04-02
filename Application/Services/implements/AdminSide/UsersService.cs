@@ -2,11 +2,10 @@
 using Application.Services.Interfaces.AdminSide;
 using Application.Services.Interfaces.UserSide;
 using Application.ViewModel.AdminSide;
-using Domain.IRepository.AccountRepositorieInterfaces;
 using Domain.entities.UserPart.User;
-using Domain.IRepository.RoleRepositoryInterface;
 using Domain.entities.UserPart.Roles;
 using Application.Helpers;
+using Domain.IRepository.UserPart;
 
 namespace Application.Services.implements.AdminSide;
 
@@ -151,13 +150,17 @@ public class UsersService : IUserService
         #region Set new Image 
         if (details.pictureFile != null)
         {
-            // delete exist image 
-            string existimage = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/images/UserAvatar", user.UserAvatar);
-
-            if (File.Exists(existimage))
+            if(user.UserAvatar != null)
             {
-                File.Delete(existimage);
+                // delete exist image 
+                string existimage = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/images/UserAvatar", user.UserAvatar);
+
+                if (File.Exists(existimage))
+                {
+                    File.Delete(existimage);
+                }
             }
+
             //Save New Image
             user.UserAvatar = NameGenerator.GenerateUniqCode() + Path.GetExtension(details.pictureFile.FileName);
 
@@ -202,14 +205,18 @@ public class UsersService : IUserService
     {
         
         var user = _account.Finduser(id);
-
-        string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/images/UserAvatar", user.UserAvatar);
-
-        if (File.Exists(imagePath))
+        if (user.UserAvatar != null)
         {
-            File.Delete(imagePath);
+                string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/images/UserAvatar", user.UserAvatar);
+
+            if (File.Exists(imagePath))
+            {
+                File.Delete(imagePath);
+            }
+           
         }
         _account.DeleteUserAvatar(user);
+
     }
     public async Task DeleteUser(int userid)
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.IRepository.GameRepositoryInteface
+namespace Domain.IRepository.GamePart
 {
     public interface IGameRepository
     {
@@ -18,7 +18,7 @@ namespace Domain.IRepository.GameRepositoryInteface
 
         #region Admin Side
         public int GameCount();
-    
+
         #endregion
 
     }

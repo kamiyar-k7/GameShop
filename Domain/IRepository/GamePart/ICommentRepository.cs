@@ -1,8 +1,6 @@
-﻿
+﻿using Domain.entities.Comments;
 
-using Domain.entities.Comments;
-
-namespace Domain.IRepository.CommentRepositoryInterface;
+namespace Domain.IRepository.GamePart;
 
 public interface ICommentRepository
 {

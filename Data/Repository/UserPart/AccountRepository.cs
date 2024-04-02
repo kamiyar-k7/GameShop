@@ -1,10 +1,10 @@
 ﻿using Data.ShopDbcontext;
 using Domain.entities.UserPart.User;
-using Domain.IRepository.AccountRepositorieInterfaces;
+using Domain.IRepository.UserPart;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace Data.Repository.AccountRepositories;
+namespace Data.Repository.UserPart;
 
 public class AccountRepository : IAccountRepository
 {
@@ -18,14 +18,14 @@ public class AccountRepository : IAccountRepository
     #endregion
 
     #region General
- 
+
     public async Task SaveChanges()
     {
         await _dbContext.SaveChangesAsync();
     }
     public async Task<User?> FindUserSignIn(User user)
     {
-        return await _dbContext.Users.Where(x=> x.IsDelete == false).FirstOrDefaultAsync(x => x.Email == user.Email && x.Password == user.Password);
+        return await _dbContext.Users.Where(x => x.IsDelete == false).FirstOrDefaultAsync(x => x.Email == user.Email && x.Password == user.Password);
     }
 
     public async Task AddToDataBase(User user, CancellationToken cancellation)
@@ -35,28 +35,28 @@ public class AccountRepository : IAccountRepository
 
     public bool IsExist(string PhoneNumber, string email)
     {
-        return _dbContext.Users.Where(x=> x.IsDelete == false).Any(x => x.PhoneNumber == PhoneNumber || x.Email == email);
+        return _dbContext.Users.Where(x => x.IsDelete == false).Any(x => x.PhoneNumber == PhoneNumber || x.Email == email);
 
     }
     public async Task<User?> GetUserByIdAsync(int id)
     {
-       
-        return await _dbContext.Users.Include(x => x.cart).Include(x=> x.Comments).Where(x => x.Id == id).Select(x => new User
+
+        return await _dbContext.Users.Include(x => x.cart).Include(x => x.Comments).Where(x => x.Id == id).Select(x => new User
         {
             Id = x.Id,
             cart = x.cart,
             Comments = x.Comments,
             Created = x.Created,
-            Email = x.Email,    
-             UserAvatar = x.UserAvatar,
-             UserName = x.UserName ,
-          
-            
+            Email = x.Email,
+            UserAvatar = x.UserAvatar,
+            UserName = x.UserName,
+
+
 
         }).FirstOrDefaultAsync();
     }
 
-   public  void  Update(User user)
+    public void Update(User user)
     {
         _dbContext.Attach(user);
 
@@ -67,21 +67,21 @@ public class AccountRepository : IAccountRepository
 
 
     }
-  
+
     public bool SuperAdmin(int id)
     {
-        if(id != null)
+        if (id != null)
         {
-            
+
             var user = _dbContext.Users.Find(id).SuperAdmin;
             if (user)
             {
 
-            return user;
+                return user;
             }
         }
         return false;
-   
+
     }
     #endregion
 
@@ -110,12 +110,12 @@ public class AccountRepository : IAccountRepository
     #region Users
     public async Task<List<User>> GetUsersAsync()
     {
-        return await _dbContext.Users.Include(x => x.Comments).Include(x=> x.cart).Include(x=> x.UserSelectedRoles).Where(x=> x.IsDelete == false).Select(x=> new User()
+        return await _dbContext.Users.Include(x => x.Comments).Include(x => x.cart).Include(x => x.UserSelectedRoles).Where(x => x.IsDelete == false).Select(x => new User()
         {
             Id = x.Id,
-            UserName = x.UserName ,
-            Email = x.Email ,
-            UserAvatar = x.UserAvatar ,
+            UserName = x.UserName,
+            Email = x.Email,
+            UserAvatar = x.UserAvatar,
             UserSelectedRoles = x.UserSelectedRoles,
             cart = x.cart,
             Comments = x.Comments,
@@ -125,18 +125,18 @@ public class AccountRepository : IAccountRepository
 
     public User? Finduser(int id)
     {
-       return _dbContext.Users.Find(id);
+        return _dbContext.Users.Find(id);
     }
     public void UpdateByAdmin(User user)
     {
         _dbContext.Users.Update(user);
         _dbContext.SaveChanges();
     }
-    public void DeleteUserAvatar (User user)
+    public void DeleteUserAvatar(User user)
     {
-      
-        user.UserAvatar = "";
-        UpdateByAdmin(user);    
+
+        user.UserAvatar = null;
+        UpdateByAdmin(user);
     }
     public async Task DeleteUser(int userid)
     {
@@ -144,11 +144,11 @@ public class AccountRepository : IAccountRepository
         var user = Finduser(userid);
         user.IsDelete = true;
         UpdateByAdmin(user);
-        
 
-    
+
+
     }
-   
+
     #endregion
 
 
@@ -158,15 +158,15 @@ public class AccountRepository : IAccountRepository
 
     public async Task<List<User>> ListOfAdmins()
     {
-        return await _dbContext.Users.Where(x=> x.IsDelete == false && x.UserSelectedRoles.Any(x=> x.Role.RoleUniqueName == "Admin")).Select(x=> new User()
+        return await _dbContext.Users.Where(x => x.IsDelete == false && x.UserSelectedRoles.Any(x => x.Role.RoleUniqueName == "Admin")).Select(x => new User()
         {
             Created = x.Created,
             Id = x.Id,
-            Email = x.Email ,
-            UserAvatar= x.UserAvatar ,
-            UserName = x.UserName ,
-            
-            
+            Email = x.Email,
+            UserAvatar = x.UserAvatar,
+            UserName = x.UserName,
+
+
         }).ToListAsync();
     }
 

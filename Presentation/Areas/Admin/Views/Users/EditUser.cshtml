@@ -109,7 +109,7 @@
 
                                                                         <div class="col-lg-6">
                                                                             <div class="product-edt-remove">
-                                                                                <a asp-area="admin" asp-controller="Users" asp-action="DeleteUserAvatar" asp-route-Id="@Model.User.Id" style="margin-bottom: 20px; margin-top:20px;" type="button" class="btn btn-ctl-bt waves-effect waves-light">
+                                                                                <a asp-area="admin" asp-controller="Users" asp-action="DeleteUserAvatar" asp-route-Id="@Model.User.Id" style="margin-bottom: 20px; margin-top:20px;" type="button" class="btn btn-ctl-bt waves-effect waves-light" onclick="return confirm('are you sure you want Delete User Avatar ?')">
                                                                                     Remove
                                                                                     <i class="fa fa-times" aria-hidden="true"></i>
                                                                                 </a>

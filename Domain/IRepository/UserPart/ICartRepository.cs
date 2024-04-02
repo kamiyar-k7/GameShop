@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.IRepository.CartRepositoryInterface
+namespace Domain.IRepository.UserPart
 {
     public interface ICartRepository
     {
@@ -16,8 +16,8 @@ namespace Domain.IRepository.CartRepositoryInterface
         Task AddUserCartToCarts(Carts carts);
         Task<List<CartDeatails>> GetCartsAsync(int userid);
         Task<CartDeatails?> FindCartById(int id);
-         void DeleteCart(CartDeatails cartDeatails);
-        CartDeatails? IsGameExistInCart(int cartid,int? id, string? platform);
+        void DeleteCart(CartDeatails cartDeatails);
+        CartDeatails? IsGameExistInCart(int cartid, int? id, string? platform);
         Task AddOneMoreToCart(CartDeatails cartDeatails);
     }
 }

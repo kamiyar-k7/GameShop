@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.IRepository.GenreRepostoryInterface
+namespace Domain.IRepository.GamePart
 {
     public interface IGenreRepository
     {

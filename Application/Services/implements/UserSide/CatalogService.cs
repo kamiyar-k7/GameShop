@@ -3,9 +3,7 @@ using Application.ViewModel.UserSide;
 using Domain.entities.GamePart.Game;
 using Domain.entities.GamePart.Genre;
 using Domain.entities.GamePart.Platform;
-using Domain.IRepository.GameRepositoryInteface;
-using Domain.IRepository.GenreRepostoryInterface;
-using Domain.IRepository.PlatformRepositoryInterface;
+using Domain.IRepository.GamePart;
 using System;
 
 

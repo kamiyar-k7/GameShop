@@ -1,7 +1,6 @@
 ﻿using Application.Services.Interfaces.UserSide;
 using Domain.entities.UserPart.Roles;
-using Domain.IRepository.AccountRepositorieInterfaces;
-using Domain.IRepository.RoleRepositoryInterface;
+using Domain.IRepository.UserPart;
 
 namespace Application.Services.implements.UserSide;
 

@@ -31,7 +31,7 @@ public class Game
     public ICollection<GameSelectedPlatform> gameSelectedPlatforms { get; set; }
     public List<CartDeatails> CartDeatails { get; set; }
     public ICollection<Comments.Comments> Comments { get; set; }
-
+    public GameStatus GameStatus { get; set; }
     #endregion
 
 

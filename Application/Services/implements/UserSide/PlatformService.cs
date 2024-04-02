@@ -1,7 +1,6 @@
 ﻿using Application.Services.Interfaces.UserSide;
 using Domain.entities.GamePart.Platform;
-using Domain.IRepository.PlatformRepositoryInterface;
-
+using Domain.IRepository.GamePart;
 
 namespace Application.Services.implements.UserSide;
 

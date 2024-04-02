@@ -2,7 +2,7 @@
 using Domain.entities.Cart;
 using Domain.entities.GamePart.Game;
 using Domain.entities.UserPart.User;
-using Domain.IRepository.CartRepositoryInterface;
+using Domain.IRepository.UserPart;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Repository.CartRepository
+namespace Data.Repository.UserPart
 {
     public class CartRepository : ICartRepository
     {
@@ -42,10 +42,10 @@ namespace Data.Repository.CartRepository
         }
         public async Task AddOneMoreToCart(CartDeatails cartDeatails)
         {
-             _dbContext.CartDeatails.Update(cartDeatails);
+            _dbContext.CartDeatails.Update(cartDeatails);
             await SaveChanges();
         }
-        public CartDeatails? IsGameExistInCart(int cartid,int? id, string? platform)
+        public CartDeatails? IsGameExistInCart(int cartid, int? id, string? platform)
         {
             return _dbContext.CartDeatails.FirstOrDefault(x => x.CartId == cartid && x.Game.Id == id && x.Platform == platform);
         }
@@ -66,7 +66,7 @@ namespace Data.Repository.CartRepository
             _dbContext.CartDeatails.Remove(cartDeatails);
         }
 
-      
+
         #endregion
 
 

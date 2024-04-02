@@ -2,10 +2,8 @@
 using Application.Services.Interfaces.UserSide;
 using Application.ViewModel.UserSide;
 using Domain.entities.Cart;
-using Domain.IRepository.AccountRepositorieInterfaces;
-using Domain.IRepository.CartRepositoryInterface;
-using Domain.IRepository.GameRepositoryInteface;
-using Domain.IRepository.PlatformRepositoryInterface;
+using Domain.IRepository.GamePart;
+using Domain.IRepository.UserPart;
 
 
 

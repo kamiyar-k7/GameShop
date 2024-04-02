@@ -2,9 +2,9 @@
 
 using Application.Services.Interfaces.AdminSide;
 using Application.ViewModel.AdminSide;
-using Domain.IRepository.AccountRepositorieInterfaces;
-using Domain.IRepository.GameRepositoryInteface;
+using Domain.IRepository.GamePart;
 using Domain.IRepository.HomeRepositoryInterface;
+using Domain.IRepository.UserPart;
 
 namespace Application.Services.implements.AdminSide;
 

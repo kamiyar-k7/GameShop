@@ -1,10 +1,10 @@
 ﻿using Data.ShopDbcontext;
 using Domain.entities.GamePart.Platform;
-using Domain.IRepository.PlatformRepositoryInterface;
+using Domain.IRepository.GamePart;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace Data.Repository.Platformrepository;
+namespace Data.Repository.GamePart;
 
 public class PlatformRepository : IPlatformRepository
 {
@@ -12,7 +12,7 @@ public class PlatformRepository : IPlatformRepository
     private readonly GameShopDbContext _gameShopDbContext;
     public PlatformRepository(GameShopDbContext gameShopDbContext)
     {
-            _gameShopDbContext = gameShopDbContext;
+        _gameShopDbContext = gameShopDbContext;
     }
     #endregion
     #region Genreal 
@@ -23,7 +23,7 @@ public class PlatformRepository : IPlatformRepository
 
     public async Task<List<Platform>> GetPlatformsById(int Id)
     {
-        var plats =  await _gameShopDbContext.SelectedPlatforms.Where(x => x.GameId == Id).Select(x => x.Platform).ToListAsync();
+        var plats = await _gameShopDbContext.SelectedPlatforms.Where(x => x.GameId == Id).Select(x => x.Platform).ToListAsync();
         return plats;
     }
     public async Task<Platform?> GetSelectedPlatform(int id)

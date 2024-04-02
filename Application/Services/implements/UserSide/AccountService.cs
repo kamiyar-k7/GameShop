@@ -1,4 +1,4 @@
-﻿using Application.DTOs.AdminSide.Admin;
+﻿
 using Application.DTOs.UserSide.Account;
 using Application.Helpers;
 using Application.Services.Interfaces.UserSide;
@@ -6,9 +6,9 @@ using Application.ViewModel.AdminSide;
 using Application.ViewModel.UserSide;
 using Domain.entities.UserPart.Roles;
 using Domain.entities.UserPart.User;
-using Domain.IRepository.AccountRepositorieInterfaces;
-using Domain.IRepository.CommentRepositoryInterface;
-using Domain.IRepository.GameRepositoryInteface;
+
+using Domain.IRepository.GamePart;
+using Domain.IRepository.UserPart;
 
 
 namespace Application.Services.implements.UserSide;

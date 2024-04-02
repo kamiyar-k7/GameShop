@@ -2,10 +2,7 @@
 using Application.ViewModel.UserSide;
 using Domain.entities.Comments;
 using Domain.entities.GamePart.Game;
-using Domain.IRepository.CommentRepositoryInterface;
-using Domain.IRepository.GameRepositoryInteface;
-using Domain.IRepository.GenreRepostoryInterface;
-using Domain.IRepository.PlatformRepositoryInterface;
+using Domain.IRepository.GamePart;
 
 
 

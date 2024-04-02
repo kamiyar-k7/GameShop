@@ -4,25 +4,13 @@ using Application.Services.implements.AdminSide;
 using Application.Services.implements.UserSide;
 using Application.Services.Interfaces.AdminSide;
 using Application.Services.Interfaces.UserSide;
-using Data.Repository.AccountRepositories;
-using Data.Repository.CartRepository;
-using Data.Repository.CatalogRepository;
-using Data.Repository.CommentRepository;
-using Data.Repository.GameRepository;
-using Data.Repository.GenreRepository;
+using Data.Repository.GamePart;
 using Data.Repository.HomeRepsitory;
-using Data.Repository.Platformrepository;
-using Data.Repository.RolesRepository;
+using Data.Repository.UserPart;
 using Data.ShopDbcontext;
-using Domain.IRepository.AccountRepositorieInterfaces;
-using Domain.IRepository.CartRepositoryInterface;
-using Domain.IRepository.CatalogRepositoryInterface;
-using Domain.IRepository.CommentRepositoryInterface;
-using Domain.IRepository.GameRepositoryInteface;
-using Domain.IRepository.GenreRepostoryInterface;
+using Domain.IRepository.GamePart;
 using Domain.IRepository.HomeRepositoryInterface;
-using Domain.IRepository.PlatformRepositoryInterface;
-using Domain.IRepository.RoleRepositoryInterface;
+using Domain.IRepository.UserPart;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 #endregion
@@ -44,7 +32,7 @@ builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddScoped<IStoreService, StoreService>();
 
 // catalog 
-builder.Services.AddScoped<ICatalogRepository, CatalogRepository>();
+
 builder.Services.AddScoped<ICatalogService, CatalogService>();
 
 // Product 
