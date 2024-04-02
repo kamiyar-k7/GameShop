@@ -1,5 +1,4 @@
-﻿
-using Application.DTOs.UserSide.Account;
+﻿using Application.DTOs.UserSide.Account;
 using Application.Helpers;
 using Application.Services.Interfaces.UserSide;
 using Application.ViewModel.AdminSide;
@@ -11,7 +10,7 @@ using Domain.IRepository.GamePart;
 using Domain.IRepository.UserPart;
 
 
-namespace Application.Services.implements.UserSide;
+namespace Application.Services.implements.SitteSide;
 
 public class AccountService : IAccountService
 {
@@ -77,16 +76,16 @@ public class AccountService : IAccountService
         user.Email = model.Email;
         user.Password = PassHelper.EncodePasswordMd5(model.Password);
         user.PhoneNumber = model.PhoneNumber.Trim();
-       
+
 
         user.UserSelectedRoles = new List<UserSelectedRole>();
 
         var userSelectedRole = new UserSelectedRole
         {
-            RoleId = 3 
+            RoleId = 3
         };
 
-     
+
         user.UserSelectedRoles.Add(userSelectedRole);
 
         return user;
@@ -213,23 +212,7 @@ public class AccountService : IAccountService
 
     #region Admin Side
 
-    public async Task<AdminInformationViewModel> AdminInfoView(int id)
-    {
-        var admin = await _account.GetUserByIdAsync(id);
 
-        AdminInformationViewModel adminview = new AdminInformationViewModel()
-        {
-            DateTime = admin.Created,
-            Email = admin.Email,
-            Id = id,
-            PhoneNumber = admin.PhoneNumber,
-            UserAvatar = admin.UserAvatar,
-            UserName = admin.UserName,
-
-        };
-
-        return adminview;
-    }
 
     #endregion
 }

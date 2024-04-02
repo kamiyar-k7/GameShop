@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.UserSide.StorePart;
+using Application.ViewModel.AdminSide;
 using Application.ViewModel.UserSide;
 
 
@@ -12,4 +13,8 @@ public interface IProductService
     Task<bool> SubmitComment(CommentsViewModelProduct model);
     #endregion
 
+
+    #region Admin Side
+    Task<AdminProductViewModel> ListOfProducts(int userid);
+    #endregion
 }

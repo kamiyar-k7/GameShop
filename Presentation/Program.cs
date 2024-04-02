@@ -1,7 +1,7 @@
 #region Usings
 
 using Application.Services.implements.AdminSide;
-using Application.Services.implements.UserSide;
+using Application.Services.implements.SitteSide;
 using Application.Services.Interfaces.AdminSide;
 using Application.Services.Interfaces.UserSide;
 using Data.Repository.GamePart;

@@ -7,7 +7,7 @@ using Domain.IRepository.GamePart;
 using System;
 
 
-namespace Application.Services.implements.UserSide;
+namespace Application.Services.implements.SitteSide;
 
 public class CatalogService : ICatalogService
 {

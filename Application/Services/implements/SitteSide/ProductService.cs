@@ -1,4 +1,6 @@
-﻿using Application.Services.Interfaces.UserSide;
+﻿using Application.Services.Interfaces.AdminSide;
+using Application.Services.Interfaces.UserSide;
+using Application.ViewModel.AdminSide;
 using Application.ViewModel.UserSide;
 using Domain.entities.Comments;
 using Domain.entities.GamePart.Game;
@@ -6,7 +8,7 @@ using Domain.IRepository.GamePart;
 
 
 
-namespace Application.Services.implements.UserSide;
+namespace Application.Services.implements.SitteSide;
 
 public class ProductService : IProductService
 {
@@ -15,16 +17,19 @@ public class ProductService : IProductService
     private readonly IPlatformRepository _platformRepository;
     private readonly IGenreRepository _genreRepository;
     private readonly ICommentRepository _commentRepository;
+    private readonly ILayoutService _layoutService;
 
     public ProductService(IGameRepository gameRepository,
         IPlatformRepository platformRepository,
         IGenreRepository genreRepository,
-       ICommentRepository commentRepository)
+       ICommentRepository commentRepository,
+       ILayoutService layoutService)
     {
         _gamerepository = gameRepository;
         _platformRepository = platformRepository;
         _genreRepository = genreRepository;
         _commentRepository = commentRepository;
+        _layoutService = layoutService;
     }
     #endregion
 
@@ -234,4 +239,46 @@ public class ProductService : IProductService
 
 
     #endregion
+
+
+    #region Admin Side
+    public async Task<AdminProductViewModel> ListOfProducts(int userid)
+    {
+        var admin = await _layoutService.AdminInfo(userid);
+        var games = await _gamerepository.GamesAsync();
+
+        List<ListOfGamesAdmin> gamesmodel = new List<ListOfGamesAdmin>();
+        if(games != null)
+        {
+            foreach (var game in games)
+            {
+
+                ListOfGamesAdmin ChildGamesmodel = new ListOfGamesAdmin()
+                {
+                    Id = game.Id,
+                    Name = game.Name,
+                    Price = game.Price,
+                    Quantity = game.Quantitiy,
+                    ScreenShots = new List<string>() ,
+                   Status = game.GameStatus,
+
+                };
+                gamesmodel.Add(ChildGamesmodel);
+            }
+        }
+     
+
+
+
+
+        AdminProductViewModel adminProductViewModel = new AdminProductViewModel()
+        {
+            Admin = admin,
+            ListGames = gamesmodel
+            
+        };
+        return adminProductViewModel;
+    }
+    #endregion
+
 }

@@ -1,6 +1,5 @@
 ﻿using Application.DTOs.AdminSide.Admin;
 using Application.DTOs.UserSide.Account;
-using Application.ViewModel.AdminSide;
 using Application.ViewModel.UserSide;
 
 
@@ -18,9 +17,4 @@ public interface IAccountService
 
     #endregion
 
-    // -------------------------------------------------------
-    #region Admin Side
-
-    Task<AdminInformationViewModel> AdminInfoView(int id);
-    #endregion
 }

@@ -3,7 +3,7 @@ using Application.Services.Interfaces.UserSide;
 using Domain.entities.GamePart.Genre;
 using Domain.IRepository.GamePart;
 
-namespace Application.Services.implements.UserSide;
+namespace Application.Services.implements.SitteSide;
 
 public class GenreService : IGenreService
 {

@@ -2,7 +2,7 @@
 using Domain.entities.UserPart.Roles;
 using Domain.IRepository.UserPart;
 
-namespace Application.Services.implements.UserSide;
+namespace Application.Services.implements.SitteSide;
 
 public class RoleService : IRoleService
 {

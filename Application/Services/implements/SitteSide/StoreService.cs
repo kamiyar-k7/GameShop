@@ -2,7 +2,7 @@
 using Application.Services.Interfaces.UserSide;
 using Domain.IRepository.GamePart;
 
-namespace Application.Services.implements.UserSide
+namespace Application.Services.implements.SitteSide
 {
     public class StoreService : IStoreService
     {

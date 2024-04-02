@@ -3,7 +3,7 @@ namespace Domain.entities.GamePart.Game;
 
 public enum GameStatus
 {
-    Active,
-    InActive,
-    Drafted,
+    Active, //0
+    InActive, // 1
+    Drafted, // 2
 }

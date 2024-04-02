@@ -2,7 +2,7 @@
 using Domain.entities.GamePart.Platform;
 using Domain.IRepository.GamePart;
 
-namespace Application.Services.implements.UserSide;
+namespace Application.Services.implements.SitteSide;
 
 public class PlatformService : IPlatformService
 {
