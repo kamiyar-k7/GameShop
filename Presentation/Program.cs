@@ -24,7 +24,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IHomeService, HomeService>();
 builder.Services.AddScoped<IHomeRepository , HomeRepository>();
 
-// Game 
+// AdminGameDetailsViewModel 
 builder.Services.AddScoped<IGameRepository, GameRepository>();
 
 #region Store part

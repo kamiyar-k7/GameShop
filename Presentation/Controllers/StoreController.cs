@@ -97,7 +97,7 @@ public class StoreController : Controller
     public async Task<IActionResult> Product(int Id)
     {
 
-        var Product = await _productService.GetProductById(Id);
+        var Product = await _productService.GetProductById(Id , 0);
 
         if (Product != null)
         {

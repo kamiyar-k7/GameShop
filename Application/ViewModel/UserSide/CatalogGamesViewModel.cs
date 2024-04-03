@@ -1,8 +1,10 @@
 ﻿
 
+using Application.ViewModel.AdminSide;
+
 namespace Application.ViewModel.UserSide;
 
-public class CatalogViewModel
+public record CatalogViewModel : AdminBaseViewModel
 {
    public  List<CatalogGamesViewModel?> Games { get; set; }
     public List<CatalogPlatformsViewModel?> Platforms { get; set; }
@@ -11,7 +13,7 @@ public class CatalogViewModel
 
 }
 
-public class CatalogGamesViewModel
+public record CatalogGamesViewModel
 {
     public int GameId { get; set; }
     public string Name { get; set; }
@@ -30,20 +32,20 @@ public class CatalogGamesViewModel
 
 
 }
-public class CatalogPlatformsViewModel
+public record CatalogPlatformsViewModel
 {
     public int Id { get; set; }
     public string Name { get; set; }
     public string PlatformUniqueName { get; set; }
 
 }
-public class CatalogGenreViewModel
+public record CatalogGenreViewModel
 {
     public int Id { get; set; }
     public string GenreName { get; set; }
     public string GenreUniqueName { get; set; }
 }
-public class CatalogSearchViewModel
+public record CatalogSearchViewModel
 {
     // sarch 
     public string? SearchString { get; set; }

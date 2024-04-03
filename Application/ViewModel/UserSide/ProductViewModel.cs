@@ -1,20 +1,25 @@
 ﻿
 
+
+using Domain.entities.GamePart.Game;
+
 namespace Application.ViewModel.UserSide;
 
 
 
-public class ProductViewModel
+public record ProductViewModel  : CatalogViewModel
 {
     public GameViewModelProduct Game { get; set; }
-    public List<PlatformViewModelProduct> Platforms { get; set; }
+    public List<GameViewModelProduct> ListGames  { get; set; }
+   public List<PlatformViewModelProduct> Platforms { get; set; }
     public List<GenreViewModelProduct> Genres { get; set; }
     public List<RelatedGamesProduct> RelatedGames { get; set; }
     public List<CommentsViewModelProduct> Comments { get; set; }
+   
 
 
     #region Post
-    public int Quantity { get; set; }
+
     public int Platformid { get; set; }
     public string Comment {  get; set; }
     public string Title { get; set; }
@@ -23,7 +28,15 @@ public class ProductViewModel
 
 }
 
-// RECORD
+public record PostProductViewModel
+{
+
+    public int Platformid { get; set; }
+    public string Comment { get; set; }
+    public string Title { get; set; }
+    public decimal Rating { get; set; }
+}
+
 public record GameViewModelProduct
 {
     public int Id { get; set; }
@@ -36,6 +49,7 @@ public record GameViewModelProduct
     public string Trailer { get; set; }
     public string SystemRequirements { get; set; }
     public List<string> ScreenShots { get; set; }
+    public GameStatus Status { get; set; }
 }
 
 

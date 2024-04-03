@@ -1,4 +1,6 @@
 ﻿
+using Domain.entities.GamePart.Game;
+
 namespace Application.DTOs.UserSide.StorePart;
 
 public class StoreDto
@@ -12,6 +14,7 @@ public class StoreDto
     public string Trailer { get; set; }
     public DateOnly ReleaseDate { get; set; }
     public List<string> Screenshots { get; set; }
+    public GameStatus GameStatus { get; set; }  
     #endregion
     public string search {  get; set; }
 }

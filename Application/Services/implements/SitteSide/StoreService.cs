@@ -28,23 +28,27 @@ namespace Application.Services.implements.SitteSide
                 List<StoreDto> model = new List<StoreDto>();
                 foreach (var game in games)
                 {
-                    StoreDto childmodel = new StoreDto()
+                    if(game.GameStatus == Domain.entities.GamePart.Game.GameStatus.Active)
                     {
-                        Id = game.Id,
-                        Name = game.Name,
-                        Description = game.Description,
-                        Price = game.Price,
-                        Rating = game.Rating,
-                        Screenshots = new List<string>(),
-                        ReleaseDate = game.ReleaseDate
+                        StoreDto childmodel = new StoreDto()
+                        {
+                            Id = game.Id,
+                            Name = game.Name,
+                            Description = game.Description,
+                            Price = game.Price,
+                            Rating = game.Rating,
+                            Screenshots = new List<string>(),
+                            ReleaseDate = game.ReleaseDate
 
 
-                    };
-                    foreach (var screenshot in game.Screenshots)
-                    {
-                        childmodel.Screenshots.Add(screenshot.AvararUrl);
+                        };
+                        foreach (var screenshot in game.Screenshots)
+                        {
+                            childmodel.Screenshots.Add(screenshot.AvararUrl);
+                        }
+                        model.Add(childmodel);
                     }
-                    model.Add(childmodel);
+         
                 }
                 return model;
             }

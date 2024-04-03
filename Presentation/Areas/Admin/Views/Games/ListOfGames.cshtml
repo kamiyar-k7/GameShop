@@ -1,4 +1,4 @@
-﻿@model Application.ViewModel.AdminSide.AdminProductViewModel;
+﻿@model Application.ViewModel.UserSide.ProductViewModel;
 
 @{
     Layout = "_AdminLayout";
@@ -11,7 +11,7 @@
                 <div class="product-status-wrap">
                     <h4>Products List</h4>
                     <div class="add-product">
-                        <a href="product-edit.html">Add Product</a>
+                        <a asp-area="Admin" asp-controller="Games" asp-action="AddGame" >Add Product</a>
                     </div>
                     <table>
                         <tbody>
@@ -55,8 +55,8 @@
                                     <td>In Stock</td>
                                     <td>$17</td>
                                     <td>
-                                        <button data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="Edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                        <button data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="Trash"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                        <a asp-area="Admin" asp-controller="Games" asp-action="GameDetails" asp-route-Id="@game.Id" style="padding:5px;" data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="Edit" type="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                        <a asp-area="Admin" asp-controller="Games" asp-action="DeleteUser" asp-route-Id="@game.Id" style="padding:5px;" data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="Trash" type="button" onclick="return confirm('are you sure you want Delete User ?')"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                     </td>
                                 </tr>
                             }
