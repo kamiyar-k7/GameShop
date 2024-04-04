@@ -4,6 +4,9 @@
     Layout = "_adminLayout";
 }
 
+<form asp-area="Admin" asp-controller="Games" asp-action="AddGame" enctype="multipart/form-data">
+
+
 <div class="single-product-tab-area mg-b-30">
     <!-- Single pro tab review Start-->
     <div class="single-pro-review-area">
@@ -16,6 +19,7 @@
                             <li class=""><a href="#reviews"><i class="icon nalika-picture" aria-hidden="true"></i> Pictures And Trailr</a></li>
                             <li><a href="#INFORMATION"><i class="icon nalika-chat" aria-hidden="true"></i> Platforms And Genres</a></li>
                         </ul>
+
                         <div id="myTabContent" class="tab-content custom-product-edit">
 
                             <div class="product-tab-list tab-pane fade active in" id="description">
@@ -26,22 +30,26 @@
 
                                             <div class="input-group mg-b-pro-edt">
                                                 <span class="input-group-addon"><i class="icon nalika-edit" aria-hidden="true"></i></span>
-                                                <input type="text" class="form-control" placeholder="Product Title">
+                                                <input type="text" required class="form-control" asp-for="@Model.Game.Name" placeholder="Product Title">
                                             </div>
                                             <div class="input-group mg-b-pro-edt">
                                                 <span class="input-group-addon"><i class="fa fa-usd" aria-hidden="true"></i></span>
-                                                <input type="text" class="form-control" placeholder="Regular Price">
+                                                <input type="number" required class="form-control" asp-for="@Model.Game.Price" placeholder="Regular Price">
                                             </div>
 
                                             <div class="input-group mg-b-pro-edt">
                                                 <span class="input-group-addon"><i class="icon nalika-favorites" aria-hidden="true"></i></span>
-                                                <input type="text" class="form-control" placeholder="Quantity">
+                                                <input type="number" required class="form-control" asp-for="@Model.Game.Quantity" placeholder="Quantity">
                                             </div>
 
                                             <div class="input-group mg-b-pro-edt">
-                                                <span class="input-group-addon"><i class="icon nalika-favorites-button" aria-hidden="true"></i></span>
-                                                <input type="text" rows="5" class="form-control" placeholder="Product Description"> </input>
+                                                <span class="input-group-addon"><i class="icon nalika-favorites-button" aria-hidden="true"></i></span>  
+                                                    <textarea rows="5" required class="form-control" asp-for="Game.Description" placeholder="Product Description"></textarea>
                                             </div>
+                                                <div class="input-group mg-b-pro-edt">
+                                                    <span class="input-group-addon"><i class="icon nalika-edit" aria-hidden="true"></i></span>
+                                                    <input type="text" required class="form-control" asp-for="@Model.Game.Company" placeholder="Company">
+                                                </div>
                                         </div>
                                     </div>
 
@@ -49,14 +57,22 @@
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 
                                         <div class="review-content-section">
+                                                <div class="input-group mg-b-pro-edt">
+                                                    <span class="input-group-addon"><i class="icon nalika-edit" aria-hidden="true"></i></span>
+                                                    <input type="date" required class="form-control" asp-for="@Model.Game.ReleaseDate" placeholder="Relese Date">
+                                                </div>
+                                                <div class="input-group mg-b-pro-edt">
+                                                    <span class="input-group-addon"><i class="icon nalika-edit" aria-hidden="true"></i></span>
+                                                    <textarea required rows="5"  class="form-control" asp-for="@Model.Game.SystemRequirements" placeholder="System Requirment"> </textarea>
+                                                </div>
 
-                                            <select style="margin-bottom:10px;" name="select" class="form-control pro-edt-select form-control-primary">
-                                                <option value="opt1">Select Status</option>
-                                                <option value="opt2">2</option>
-                                                <option value="opt3">3</option>
-                                                <option value="opt4">4</option>
-
-
+                                            <select required style="margin-bottom:10px;" name="select" class="form-control pro-edt-select form-control-primary">
+                                                <option  value="">Select Status</option>
+                                                        <option value="0">Active</option>
+                                                        <option value="1">InActive</option>
+                                                        <option value="2">Draft</option>
+   
+                                                  
                                             </select>
 
                                             <div class="input-group mg-b-pro-edt">
@@ -65,33 +81,33 @@
 
                                             </div>
 
-                                            <div class="stars stars-example-css detail-stars">
-                                                <div class="review-rating">
-                                                    <fieldset class="rating">
-                                                        <input type="radio" id="star5" name="rating" value="5">
-                                                        <label class="full" for="star5"></label>
-                                                        <input type="radio" id="star4half" name="rating" value="4 and a half">
-                                                        <label class="half" for="star4half"></label>
-                                                        <input type="radio" id="star4" name="rating" value="4">
-                                                        <label class="full" for="star4"></label>
-                                                        <input type="radio" id="star3half" name="rating" value="3 and a half">
-                                                        <label class="half" for="star3half"></label>
-                                                        <input type="radio" id="star3" name="rating" value="3">
-                                                        <label class="full" for="star3"></label>
-                                                        <input type="radio" id="star2half" name="rating" value="2 and a half">
-                                                        <label class="half" for="star2half"></label>
-                                                        <input type="radio" id="star2" name="rating" value="2">
-                                                        <label class="full" for="star2"></label>
-                                                        <input type="radio" id="star1half" name="rating" value="1 and a half">
-                                                        <label class="half" for="star1half"></label>
-                                                        <input type="radio" id="star1" name="rating" value="1">
-                                                        <label class="full" for="star1"></label>
-                                                        <input type="radio" id="starhalf" name="rating" value="half">
-                                                        <label class="half" for="starhalf"></label>
-                                                    </fieldset>
+                                                <div class="stars stars-example-css detail-stars">
+                                                    <div  class="review-rating">
+                                                        <fieldset  class="rating">
+                                                            <input  asp-for="Game.Rating" type="radio" id="star5" value="5">
+                                                            <label class="full" for="star5"></label>
+                                                            <input asp-for="Game.Rating" type="radio" id="star4half" value="4.5">
+                                                            <label class="half" for="star4half"></label>
+                                                            <input asp-for="Game.Rating" type="radio" id="star4" value="4">
+                                                            <label class="full" for="star4"></label>
+                                                            <input asp-for="Game.Rating" type="radio" id="star3half" value="3.5">
+                                                            <label class="half" for="star3half"></label>
+                                                            <input asp-for="Game.Rating" type="radio" id="star3" value="3">
+                                                            <label class="full" for="star3"></label>
+                                                            <input asp-for="Game.Rating" type="radio" id="star2half" value="2.5">
+                                                            <label class="half" for="star2half"></label>
+                                                            <input asp-for="Game.Rating" type="radio" id="star2" value="2">
+                                                            <label class="full" for="star2"></label>
+                                                            <input asp-for="Game.Rating" type="radio" id="star1half" value="1.5">
+                                                            <label class="half" for="star1half"></label>
+                                                            <input asp-for="Game.Rating" type="radio" id="star1" value="1">
+                                                            <label class="full" for="star1"></label>
+                                                            <input asp-for="Game.Rating" type="radio" id="starhalf" value="0.5">
+                                                            <label class="half" for="starhalf"></label>
+                                                        </fieldset>
+                                                    </div>
+                                                    <div class="clear"></div>
                                                 </div>
-                                                <div class="clear"></div>
-                                            </div>
                                         </div>
 
 
@@ -102,18 +118,7 @@
 
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="text-center custom-pro-edt-ds">
-                                            <button type="button" class="btn btn-ctl-bt waves-effect waves-light m-r-10">
-                                                Save
-                                            </button>
-                                            <button type="button" class="btn btn-ctl-bt waves-effect waves-light">
-                                                Discard
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                        
                             </div>
 
                             <div class="product-tab-list tab-pane fade" id="reviews">
@@ -121,27 +126,23 @@
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="review-content-section">
-
+                                            <!-- Video -->
                                             <div class="row">
                                                 <div class="col-lg-4">
                                                     <div class="pro-edt-img">
-                                                        <div id="imagePreview" class="mb-3 text-center">
-                                                            @*  @if (string.IsNullOrEmpty(Model.Name))
-                                                            {
-                                                            <img id="preview" src="" alt="none">
-                                                            }
-                                                            else
-                                                            {
-                                                            <img id="preview" src="~/assets/images/UserAvatar/b322929f63a146bb94651bae589c19fc.jpg" alt="Image Preview">
-                                                            } *@
-                                                            <video  id="preview" style="width:80%" height="100%"  controls src="~/assets/Trailers/trailer.mp3" alt="Trailer Preview"> </video>
+                                                            <div  class="mb-3 text-center">
+
+                                                                <video  id="video-preview" style="width:80%" height="100%" controls src="~/assets/Trailers/trailer.mp3" alt="Trailer Preview"> </video>
+                                                            
+                                                        
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-8">
+                                                <div class="col-lg-8" >
+                                                 
                                                     <div class="row">
                                                         <div class="col-lg-12">
-
+                                                         
                                                             <div class="product-edt-pix-wrap">
                                                                 <div class="input-group">
                                                                     <span class="input-group-addon">TT</span>
@@ -158,10 +159,10 @@
                                                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                                                             </a>
                                                                             <br />
-                                                                            <input type="file"  class="btn btn-ctl-bt waves-effect waves-light" id="formFile" onchange="previewImage(event)">
 
+                                                                                <input type="file" asp-for="@Model.Game.VideoFile" class="btn btn-ctl-bt waves-effect waves-light" accept="video/*" id="video-file" onchange="previewVideo()">
+                                                                       
 
-                                                                            </input>
 
                                                                         </div>
 
@@ -172,71 +173,64 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <hr />
-                                            </div>
-                                     <hr />
+                                                 
 
-                                            <div class="row">
-                                                <div class="col-lg-4">
-                                                    <div class="pro-edt-img">
-                                                        <div id="imagePreview" class="mb-3 text-center">
-                                                           @*  @if (string.IsNullOrEmpty(Model.Name))
-                                                            {
-                                                                <img id="preview" src="" alt="none">
-                                                            }
-                                                            else
-                                                            {
+                                                </div>
+                                            </div>
+                                            <!--Video End-->
+                                            <hr />
+
+                                            <!--Image -->
+
+                                                <div class="row" id="imageRowsContainer">
+                                                    <div class="col-lg-4">
+                                                        <div class="pro-edt-img">
+                                                            <div id="imagePreview" class="mb-3 text-center">
+
+
                                                                 <img id="preview" src="~/assets/images/UserAvatar/b322929f63a146bb94651bae589c19fc.jpg" alt="Image Preview">
-                                                            } *@
-                                                            <img id="preview" src="~/assets/images/UserAvatar/b322929f63a146bb94651bae589c19fc.jpg" alt="Image Preview">
+
+
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-8">
-                                                    <div class="row">
-                                                        <div class="col-lg-12">
+                                                    <div class="col-lg-8">
+                                                        <div class="row">
+                                                            <div class="col-lg-12">
 
-                                                            <div class="product-edt-pix-wrap">
-                                                                <div class="input-group">
-                                                                    <span class="input-group-addon">TT</span>
-                                                                    <input type="text" class="form-control" placeholder="Add Game ScrrenShot" readonly style="color:#152036; background-color:#152036;">
-                                                                </div>
-
-
-                                                                <div class="row">
-
-                                                                    <div class="col-lg-6">
-                                                                        <div class="product-edt-remove">
-                                                                            <a asp-area="admin" asp-controller="Users" asp-action="DeleteUserAvatar" asp-route-Id="" style="margin-bottom: 20px; margin-top:20px;" type="button" class="btn btn-ctl-bt waves-effect waves-light" onclick="return confirm('are you sure you want Delete User Avatar ?')">
-                                                                                Remove
-                                                                                <i class="fa fa-times" aria-hidden="true"></i>
-                                                                            </a>
-                                                                            <br />
-                                                                            <input type="file"  class="btn btn-ctl-bt waves-effect waves-light" id="formFile" onchange="previewImage(event)">
+                                                                <div class="product-edt-pix-wrap">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon">TT</span>
+                                                                        <input type="text" class="form-control" placeholder="Add Game ScrrenShot" readonly style="color:#152036; background-color:#152036;">
+                                                                    </div>
 
 
-                                                                            </input>
+                                                                    <div class="row image-row">
+                                                                        <div class="col-lg-6">
+                                                                            <div class="product-edt-remove">
+                                                                                <a asp-area="admin" asp-controller="Users" asp-action="DeleteUserAvatar" asp-route-Id="" style="margin-bottom: 20px; margin-top:20px;" type="button" class="btn btn-ctl-bt waves-effect waves-light" onclick="return confirm('are you sure you want Delete User Avatar ?')">
+                                                                                    Remove
+                                                                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                                                                </a>
+                                                                                <br />
+                                                                                <input type="file" class="btn btn-ctl-bt waves-effect waves-light" id="formFile" asp-for="Game.FormFiles" onchange="previewImage(event)">
+                                                                            </div>
                                                                         </div>
-
-
-
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
                                             <hr />
-                                          
+                                                <button id="addImageRowBtn" class="btn btn-primary">Add Image</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                        
+
 
                             <div class="product-tab-list tab-pane fade" id="INFORMATION">
                                 <div class="row">
@@ -254,18 +248,20 @@
                                                         <div class="row">
                                                             <div class="col-lg-6">
                                                                 <div class="form-radio">
+                                                                    @foreach (var plats in  Model.Platforms)
+                                                                    {
+                                                                        <br />
+                                                                        <div style="margin:0px;" class="radio radiofill">
+                                                                            <label>
+                                                                                    <input type="checkbox" value="@plats.Id" name="selectedPlatforms"><i class="helper"></i>@plats.Name
+                                                                            </label>
+                                                                        </div>
+                                                                        <br />
+                                                                    }
 
-                                                                    <br />
-                                                                    <div style="margin:0px;" class="radio radiofill">
-                                                                        <label>
-                                                                            <input type="checkbox" name="checkbox"><i class="helper"></i>Largest Image
-                                                                        </label>
-                                                                    </div>
-                                                                    <br />
-                                                                 
                                                                 </div>
                                                             </div>
-                                                        
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -283,18 +279,21 @@
                                                         <div class="row">
                                                             <div class="col-lg-6">
                                                                 <div class="form-radio">
+                                                                    @foreach (var genres in Model.Genres)
+                                                                    {
+                                                                        <br />
+                                                                        <div style="margin:0px;" class="radio radiofill">
+                                                                            <label>
+                                                                                <input type="checkbox" value="@genres.Id" name="SelectedGenres"><i class="helper"></i>@genres.GenreName
+                                                                            </label>
+                                                                        </div>
+                                                                        <br />
+                                                                    }
 
-                                                                    <br />
-                                                                    <div style="margin:0px;" class="radio radiofill">
-                                                                        <label>
-                                                                            <input type="checkbox" name="checkbox"><i class="helper"></i>Largest Image
-                                                                        </label>
-                                                                    </div>
-                                                                    <br />
-                                                                 
+
                                                                 </div>
                                                             </div>
-                                                        
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -312,3 +311,80 @@
         </div>
     </div>
 </div>
+
+    <div class="footer-copyright-area">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="text-center custom-pro-edt-ds">
+                        <button type="submit" class="btn btn-ctl-bt waves-effect waves-light m-r-10">
+                            Save
+                        </button>
+                        <a asp-area="Admin" asp-controller="Games" asp-action="ListOfGames" type="submit" class="btn btn-ctl-bt waves-effect waves-light">
+                            Discard
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById('preview');
+        const file = input.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function () {
+            preview.src = reader.result;
+        };
+
+        reader.readAsDataURL(file);
+    }
+</script>
+
+
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById('addImageRowBtn').addEventListener('click', addNewImageRow);
+    });
+
+    function addNewImageRow(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Clone the existing image row
+        const newRow = document.querySelector('.image-row').cloneNode(true);
+
+        // Clear input field if needed
+        newRow.querySelector('input[type="file"]').value = '';
+
+        // Append the cloned row to the container
+        document.getElementById('imageRowsContainer').appendChild(newRow);
+    }
+</script>
+
+<!--Video Script-->
+<script>
+    function previewVideo() {
+        const videoFile = document.getElementById('video-file').files[0];
+        const videoPreview = document.getElementById('video-preview');
+
+        if (videoFile) {
+            const videoURL = URL.createObjectURL(videoFile);
+            videoPreview.src = videoURL;
+            videoPreview.style.display = 'block';
+        } else {
+            videoPreview.src = '';
+            videoPreview.style.display = 'none';
+        }
+    }
+</script>
+
+

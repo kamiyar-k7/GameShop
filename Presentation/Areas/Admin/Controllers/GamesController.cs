@@ -1,7 +1,5 @@
 ﻿using Application.Helpers;
-using Application.Services.Interfaces.AdminSide;
 using Application.Services.Interfaces.UserSide;
-using Application.ViewModel.AdminSide;
 using Application.ViewModel.UserSide;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,10 +29,10 @@ public class GamesController : BaseController
 
     }
 
-    public async Task<IActionResult> GameDetails()
+    public async Task<IActionResult> GameDetails(int id)
     {
        
-        var model = await _productService.ListOfProducts( (int)HttpContext.User.GetUserId());
+        var model = await _productService.GetProductById(id , (int)HttpContext.User.GetUserId());
         ViewData["Title"] = $"{model.Game.Name} Details";
         return View(model);
     }
@@ -51,13 +49,23 @@ public class GamesController : BaseController
     }
 
     [HttpPost, ValidateAntiForgeryToken]
-    public async Task<IActionResult> AddGame(ProductViewModel model , List<int> selectedGenres , List<int > selectedPlatforms)
+    public async Task<IActionResult> AddGame(ProductViewModel model , List<int> selectedGenres , List<int > selectedPlatforms , int selectedStatus)
     {
-        // game details
-        // game platforms 
-        // game genres 
+       
+        var res =   await _productService.AddNewGame(model.Game, selectedGenres, selectedPlatforms, selectedStatus);
+        if (res)
+        {
+            return RedirectToAction(nameof(ListOfGames));
+
+        }
+
+        return RedirectToAction(nameof(AddGame));
 
 
-        return View();
+
+
+
+
+
     }
 }

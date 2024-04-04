@@ -41,11 +41,11 @@ builder.Services.AddScoped<ICommentRepository , CommentRepository>();
 
 // Genre 
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
-builder.Services.AddScoped<IGenreService, GenreService>();
+
 
 // Platform
 builder.Services.AddScoped<IPlatformRepository, PlatformRepository>();
-builder.Services.AddScoped<IPlatformService, PlatformService>();
+
 
 #endregion
 

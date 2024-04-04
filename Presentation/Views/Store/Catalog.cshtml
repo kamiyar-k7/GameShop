@@ -166,7 +166,7 @@
                         <div class="col-lg-6">
                             <div class="nk-product-cat-2">
 
-                                @if (game.Screenshots != null)
+                                @if (game.Screenshots != null && game.Screenshots.Any())
                                 {
                                     var firstscreenshot = game.Screenshots.First();
 
@@ -266,7 +266,7 @@
                 {
                     <div class="col-lg-4 col-md-6">
                         <div class="nk-product-cat">
-                            @if (game.Screenshots != null)
+                            @if (game.Screenshots != null && game.Screenshots.Any())
                             {
                                 var firstscreenshot = game.Screenshots.First();
 

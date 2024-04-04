@@ -1,7 +1,4 @@
-﻿using Application.DTOs.UserSide.StorePart;
-using Application.ViewModel.AdminSide;
-using Application.ViewModel.UserSide;
-using Domain.entities.GamePart.Game;
+﻿using Application.ViewModel.UserSide;
 
 
 namespace Application.Services.Interfaces.UserSide;
@@ -19,5 +16,6 @@ public interface IProductService
     #region Admin Side
     Task<ProductViewModel> ListOfProducts(int userid);
     Task<ProductViewModel> ShowAddGame(int id);
+    Task<bool> AddNewGame(GameViewModelProduct model, List<int> selectedGenres, List<int> selectedPlatforms, int selectedStatus);
     #endregion
 }

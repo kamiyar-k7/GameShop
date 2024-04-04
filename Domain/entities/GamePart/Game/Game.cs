@@ -1,5 +1,4 @@
 ﻿using Domain.entities.Cart;
-using Domain.entities.Comments;
 using Domain.entities.GamePart.Genre;
 using Domain.entities.GamePart.Platform;
 using System.ComponentModel.DataAnnotations;

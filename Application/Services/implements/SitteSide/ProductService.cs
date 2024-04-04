@@ -1,10 +1,12 @@
-﻿using Application.Services.Interfaces.AdminSide;
+﻿using Application.Helpers;
+using Application.Services.Interfaces.AdminSide;
 using Application.Services.Interfaces.UserSide;
-using Application.ViewModel.AdminSide;
 using Application.ViewModel.UserSide;
 using Domain.entities.Comments;
 using Domain.entities.GamePart.Game;
 using Domain.entities.GamePart.Genre;
+using Domain.entities.GamePart.Platform;
+using Domain.entities.UserPart.User;
 using Domain.IRepository.GamePart;
 
 
@@ -20,24 +22,20 @@ public class ProductService : IProductService
     private readonly IGenreRepository _genreRepository;
     private readonly ICommentRepository _commentRepository;
     private readonly ILayoutService _layoutService;
-    private readonly  IPlatformService _platformService;
-    private readonly  IGenreService _genreService;
+  
+
 
     public ProductService(IGameRepository gameRepository,
         IPlatformRepository platformRepository,
         IGenreRepository genreRepository,
        ICommentRepository commentRepository,
-       ILayoutService layoutService,
-       IGenreService genreService ,
-       IPlatformService platformService)
+       ILayoutService layoutService)
     {
         _gamerepository = gameRepository;
         _platformRepository = platformRepository;
         _genreRepository = genreRepository;
         _commentRepository = commentRepository;
         _layoutService = layoutService;
-        _genreService = genreService;
-        _platformService = platformService;
     }
     #endregion
 
@@ -118,11 +116,10 @@ public class ProductService : IProductService
         return null;
     }
 
-    // fill Platforms \
-
-    public  async Task<List<PlatformViewModelProduct>> FillPlatform(int Id)
+    #region fill Platforms 
+    public async Task<List<PlatformViewModelProduct>> FillPlatformModel(List<Platform> platforms)
     {
-        var platforms = await _platformRepository.GetPlatformsById(Id);
+
         List<PlatformViewModelProduct> listofplatforms = new List<PlatformViewModelProduct>();
         if (platforms != null)
         {
@@ -140,11 +137,19 @@ public class ProductService : IProductService
         }
         return null;
     }
-
-    // fill Genres 
-    public async Task<List<GenreViewModelProduct>> FillGenre(int Id)
+    public async Task<List<PlatformViewModelProduct>> FillPlatformById(int Id)
     {
-       var Genres = await _genreRepository.GetGenresById(Id);
+        var platforms = await _platformRepository.GetPlatformsById(Id);
+        var plats = await FillPlatformModel(platforms);
+        return plats;
+    }
+    #endregion
+
+
+    #region FillGenre
+    public async Task<List<GenreViewModelProduct>> FillGenre(List<Genre> Genres)
+    {
+        
         List<GenreViewModelProduct> listofgenres = new List<GenreViewModelProduct>();
         if (Genres != null)
         {
@@ -162,6 +167,16 @@ public class ProductService : IProductService
         }
         return null;
     }
+    public async Task<List<GenreViewModelProduct>> FillGenreById(int Id)
+    {
+        var Genres = await _genreRepository.GetGenresById(Id);
+        var selectedenre = await FillGenre(Genres);
+        return selectedenre;
+    }
+    #endregion
+
+
+
 
     // fill Related GAmes 
     public async Task<List<RelatedGamesProduct>> FillRelated(int Id)
@@ -202,9 +217,9 @@ public class ProductService : IProductService
 
         var Game = await GetGameAsync(Id);
 
-        var platforms = await FillPlatform(Id);
+        var platforms = await FillPlatformById(Id);
 
-        var Genres = await FillGenre(Id);
+        var Genres = await FillGenreById(Id);
 
         var related = await FillRelated(Id);
 
@@ -326,6 +341,7 @@ public class ProductService : IProductService
 
     }
 
+
     public async Task<ProductViewModel> ListOfProducts(int userid)
     {
         var admin = await _layoutService.AdminInfo(userid);
@@ -345,16 +361,17 @@ public class ProductService : IProductService
     }
 
     
-
     public async Task<ProductViewModel> ShowAddGame(int id)
     {
         var admin = await _layoutService.AdminInfo(id);
-        var plats = await _platformService.ShowPlatform();
-        var genres = await _genreService.ShowGenre();
+        var DBPlats = await _platformRepository.GetPlatforms();
+        var Plats = await FillPlatformModel(DBPlats);
+        var DBgenres = await _genreRepository.GetGenre();
+        var genres = await FillGenre(DBgenres);
 
         #region Object mapping 
 
-       
+
 
 
         #endregion
@@ -362,9 +379,103 @@ public class ProductService : IProductService
         ProductViewModel adminGameViewModel = new ProductViewModel()
         {
             Admin = admin,
-           
+            Platforms = Plats,
+            Genres = genres,
+            
+
         };
         return adminGameViewModel;
+    }
+
+    public async Task<bool> AddNewGame(GameViewModelProduct model, List<int> selectedGenres, List<int> selectedPlatforms, int selectedStatus)
+    {
+
+       
+        List<Screenshot> screenshots = new List<Screenshot>();
+        Game NewGame = new Game()
+        {
+            Name = model.Name,
+            Description = model.Description,
+            Company = model.Company,
+            Price = model.Price,
+            Quantitiy = model.Quantity,
+            Rating = model.Rating,
+            Trailer = model.Trailer,
+            ReleaseDate = model.ReleaseDate,
+           // GameStatus =  selectedStatus
+            gameSelectedPlatforms = new List<GameSelectedPlatform>(),
+            gemeSelectedGenres = new List<GemeSelectedGenre> (),
+            Screenshots = screenshots,        
+            SystemRequirements = model.SystemRequirements ,
+               
+                
+    
+        };
+        // screenshots
+
+        foreach (var file in model.FormFiles)
+        {
+            if (file != null && file.Length > 0)
+            {
+                string uniqueFileName = NameGenerator.GenerateUniqCode() + Path.GetExtension(file.FileName);
+                string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/images/GameImages", uniqueFileName);
+
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                Screenshot screen = new Screenshot()
+                {
+                    AvararUrl = uniqueFileName,
+                    Game = NewGame,
+                };
+                screenshots.Add(screen);
+            }
+        }
+        //Video 
+        if (model.VideoFile != null)
+        {
+            //Save New Image
+            string filename = NameGenerator.GenerateUniqCode() + Path.GetExtension(model.VideoFile.FileName);
+
+            string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/Trailers", filename);
+            using (var stream = new FileStream(imagePath, FileMode.Create))
+            {
+                model.VideoFile.CopyTo(stream);
+            }
+            NewGame.Trailer = filename;
+        }
+        // plats
+        foreach (var PlatId in selectedPlatforms)
+        {
+            GameSelectedPlatform gameSelectedPlatform = new GameSelectedPlatform()
+            {
+                PlatformId = PlatId,
+                Game = NewGame
+            };
+           NewGame.gameSelectedPlatforms.Add(gameSelectedPlatform);
+        }
+        // genre
+        foreach (var GenreId in selectedGenres)
+        {
+            GemeSelectedGenre selectedGenre = new GemeSelectedGenre()
+            {
+                GenreId = GenreId,
+                Game = NewGame
+            };
+            NewGame.gemeSelectedGenres.Add(selectedGenre);
+
+        }
+        // status 
+        if(NewGame != null)
+        {
+            await _gamerepository.AddNewGame(NewGame);
+            return true;
+        }
+        return false;
+       
+
     }
 
     #endregion

@@ -4,7 +4,7 @@ using Application.ViewModel.AdminSide;
 
 namespace Application.ViewModel.UserSide;
 
-public record CatalogViewModel : AdminBaseViewModel
+public record CatalogViewModel 
 {
    public  List<CatalogGamesViewModel?> Games { get; set; }
     public List<CatalogPlatformsViewModel?> Platforms { get; set; }

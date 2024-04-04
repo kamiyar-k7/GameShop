@@ -18,6 +18,8 @@ namespace Domain.IRepository.GamePart
 
         #region Admin Side
         public int GameCount();
+        Task SaveChanges();
+        Task AddNewGame(Game game);
 
         #endregion
 
