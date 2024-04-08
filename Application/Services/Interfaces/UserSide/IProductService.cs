@@ -16,6 +16,8 @@ public interface IProductService
     #region Admin Side
     Task<ProductViewModel> ListOfProducts(int userid);
     Task<ProductViewModel> ShowAddGame(int id);
-    Task<bool> AddNewGame(GameViewModelProduct model, List<int> selectedGenres, List<int> selectedPlatforms, int selectedStatus);
+    Task<bool> AddNewGame(GameViewModelProduct model, List<int> selectedGenres, List<int> selectedPlatforms);
+    Task EditGame(GameViewModelProduct model, List<int> selectedGenres, List<int> selectedPlatforms);
+
     #endregion
 }

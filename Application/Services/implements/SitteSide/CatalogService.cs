@@ -105,27 +105,31 @@ public class CatalogService : ICatalogService
             List<CatalogGamesViewModel> GameModel = new List<CatalogGamesViewModel>();
             foreach (var games in listOfGames)
             {
-                CatalogGamesViewModel ChildGameMdoel = new CatalogGamesViewModel()
+                if (games.GameStatus == Domain.entities.GamePart.Game.GameStatus.Active)
                 {
-                    GameId = games.Id,
-                    Name = games.Name,
-                    Description = games.Description,
-                    Price = games.Price,
-                    Company = games.Company,
-                    Quantitiy = games.Quantitiy,
-                    Rating = games.Rating,
-                    ReleaseDate = games.ReleaseDate,
-                    SystemRequirements = games.SystemRequirements,
-                    Trailer = games.Trailer,
-                    Screenshots = new List<string>(),
+                    CatalogGamesViewModel ChildGameMdoel = new CatalogGamesViewModel()
+                    {
+                        GameId = games.Id,
+                        Name = games.Name,
+                        Description = games.Description,
+                        Price = games.Price,
+                        Company = games.Company,
+                        Quantitiy = games.Quantitiy,
+                        Rating = games.Rating,
+                        ReleaseDate = games.ReleaseDate,
+                        SystemRequirements = games.SystemRequirements,
+                        Trailer = games.Trailer,
+                        Screenshots = new List<string>(),
 
-                };
+                    };
 
-                foreach (var screens in games.Screenshots)
-                {
-                    ChildGameMdoel.Screenshots.Add(screens.AvararUrl);
+                    foreach (var screens in games.Screenshots)
+                    {
+                        ChildGameMdoel.Screenshots.Add(screens.AvararUrl);
+                    }
+                    GameModel.Add(ChildGameMdoel);
                 }
-                GameModel.Add(ChildGameMdoel);
+            
             }
             #endregion
 

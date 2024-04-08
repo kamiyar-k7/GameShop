@@ -1,7 +1,4 @@
-﻿
-
-
-using Application.ViewModel.AdminSide;
+﻿using Application.ViewModel.AdminSide;
 using Domain.entities.GamePart.Game;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
@@ -14,11 +11,13 @@ public record ProductViewModel  : AdminBaseViewModel
 {
     public GameViewModelProduct Game { get; set; }
     public List<GameViewModelProduct> ListGames  { get; set; }
-   public List<PlatformViewModelProduct> Platforms { get; set; }
+    public List<PlatformViewModelProduct> Platforms { get; set; }
     public List<GenreViewModelProduct> Genres { get; set; }
     public List<RelatedGamesProduct> RelatedGames { get; set; }
     public List<CommentsViewModelProduct> Comments { get; set; }
    
+    public List<GenreViewModelProduct> AllGenres { get; set; }
+    public List<PlatformViewModelProduct> AllPlatforms { get; set; }
 
 
     #region Post
@@ -36,32 +35,36 @@ public record ProductViewModel  : AdminBaseViewModel
 public record GameViewModelProduct
 {
     public int Id { get; set; }
-    [Required]
+    [Required(ErrorMessage = "This Field is required")]
     public string Name { get; set; }
-    [Required]
+    [Required(ErrorMessage = "This Field is required")]
     public string Description { get; set; }
-    [Required]
+    [Required(ErrorMessage = "This Field is required")]
     public DateOnly ReleaseDate { get; set; }
-    [Required]
+    [Required(ErrorMessage = "This Field is required")]
     public string Company { get; set; }
-    [Required]
+    [Required(ErrorMessage = "This Field is required")]
     public decimal Price { get; set; }
-    [Required]
+    [Required(ErrorMessage = "This Field is required")]
     public float Rating { get; set; }
     
     public string? Trailer { get; set; }
-    [Required]
+
     public IFormFile VideoFile { get; set; }
-    [Required]
+    [Required(ErrorMessage = "This Field is required")]
     public string SystemRequirements { get; set; }
     
     public List<string>? ScreenShots { get; set; }
-    [Required]
+ 
     public List<IFormFile> FormFiles { get; set; }
 
-    [Required]
+   
     public GameStatus Status { get; set; }
-    [Required]
+
+    [Required(ErrorMessage = "This Field is required")]
+    public int selectedStatus {  get; set; }
+
+    [Required(ErrorMessage = "This Field is required")]
     public int Quantity { get; set; }
 }
 
@@ -71,13 +74,16 @@ public record PlatformViewModelProduct
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public string PlatformUniqueName { get; set; }
+
 }
+
+
+
 public record GenreViewModelProduct
 {
     public int Id { get; set; }
     public string GenreName { get; set; }
-    public string GenreUniqueName { get; set; }
+
 }
  
 public record RelatedGamesProduct

@@ -14,6 +14,13 @@ namespace Domain.IRepository.GamePart
         Task<List<Genre>> GetGenre();
         Task<List<Genre>> GetGenresById(int Id);
         Task<List<Game>> GetGamesByGenres(List<Genre> genres);
+        Task AddSelectedGenres(GemeSelectedGenre gemeSelectedGenre);
+
+         Task<List<GemeSelectedGenre>> GameSelectedGenre(int id);
+
+
+        void DeleteGameGenres(List<GemeSelectedGenre> gemeSelectedGenres);
+      
         #endregion
     }
 }

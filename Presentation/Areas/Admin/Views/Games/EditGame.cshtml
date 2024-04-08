@@ -1,11 +1,13 @@
 ﻿@model Application.ViewModel.UserSide.ProductViewModel;
 
 @{
-    Layout = "_adminLayout";
+    Layout = "_AdminLayout";
 }
 
-<form asp-area="Admin" asp-controller="Games" asp-action="AddGame" enctype="multipart/form-data">
 
+<form asp-area="Admin" asp-controller="Games" asp-action="EditGame" enctype="multipart/form-data">
+
+    <input type="type" hidden  asp-for="Game.Id"/>
 
 <div class="single-product-tab-area mg-b-30">
     <!-- Single pro tab review Start-->
@@ -70,10 +72,12 @@
 
                                             <select asp-for="@Model.Game.selectedStatus" required style="margin-bottom:10px;"  class="form-control pro-edt-select form-control-primary">
                                                 <option  value="">Select Status</option>
-                                                     @foreach (var status in Html.GetEnumSelectList<Domain.entities.GamePart.Game.GameStatus>())
+                                                    @foreach (var status in Html.GetEnumSelectList<Domain.entities.GamePart.Game.GameStatus>())
                                                     {
+                                                    
                                                         <option  value="@status.Value">@status.Text</option>
                                                     }
+
                                             </select>
                                              
 
@@ -134,8 +138,15 @@
                                                 <div class="col-lg-4">
                                                     <div class="pro-edt-img">
                                                             <div  class="mb-3 text-center">
-
-                                                                <video  id="video-preview" style="width:80%" height="100%" controls src="~/assets/Trailers/trailer.mp3" alt="Trailer Preview"> </video>
+                                                                @if (Model.Game.Trailer.Any())
+                                                                {
+                                                                    <video id="video-preview" style="width:80%" height="100%" controls src="~/assets/Trailers/@Model.Game.Trailer" alt="Trailer Preview"> </video>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <video id="video-preview" style="width:80%" height="100%" controls src="~/assets/Trailers/trailer.mp3" alt="Trailer Preview"> </video>
+                                                                }
+                                                             
                                                             
                                                         
                                                         </div>
@@ -163,7 +174,7 @@
                                                                             </a>
                                                                             <br />
 
-                                                                                <input required type="file" asp-for="@Model.Game.VideoFile" class="btn btn-ctl-bt waves-effect waves-light" accept="video/*" id="video-file" onchange="previewVideo()">
+                                                                                <input  type="file" asp-for="@Model.Game.VideoFile" class="btn btn-ctl-bt waves-effect waves-light" accept="video/*" id="video-file" onchange="previewVideo()">
                                                                        
 
 
@@ -183,44 +194,61 @@
                                             <!--Video End-->
                                             <hr />
 
+
                                             <!--Image -->
 
-                                                <div class="row" id="imageRowsContainer">
-                                                    <div class="col-lg-4">
-                                                        <div class="pro-edt-img">
-                                                            <div id="imagePreview" class="mb-3 text-center">
+                                                @foreach (var screen in Model.Game.ScreenShots)
+                                                {
+                                                    <div class="row" id="imageRowsContainer">
+                                                        <div class="col-lg-4">
+                                                            <div class="pro-edt-img">
+
+                                                                <div id="imagePreview" class="mb-3 text-center">
 
 
-                                                                <img id="preview" src="~/assets/images/UserAvatar/b322929f63a146bb94651bae589c19fc.jpg" alt="Image Preview">
+                                                                    @if (Model.Game.ScreenShots.Any())
+                                                                    {
+                                                                        <img id="preview" src="~/assets/images/GameImages/@screen" alt="Image Preview">
+                                                                        
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                    <img id="preview" src="~/assets/images/UserAvatar/b322929f63a146bb94651bae589c19fc.jpg" alt="Image Preview">
+                                                                    }
 
 
+
+
+
+
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-lg-8">
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
+                                                        <div class="col-lg-8">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
 
-                                                                <div class="product-edt-pix-wrap">
-                                                                    <div class="input-group">
-                                                                        <span class="input-group-addon">TT</span>
-                                                                        <input type="text" class="form-control" placeholder="Add Game ScrrenShot" readonly style="color:#152036; background-color:#152036;">
-                                                                    </div>
+                                                                    <div class="product-edt-pix-wrap">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon">TT</span>
+                                                                            <input type="text" class="form-control" placeholder="Add Game ScrrenShot" readonly style="color:#152036; background-color:#152036;">
+                                                                        </div>
 
-                                                                    <br />
-                                                                    <div class="row image-row">
-                                                                       
-                                                                          
-                                                                        
-                                                                        <div class="col-lg-6">
-                                                                            <div class="product-edt-remove">
-                                                                                <a asp-area="admin" asp-controller="Users" asp-action="DeleteUserAvatar" asp-route-Id="" style="margin-bottom: 20px; margin-top:20px;" type="button" class="btn btn-ctl-bt waves-effect waves-light" onclick="return confirm('are you sure you want Delete User Avatar ?')">
-                                                                                    Remove
-                                                                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                                                                </a>
-                                                                                <br />
-                                                                                 <input required type="file" class="btn btn-ctl-bt waves-effect waves-light" id="formFile" asp-for="Game.FormFiles" onchange="previewImage(event)"> 
-                                                                          
+                                                                        <br />
+                                                                        <div class="row image-row">
+
+
+
+                                                                            <div class="col-lg-6">
+                                                                                <div class="product-edt-remove">
+                                                                                    <a asp-area="admin" asp-controller="Games" asp-action="DeletScreenShot" asp-route-Id="@Model.Game.Id" style="margin-bottom: 20px; margin-top:20px;" type="button" class="btn btn-ctl-bt waves-effect waves-light" onclick="return confirm('are you sure you want Delete User Avatar ?')">
+                                                                                        Remove
+                                                                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                                                                    </a>
+                                                                                    <br />
+                                                                                    <input type="file" class="btn btn-ctl-bt waves-effect waves-light" id="formFile" asp-for="Game.FormFiles" onchange="previewImage(event)">
+
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -228,7 +256,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                }
+                                              
 
                                             <hr />
                                                 <button id="addImageRowBtn" class="btn btn-primary">Add Image</button>
@@ -255,15 +284,29 @@
                                                         <div class="row">
                                                             <div class="col-lg-6">
                                                                 <div class="form-radio">
-                                                                    @foreach (var plats in  Model.Platforms)
+                                                                    @foreach (var plats in  Model.AllPlatforms)
                                                                     {
-                                                                        <br />
-                                                                        <div style="margin:0px;" class="radio radiofill">
-                                                                            <label>
-                                                                                    <input  type="checkbox" value="@plats.Id" name="selectedPlatforms"><i class="helper"></i>@plats.Name
-                                                                            </label>
-                                                                        </div>
-                                                                        <br />
+                                                                            if(Model.Platforms.Any(x=> x.Id == plats.Id))
+                                                                            {
+                                                                                <br />
+                                                                                <div style="margin:0px;" class="radio radiofill">
+                                                                                    <label>
+                                                                                        <input checked type="checkbox" value="@plats.Id" name="selectedPlatforms"><i class="helper"></i>@plats.Name
+                                                                                    </label>
+                                                                                </div>
+                                                                                <br />
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <br />
+                                                                                <div style="margin:0px;" class="radio radiofill">
+                                                                                    <label>
+                                                                                        <input type="checkbox" value="@plats.Id" name="selectedPlatforms"><i class="helper"></i>@plats.Name
+                                                                                    </label>
+                                                                                </div>
+                                                                                <br />
+                                                                            }
+
                                                                     }
 
                                                                 </div>
@@ -286,15 +329,29 @@
                                                         <div class="row">
                                                             <div class="col-lg-6">
                                                                 <div class="form-radio">
-                                                                    @foreach (var genres in Model.Genres)
+                                                                    @foreach (var genres in Model.AllGenres)
                                                                     {
-                                                                        <br />
-                                                                        <div style="margin:0px;" class="radio radiofill">
-                                                                            <label>
-                                                                                <input  type="checkbox" value="@genres.Id" name="SelectedGenres"><i class="helper"></i>@genres.GenreName
-                                                                            </label>
-                                                                        </div>
-                                                                        <br />
+                                                                            if(Model.Genres.Any(x=> x.Id == genres.Id))
+                                                                            {
+                                                                                <br />
+                                                                                <div style="margin:0px;" class="radio radiofill">
+                                                                                    <label>
+                                                                                        <input checked type="checkbox" value="@genres.Id" name="SelectedGenres"><i class="helper"></i>@genres.GenreName
+                                                                                    </label>
+                                                                                </div>
+                                                                                <br />
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <br />
+                                                                                <div style="margin:0px;" class="radio radiofill">
+                                                                                    <label>
+                                                                                        <input type="checkbox" value="@genres.Id" name="SelectedGenres"><i class="helper"></i>@genres.GenreName
+                                                                                    </label>
+                                                                                </div>
+                                                                                <br />
+                                                                            }
+
                                                                     }
 
 
@@ -339,11 +396,7 @@
 
 </form>
 
-
-
-
-
-@* <script>
+<script>
     function previewImage(event) {
         const input = event.target;
         const preview = document.getElementById('preview');
@@ -379,7 +432,7 @@
         // Append the cloned row to the container
         document.getElementById('imageRowsContainer').appendChild(newRow);
     }
-</script> *@
+</script>
 
 <!--Video Script-->
 <script>

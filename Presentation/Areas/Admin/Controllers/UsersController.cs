@@ -63,7 +63,7 @@ public class UsersController : BaseController
     {
         _userService.DeleteUserAvatar(id);
 
-        return RedirectToAction("EditUser" , new {id = id});
+        return RedirectToAction("EditUser" ,  id);
     }
     public async Task<IActionResult> DeleteUser(int Id)
     {

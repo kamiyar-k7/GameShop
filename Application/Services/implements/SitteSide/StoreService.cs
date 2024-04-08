@@ -38,7 +38,9 @@ namespace Application.Services.implements.SitteSide
                             Price = game.Price,
                             Rating = game.Rating,
                             Screenshots = new List<string>(),
-                            ReleaseDate = game.ReleaseDate
+                            ReleaseDate = game.ReleaseDate ,
+                            
+                            
 
 
                         };

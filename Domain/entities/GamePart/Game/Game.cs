@@ -39,10 +39,10 @@ public class Game
 public class Screenshot
 {
 
-public int Id { get; set; }
-public string AvararUrl { get; set; }
-public int GameId { get; set; }
-public Game Game { get; set; }
+    public int Id { get; set; }
+    public string AvararUrl { get; set; }
+    public int GameId { get; set; }
+    public Game Game { get; set; }
 
 }
 

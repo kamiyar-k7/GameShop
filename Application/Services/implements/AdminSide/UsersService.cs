@@ -173,6 +173,7 @@ public class UsersService : IUserService
 
         }
         #endregion
+
         #region Update User Roles 
 
         var userroles = _roleRepository.listOfUserSelectedRoles(details.Id);

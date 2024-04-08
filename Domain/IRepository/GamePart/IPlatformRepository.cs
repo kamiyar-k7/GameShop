@@ -1,19 +1,20 @@
 ﻿using Domain.entities.GamePart.Platform;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Domain.IRepository.GamePart
+namespace Domain.IRepository.GamePart;
+
+public interface IPlatformRepository
 {
-    public interface IPlatformRepository
-    {
-        #region General
+    #region General
 
-        Task<List<Platform>> GetPlatforms();
-        Task<List<Platform>> GetPlatformsById(int Id);
-        Task<Platform?> GetSelectedPlatform(int id);
-        #endregion
-    }
+    Task<List<Platform>> GetPlatforms();
+    Task<List<Platform>> GetPlatformsById(int Id);
+    Task<Platform?> GetSelectedPlatform(int id);
+    Task AddselectedPlats(GameSelectedPlatform platforms);
+    Task<List<GameSelectedPlatform>> GameSelectedPlatforms(int id);
+
+
+
+    void DeleteGamePlatforms(List<GameSelectedPlatform> gameSelectedPlatforms);
+  
+    #endregion
 }

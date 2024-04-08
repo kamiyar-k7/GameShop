@@ -19,9 +19,9 @@
                                 <th>Image</th>
                                 <th>Product Title</th>
                                 <th>Status</th>
-                                <th>Purchases</th>
+                                <th>Quantity</th>
                               
-                                <th>Stock</th>
+                               
                                 <th>Price</th>
                                 <th>Setting</th>
                             </tr>
@@ -29,16 +29,26 @@
                             @foreach (var game in Model.ListGames)
                             {
                                 <tr>
-                                    <td><img src="img/new-product/6-small.jpg" alt=""></td>
+                                    @if(game.ScreenShots != null && game.ScreenShots.Any())
+                                    {
+
+                                        <td><img src="~/assets/images/GameImages/@game.ScreenShots.FirstOrDefault()" alt="Game Screenshot"></td>
+                                    }
+                                    else
+                                    {
+                                        <td><img src="" alt="Game Screenshot"></td>
+                                    }
+
                                     <td>@game.Name</td>
-                                    @if(game.Status.ToString() == "Active")
+
+                                    @if(game.Status == Domain.entities.GamePart.Game.GameStatus.Active)
                                     {
                                        
                                         <td>
                                             <button class="pd-setting">@game.Status.ToString()</button>
                                         </td>
                                     }
-                                    else if (game.Status.ToString() == "InActive")
+                                    else if (game.Status == Domain.entities.GamePart.Game.GameStatus.InActive)
                                     {
                                         <td>
                                             <button class="ds-setting">@game.Status.ToString()</button>
@@ -50,11 +60,13 @@
                                             <button class="ps-setting">@game.Status.ToString()</button>
                                         </td>
                                     }
+                                    
 
-                                    <td>60</td>
+                                    <td>@game.Quantity</td>
                                  
-                                    <td>In Stock</td>
-                                    <td>$17</td>
+                                    
+                                    <td>@game.Price</td>
+
                                     <td>
                                         <a asp-area="Admin" asp-controller="Games" asp-action="GameDetails" asp-route-Id="@game.Id" style="padding:5px;" data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="Edit" type="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                         <a asp-area="Admin" asp-controller="Games" asp-action="DeleteUser" asp-route-Id="@game.Id" style="padding:5px;" data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="Trash" type="button" onclick="return confirm('are you sure you want Delete User ?')"><i class="fa fa-trash-o" aria-hidden="true"></i></a>

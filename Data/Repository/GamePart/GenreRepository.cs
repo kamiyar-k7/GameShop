@@ -33,5 +33,20 @@ public class GenreRepository : IGenreRepository
        .ToListAsync();
         return games;
     }
+    public async Task AddSelectedGenres(GemeSelectedGenre gemeSelectedGenre)
+    {
+        await _gameShopDbContext.AddAsync(gemeSelectedGenre);
+    }
+
+    public async Task<List<GemeSelectedGenre>> GameSelectedGenre(int id)
+    {
+        return await _gameShopDbContext.SelectedGenres.Where(x => x.GameId == id).ToListAsync();
+
+    }
+
+    public void DeleteGameGenres(List<GemeSelectedGenre> gemeSelectedGenres)
+    {
+        _gameShopDbContext.RemoveRange(gemeSelectedGenres);
+    }
     #endregion
 }

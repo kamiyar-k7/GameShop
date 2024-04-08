@@ -1,13 +1,14 @@
 ﻿using Application.Helpers;
 using Application.Services.Interfaces.AdminSide;
 using Application.Services.Interfaces.UserSide;
+using Application.ViewModel.AdminSide;
 using Application.ViewModel.UserSide;
 using Domain.entities.Comments;
 using Domain.entities.GamePart.Game;
 using Domain.entities.GamePart.Genre;
 using Domain.entities.GamePart.Platform;
-using Domain.entities.UserPart.User;
 using Domain.IRepository.GamePart;
+
 
 
 
@@ -22,7 +23,7 @@ public class ProductService : IProductService
     private readonly IGenreRepository _genreRepository;
     private readonly ICommentRepository _commentRepository;
     private readonly ILayoutService _layoutService;
-  
+
 
 
     public ProductService(IGameRepository gameRepository,
@@ -55,14 +56,14 @@ public class ProductService : IProductService
         var Game = await _gamerepository.GetGameById(Id);
         return Game;
     }
+
     // fill game model 
-    public async Task<GameViewModelProduct> fillgame(int Id)
+    public async Task<GameViewModelProduct> fillgame(Game? Game)
     {
-        var Game = await _gamerepository.GetGameById(Id);
-        GameViewModelProduct gameViewModel = new GameViewModelProduct();
+
         if (Game != null)
         {
-            gameViewModel = new GameViewModelProduct()
+            GameViewModelProduct gameViewModel = new GameViewModelProduct()
             {
                 Company = Game.Company,
                 Description = Game.Description,
@@ -73,8 +74,9 @@ public class ProductService : IProductService
                 ReleaseDate = Game.ReleaseDate,
                 SystemRequirements = Game.SystemRequirements,
                 Trailer = Game.Trailer,
-                ScreenShots = new List<string>()
-
+                ScreenShots = new List<string>(),
+                Quantity = Game.Quantitiy,
+                Status = Game.GameStatus
             };
             foreach (var item in Game.Screenshots)
             {
@@ -86,7 +88,7 @@ public class ProductService : IProductService
     }
 
     // fill comments model 
-    public async Task<List< CommentsViewModelProduct>> FillComment(int Id)
+    public async Task<List<CommentsViewModelProduct>> FillComment(int Id)
     {
         var game = await GetGameAsync(Id);
         var comments = await _commentRepository.GetCommentsAsync(game.Id);
@@ -129,7 +131,7 @@ public class ProductService : IProductService
                 {
                     Id = plats.Id,
                     Name = plats.Name,
-                    PlatformUniqueName = plats.PlatformUniqueName,
+
                 };
                 listofplatforms.Add(platformViewModel);
             }
@@ -149,7 +151,7 @@ public class ProductService : IProductService
     #region FillGenre
     public async Task<List<GenreViewModelProduct>> FillGenre(List<Genre> Genres)
     {
-        
+
         List<GenreViewModelProduct> listofgenres = new List<GenreViewModelProduct>();
         if (Genres != null)
         {
@@ -159,7 +161,7 @@ public class ProductService : IProductService
                 {
                     Id = genre.Id,
                     GenreName = genre.GenreName,
-                    GenreUniqueName = genre.GenreUniqueName
+
                 };
                 listofgenres.Add(genreViewModel);
             }
@@ -209,13 +211,14 @@ public class ProductService : IProductService
         return null;
     }
 
-    public async Task<ProductViewModel> GetProductById(int Id , int Adminid  )
+
+
+    public async Task<ProductViewModel> GetProductById(int Id, int Adminid)
     {
 
-
-        var gameModel = await fillgame(Id);
-
         var Game = await GetGameAsync(Id);
+
+        var gameModel = await fillgame(Game);
 
         var platforms = await FillPlatformById(Id);
 
@@ -225,20 +228,43 @@ public class ProductService : IProductService
 
         var comments = await FillComment(Id);
 
-     //   var admin = await _layoutService.AdminInfo(userid);
+        var allPlatformsFromDb = await _platformRepository.GetPlatforms();
+        var AllPlats = FillPlatformModel(allPlatformsFromDb);
+        var AllGenresFromDb = await _genreRepository.GetGenre();
+        var allgenres = FillGenre(AllGenresFromDb);
+
+        AdminInformationViewModel admininfo = new AdminInformationViewModel();
+
+        var admin = admininfo;
+        if (Adminid != 0)
+        {
+            admin = await _layoutService.AdminInfo(Adminid);
+
+        }
+        else
+        {
+            admin = null;
+        }
+
+
+
 
         if (Game != null)
         {
 
-            
-			ProductViewModel model = new ProductViewModel()
+
+            ProductViewModel model = new ProductViewModel()
             {
                 Game = gameModel,
                 Platforms = platforms,
                 Genres = Genres,
                 RelatedGames = related,
                 Comments = comments,
-    
+                Admin = admin ,
+                AllGenres = await allgenres,
+                AllPlatforms = await AllPlats,
+                
+                
                 
             };
 
@@ -328,7 +354,9 @@ public class ProductService : IProductService
                 ReleaseDate = Game.ReleaseDate,
                 SystemRequirements = Game.SystemRequirements,
                 Trailer = Game.Trailer,
-                ScreenShots = new List<string>()
+                ScreenShots = new List<string>(),
+                Status = Game.GameStatus,
+                Quantity = Game.Quantitiy
 
             };
             foreach (var item in Game.Screenshots)
@@ -346,7 +374,7 @@ public class ProductService : IProductService
     {
         var admin = await _layoutService.AdminInfo(userid);
         var games = await ListOfGames();
-       
+
 
 
 
@@ -354,13 +382,14 @@ public class ProductService : IProductService
         {
             Admin = admin,
             ListGames = games,
-            
+
         };
 
         return adminProductViewModel;
     }
 
-    
+
+
     public async Task<ProductViewModel> ShowAddGame(int id)
     {
         var admin = await _layoutService.AdminInfo(id);
@@ -381,16 +410,16 @@ public class ProductService : IProductService
             Admin = admin,
             Platforms = Plats,
             Genres = genres,
-            
+
 
         };
         return adminGameViewModel;
     }
 
-    public async Task<bool> AddNewGame(GameViewModelProduct model, List<int> selectedGenres, List<int> selectedPlatforms, int selectedStatus)
+    public async Task<bool> AddNewGame(GameViewModelProduct model, List<int> selectedGenres, List<int> selectedPlatforms)
     {
 
-       
+
         List<Screenshot> screenshots = new List<Screenshot>();
         Game NewGame = new Game()
         {
@@ -402,15 +431,18 @@ public class ProductService : IProductService
             Rating = model.Rating,
             Trailer = model.Trailer,
             ReleaseDate = model.ReleaseDate,
-           // GameStatus =  selectedStatus
+            // GameStatus =  selectedStatus
             gameSelectedPlatforms = new List<GameSelectedPlatform>(),
-            gemeSelectedGenres = new List<GemeSelectedGenre> (),
-            Screenshots = screenshots,        
-            SystemRequirements = model.SystemRequirements ,
-               
-                
-    
+            gemeSelectedGenres = new List<GemeSelectedGenre>(),
+            Screenshots = screenshots,
+            SystemRequirements = model.SystemRequirements,
+            GameStatus = (GameStatus)model.selectedStatus,
+
+
         };
+
+        var game = await fillgame(NewGame);
+
         // screenshots
 
         foreach (var file in model.FormFiles)
@@ -454,7 +486,7 @@ public class ProductService : IProductService
                 PlatformId = PlatId,
                 Game = NewGame
             };
-           NewGame.gameSelectedPlatforms.Add(gameSelectedPlatform);
+            NewGame.gameSelectedPlatforms.Add(gameSelectedPlatform);
         }
         // genre
         foreach (var GenreId in selectedGenres)
@@ -467,16 +499,134 @@ public class ProductService : IProductService
             NewGame.gemeSelectedGenres.Add(selectedGenre);
 
         }
-        // status 
-        if(NewGame != null)
+
+        // statsu 
+
+
+
+        if (NewGame != null)
         {
             await _gamerepository.AddNewGame(NewGame);
             return true;
         }
+
+      
+   
+
         return false;
-       
+
 
     }
+
+    public async Task EditGame(GameViewModelProduct model, List<int> selectedGenres, List<int> selectedPlatforms)
+    {
+
+
+
+        List<Screenshot> screenshots = new List<Screenshot>();
+
+        var game = await _gamerepository.GetGameById(model.Id);
+
+        game.Name = model.Name;
+        game.Description = model.Description;
+        game.Price = model.Price;
+        game.SystemRequirements = model.SystemRequirements;
+        game.Company = model.Company;
+        game.Quantitiy = model.Quantity;
+        game.Rating = model.Rating;
+        game.ReleaseDate = model.ReleaseDate;
+        game.GameStatus = (GameStatus)model.selectedStatus;
+        //game.Screenshots =  screenshots;
+
+
+
+        // screenshots
+        if(model.FormFiles != null && model.FormFiles.Any())
+        {
+            foreach (var file in model.FormFiles)
+            {
+                if (file != null && file.Length > 0)
+                {
+                    string uniqueFileName = NameGenerator.GenerateUniqCode() + Path.GetExtension(file.FileName);
+                    string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/images/GameImages", uniqueFileName);
+
+                    using (var stream = new FileStream(imagePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+                    Screenshot screen = new Screenshot()
+                    {
+                        AvararUrl = uniqueFileName,
+
+                    };
+                    screenshots.Add(screen);
+
+                }
+            }
+           // game.Screenshots == screenshots;
+        }
+
+
+
+
+
+        //Video 
+        if (model.VideoFile != null )
+        {
+            if (model.VideoFile != null)
+            {
+                //Save New Image
+                string filename = NameGenerator.GenerateUniqCode() + Path.GetExtension(model.VideoFile.FileName);
+
+                string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/Trailers", filename);
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    model.VideoFile.CopyTo(stream);
+                }
+                game.Trailer = filename;
+            }
+        }
+
+        // genre
+
+        var gamegenres = await _genreRepository.GameSelectedGenre(game.Id);
+        _genreRepository.DeleteGameGenres(gamegenres);
+
+        foreach (var GenreId in selectedGenres)
+        {
+            GemeSelectedGenre selectedGenre = new GemeSelectedGenre()
+            {
+                GenreId = GenreId,
+                GameId = game.Id,
+            };
+            await _genreRepository.AddSelectedGenres(selectedGenre);
+
+        }
+
+        // plats
+
+        var gameplatforms = await _platformRepository.GameSelectedPlatforms(game.Id);
+        _platformRepository.DeleteGamePlatforms(gameplatforms);
+
+       
+        foreach (var PlatId in selectedPlatforms)
+        {
+            GameSelectedPlatform gameSelectedPlatform = new GameSelectedPlatform()
+            {
+                PlatformId = PlatId,
+                GameId = game.Id,
+              
+            };
+
+            await _platformRepository.AddselectedPlats(gameSelectedPlatform);
+        }
+      
+
+       await _gamerepository.UpdateGame(game);
+
+    }
+
 
     #endregion
 

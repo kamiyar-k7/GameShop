@@ -1,5 +1,7 @@
 ﻿using Data.ShopDbcontext;
 using Domain.entities.GamePart.Game;
+using Domain.entities.GamePart.Genre;
+using Domain.entities.GamePart.Platform;
 using Domain.IRepository.GamePart;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,10 +41,11 @@ public class GameRepository : IGameRepository
 
     //----------------------------------
     #region Admin Side
-    public async Task SaveChanges()
+    public  async Task SaveChanges()
     {
-        await _dbContext.SaveChangesAsync();
+       await  _dbContext.SaveChangesAsync();
     }
+
     public int GameCount()
     {
         var num = _dbContext.Games.Count();
@@ -54,5 +57,15 @@ public class GameRepository : IGameRepository
        await _dbContext.Games.AddAsync(game);
        await SaveChanges();
     }
+
+
+   
+
+    public  async Task UpdateGame(Game game)
+    {
+         _dbContext.Games.Update(game);
+          await SaveChanges();
+    }
+
     #endregion
 }
