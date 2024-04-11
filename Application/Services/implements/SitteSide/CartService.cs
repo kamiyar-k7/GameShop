@@ -101,7 +101,7 @@ public class CartService : ICartService
                         GameId = model.Game.Id,
                         Price = game.Price,
                         Quantity = model.Quantity,
-                        Platform = platform.PlatformUniqueName
+                        Platform = platform.Name,
 
 
 

@@ -34,7 +34,7 @@ public class CatalogService : ICatalogService
     {
         var listOfGames = await _gameRepository.GamesAsync();
         var listOfPlatforms = await _platformRepository.GetPlatforms();
-        var ListOfGenres = await _genreRepository.GetGenre();
+        var ListOfGenres = await _genreRepository.GetListOfGenres();
 
         var model = await FillModel(listOfGames, listOfPlatforms, ListOfGenres);
         return model;
@@ -50,7 +50,7 @@ public class CatalogService : ICatalogService
 
         var listOfGames = await _gameRepository.GamesAsync();
         var listOfPlatforms = await _platformRepository.GetPlatforms();
-        var ListOfGenres = await _genreRepository.GetGenre();
+        var ListOfGenres = await _genreRepository.GetListOfGenres();
 
         if (searchViewModel.search != null)
         {
@@ -105,7 +105,7 @@ public class CatalogService : ICatalogService
             List<CatalogGamesViewModel> GameModel = new List<CatalogGamesViewModel>();
             foreach (var games in listOfGames)
             {
-                if (games.GameStatus == Domain.entities.GamePart.Game.GameStatus.Active)
+                if (games.GamesStatus == Domain.entities.GamePart.Game.GameStatus.Active)
                 {
                     CatalogGamesViewModel ChildGameMdoel = new CatalogGamesViewModel()
                     {
@@ -141,7 +141,7 @@ public class CatalogService : ICatalogService
                 {
                     Id = plats.Id,
                     Name = plats.Name,
-                    PlatformUniqueName = plats.PlatformUniqueName,
+                  
                 };
                 PlatformModel.Add(ChildePlatformModel);
             }
@@ -155,7 +155,7 @@ public class CatalogService : ICatalogService
                 {
                     Id = Genre.Id,
                     GenreName = Genre.GenreName,
-                    GenreUniqueName = Genre.GenreUniqueName
+                 
                 };
                 GenreModel.Add(ChildeGenreModel);
             }

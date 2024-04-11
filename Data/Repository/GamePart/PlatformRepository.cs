@@ -17,6 +17,10 @@ public class PlatformRepository : IPlatformRepository
     #endregion
 
     #region Genreal 
+    public async Task SaveChanges()
+    {
+        await _gameShopDbContext.SaveChangesAsync();
+    }
     public async Task<List<Platform>> GetPlatforms()
     {
         return await _gameShopDbContext.Platforms.ToListAsync();
@@ -47,4 +51,28 @@ public class PlatformRepository : IPlatformRepository
         _gameShopDbContext.RemoveRange(gameSelectedPlatforms);
     }
     #endregion
+
+    public async Task AddNewPlatform(Platform newPlatform)
+    {
+        await _gameShopDbContext.Platforms.AddAsync(newPlatform);
+      await  SaveChanges();
+    }
+
+    public async Task<Platform?> GetPlatformById(int id)
+    {
+        return await _gameShopDbContext.Platforms.FirstOrDefaultAsync(x => x.Id == id);
+    }
+
+    public async Task UpdatePlatform(Platform newPlatform)
+    {
+         _gameShopDbContext.Platforms.Update(newPlatform);
+        await SaveChanges();
+    }
+    public async Task RemovePlatform(Platform platform)
+    {
+         _gameShopDbContext.Platforms.Remove(platform);
+        var selectedplats = _gameShopDbContext.SelectedPlatforms.Where(x => x.PlatformId == platform.Id);
+         _gameShopDbContext.RemoveRange(selectedplats);
+        await SaveChanges();
+    }
 }

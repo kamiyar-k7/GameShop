@@ -11,7 +11,7 @@ namespace Domain.IRepository.GamePart
     public interface IGenreRepository
     {
         #region General 
-        Task<List<Genre>> GetGenre();
+        Task<List<Genre>> GetListOfGenres();
         Task<List<Genre>> GetGenresById(int Id);
         Task<List<Game>> GetGamesByGenres(List<Genre> genres);
         Task AddSelectedGenres(GemeSelectedGenre gemeSelectedGenre);
@@ -20,7 +20,10 @@ namespace Domain.IRepository.GamePart
 
 
         void DeleteGameGenres(List<GemeSelectedGenre> gemeSelectedGenres);
-      
+        Task<Genre?> GetGenreById(int id);
+        Task AddNewGenre(Genre genre);
+        Task UpdateGenre(Genre genre);
+        Task RemoveGenre(Genre genre);
         #endregion
     }
 }

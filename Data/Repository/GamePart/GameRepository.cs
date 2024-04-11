@@ -1,7 +1,5 @@
 ﻿using Data.ShopDbcontext;
 using Domain.entities.GamePart.Game;
-using Domain.entities.GamePart.Genre;
-using Domain.entities.GamePart.Platform;
 using Domain.IRepository.GamePart;
 using Microsoft.EntityFrameworkCore;
 

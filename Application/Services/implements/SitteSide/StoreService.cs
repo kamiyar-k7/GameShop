@@ -28,7 +28,7 @@ namespace Application.Services.implements.SitteSide
                 List<StoreDto> model = new List<StoreDto>();
                 foreach (var game in games)
                 {
-                    if(game.GameStatus == Domain.entities.GamePart.Game.GameStatus.Active)
+                    if(game.GamesStatus == Domain.entities.GamePart.Game.GameStatus.Active)
                     {
                         StoreDto childmodel = new StoreDto()
                         {

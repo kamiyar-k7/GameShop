@@ -17,8 +17,13 @@ public class GenreRepository : IGenreRepository
     }
     #endregion
 
-    #region general 
-    public async Task<List<Genre>> GetGenre()
+   
+    public async Task saveChanges()
+    {
+        await _gameShopDbContext.SaveChangesAsync();    
+    }
+
+    public async Task<List<Genre>> GetListOfGenres()
     {
         return await _gameShopDbContext.Genres.ToListAsync();
 
@@ -48,5 +53,29 @@ public class GenreRepository : IGenreRepository
     {
         _gameShopDbContext.RemoveRange(gemeSelectedGenres);
     }
-    #endregion
+
+    public async Task<Genre?> GetGenreById(int id)
+    {
+        return await _gameShopDbContext.Genres.FirstOrDefaultAsync(x => x.Id == id);
+    }
+    
+   public async Task AddNewGenre(Genre genre)
+    {
+       await  _gameShopDbContext.Genres.AddAsync(genre);
+        await saveChanges();
+    }
+
+    public async Task UpdateGenre(Genre genre)
+    {
+         _gameShopDbContext.Genres.Update(genre);
+        await saveChanges();
+    }
+
+    public async Task RemoveGenre(Genre genre)
+    {
+         _gameShopDbContext.Genres.Remove(genre);
+        var genreAssociations = _gameShopDbContext.SelectedGenres.Where(gs => gs.GenreId == genre.Id);
+        _gameShopDbContext.SelectedGenres.RemoveRange(genreAssociations);
+        await saveChanges();
+    }
 }

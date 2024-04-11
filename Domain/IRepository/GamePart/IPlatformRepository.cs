@@ -14,7 +14,12 @@ public interface IPlatformRepository
 
 
 
-    void DeleteGamePlatforms(List<GameSelectedPlatform> gameSelectedPlatforms);
-  
     #endregion
+    void DeleteGamePlatforms(List<GameSelectedPlatform> gameSelectedPlatforms);
+    Task AddNewPlatform(Platform newPlatform);
+    Task<Platform?> GetPlatformById(int id);
+    Task UpdatePlatform(Platform newPlatform);
+    Task RemovePlatform(Platform platform);
+
+
 }

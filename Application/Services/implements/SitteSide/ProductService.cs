@@ -76,7 +76,7 @@ public class ProductService : IProductService
                 Trailer = Game.Trailer,
                 ScreenShots = new List<string>(),
                 Quantity = Game.Quantitiy,
-                Status = Game.GameStatus
+                Status = Game.GamesStatus
             };
             foreach (var item in Game.Screenshots)
             {
@@ -230,7 +230,7 @@ public class ProductService : IProductService
 
         var allPlatformsFromDb = await _platformRepository.GetPlatforms();
         var AllPlats = FillPlatformModel(allPlatformsFromDb);
-        var AllGenresFromDb = await _genreRepository.GetGenre();
+        var AllGenresFromDb = await _genreRepository.GetListOfGenres();
         var allgenres = FillGenre(AllGenresFromDb);
 
         AdminInformationViewModel admininfo = new AdminInformationViewModel();
@@ -334,6 +334,7 @@ public class ProductService : IProductService
 
     #region Admin Side
 
+    #region Game
     // fill lits of games
     public async Task<List<GameViewModelProduct>> ListOfGames()
     {
@@ -355,7 +356,7 @@ public class ProductService : IProductService
                 SystemRequirements = Game.SystemRequirements,
                 Trailer = Game.Trailer,
                 ScreenShots = new List<string>(),
-                Status = Game.GameStatus,
+                Status = Game.GamesStatus,
                 Quantity = Game.Quantitiy
 
             };
@@ -395,7 +396,7 @@ public class ProductService : IProductService
         var admin = await _layoutService.AdminInfo(id);
         var DBPlats = await _platformRepository.GetPlatforms();
         var Plats = await FillPlatformModel(DBPlats);
-        var DBgenres = await _genreRepository.GetGenre();
+        var DBgenres = await _genreRepository.GetListOfGenres();
         var genres = await FillGenre(DBgenres);
 
         #region Object mapping 
@@ -436,7 +437,7 @@ public class ProductService : IProductService
             gemeSelectedGenres = new List<GemeSelectedGenre>(),
             Screenshots = screenshots,
             SystemRequirements = model.SystemRequirements,
-            GameStatus = (GameStatus)model.selectedStatus,
+            GamesStatus = (GameStatus)model.selectedStatus,
 
 
         };
@@ -510,8 +511,8 @@ public class ProductService : IProductService
             return true;
         }
 
-      
-   
+
+
 
         return false;
 
@@ -535,13 +536,13 @@ public class ProductService : IProductService
         game.Quantitiy = model.Quantity;
         game.Rating = model.Rating;
         game.ReleaseDate = model.ReleaseDate;
-        game.GameStatus = (GameStatus)model.selectedStatus;
+        game.GamesStatus = (GameStatus)model.selectedStatus;
         //game.Screenshots =  screenshots;
 
 
 
         // screenshots
-        if(model.FormFiles != null && model.FormFiles.Any())
+        if (model.FormFiles != null && model.FormFiles.Any())
         {
             foreach (var file in model.FormFiles)
             {
@@ -564,7 +565,7 @@ public class ProductService : IProductService
 
                 }
             }
-           // game.Screenshots == screenshots;
+            // game.Screenshots == screenshots;
         }
 
 
@@ -572,7 +573,7 @@ public class ProductService : IProductService
 
 
         //Video 
-        if (model.VideoFile != null )
+        if (model.VideoFile != null)
         {
             if (model.VideoFile != null)
             {
@@ -609,24 +610,28 @@ public class ProductService : IProductService
         var gameplatforms = await _platformRepository.GameSelectedPlatforms(game.Id);
         _platformRepository.DeleteGamePlatforms(gameplatforms);
 
-       
+
         foreach (var PlatId in selectedPlatforms)
         {
             GameSelectedPlatform gameSelectedPlatform = new GameSelectedPlatform()
             {
                 PlatformId = PlatId,
                 GameId = game.Id,
-              
+
             };
 
             await _platformRepository.AddselectedPlats(gameSelectedPlatform);
         }
-      
 
-       await _gamerepository.UpdateGame(game);
+
+        await _gamerepository.UpdateGame(game);
 
     }
 
+
+    #endregion
+
+    
 
     #endregion
 

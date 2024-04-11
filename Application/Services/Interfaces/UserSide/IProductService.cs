@@ -1,4 +1,5 @@
-﻿using Application.ViewModel.UserSide;
+﻿using Application.ViewModel.AdminSide;
+using Application.ViewModel.UserSide;
 
 
 namespace Application.Services.Interfaces.UserSide;
@@ -18,6 +19,12 @@ public interface IProductService
     Task<ProductViewModel> ShowAddGame(int id);
     Task<bool> AddNewGame(GameViewModelProduct model, List<int> selectedGenres, List<int> selectedPlatforms);
     Task EditGame(GameViewModelProduct model, List<int> selectedGenres, List<int> selectedPlatforms);
+
+
+  
+    #region Genres
+   
+    #endregion
 
     #endregion
 }

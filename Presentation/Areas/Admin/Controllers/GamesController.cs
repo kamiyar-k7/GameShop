@@ -1,5 +1,7 @@
 ﻿using Application.Helpers;
+using Application.Services.Interfaces.AdminSide;
 using Application.Services.Interfaces.UserSide;
+using Application.ViewModel.AdminSide;
 using Application.ViewModel.UserSide;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,12 +13,14 @@ public class GamesController : BaseController
     #region Ctor
 
     private readonly IProductService _productService;
+    private readonly IplatfromsService _platfromservice;
+    private readonly IgenreService _genreService;
 
-
-    public GamesController(IProductService productService)
+    public GamesController(IProductService productService , IplatfromsService iplatfromsService , IgenreService genreService)
     {
         _productService = productService;
-
+        _platfromservice = iplatfromsService;
+        _genreService = genreService;
     }
 
     #endregion
@@ -97,4 +101,109 @@ public class GamesController : BaseController
     {
         return View();
     }
+
+    #region Platforms
+
+    public async Task<IActionResult> ListOfPlatforms()
+    {
+
+        var model = await _platfromservice.ListOfPLatforms((int)HttpContext.User.GetUserId()) ;
+       if(model.ListOfPlats != null)
+        {
+            return View(model);
+        }
+       return View();
+          
+        
+  
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> AddNewPlatform()
+    {
+       var model = await _platfromservice.ShowAddNewPalform((int)HttpContext.User.GetUserId());
+        return View(model);
+    }
+    [HttpPost, ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddNewPlatform(AdminPlatformsViewModel model)
+    {
+        await _platfromservice.AddNewPlatform(model.Platform);
+
+        return RedirectToAction(nameof(ListOfPlatforms));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> EditPlatform(int id)
+    {
+        var model = await _platfromservice.GetPlatformById(id , (int)HttpContext.User.GetUserId());
+        return View(model);
+
+    }
+
+    [HttpPost ,ValidateAntiForgeryToken]
+    public async Task<IActionResult> EditPlatform(AdminPlatformsViewModel model )
+    {
+        await _platfromservice.UpdatePlatform(model.Platform);
+        return RedirectToAction(nameof(ListOfPlatforms));
+    }
+
+    public async Task<IActionResult> RemovePlatform(int id )
+    {
+        await _platfromservice.RemovePlatfrom(id);
+
+        return RedirectToAction(nameof(ListOfPlatforms));
+    }
+    #endregion
+
+    #region Genres
+
+    public async Task<IActionResult> ListOfGenres()
+    {
+        var model = await _genreService.ListOfGenres((int)HttpContext.User.GetUserId());
+        if(model.ListOfGenres != null)
+        {
+
+          return View(model);
+        }
+        return View();
+    }
+
+    // addd genre
+    [HttpGet]
+    public async Task<IActionResult> AddNewGenre()
+    {
+        var model = await _genreService.ShowAddGenreView((int)HttpContext.User.GetUserId());
+        return View(model);
+    }
+    [HttpPost, ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddNewGenre(AdminGenresViewModel model)
+    {
+        await _genreService.AddNewGenre(model.genre);
+        return RedirectToAction(nameof(ListOfGenres));
+
+
+    }
+
+    // edit genre
+    [HttpGet]
+    public async Task<IActionResult> EditGenre(int id)
+    {
+        var model = await _genreService.GetGenreById(id , (int)HttpContext.User.GetUserId());
+        return View(model);
+    }
+    [HttpPost , ValidateAntiForgeryToken]
+    public async Task<IActionResult> EditGenre(AdminGenresViewModel model)
+    {
+        await _genreService.EditGenre(model.genre);
+        return RedirectToAction(nameof(ListOfGenres));
+    }
+
+
+    // remove genre 
+    public async Task<IActionResult> RemoveGenre(int id)
+    {
+        await _genreService.RemoveGenre(id);
+        return RedirectToAction(nameof(ListOfGenres));
+    }
+    #endregion
 }

@@ -36,14 +36,14 @@ public record CatalogPlatformsViewModel
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public string PlatformUniqueName { get; set; }
+
 
 }
 public record CatalogGenreViewModel
 {
     public int Id { get; set; }
     public string GenreName { get; set; }
-    public string GenreUniqueName { get; set; }
+
 }
 public record CatalogSearchViewModel
 {
