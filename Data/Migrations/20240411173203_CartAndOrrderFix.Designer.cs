@@ -4,6 +4,7 @@ using Data.ShopDbcontext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(GameShopDbContext))]
-    partial class GameShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240411173203_CartAndOrrderFix")]
+    partial class CartAndOrrderFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,74 +66,17 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"));
 
-                    b.Property<bool>("IsFinally")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("LocationId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("Status")
-                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("CartId");
 
-                    b.HasIndex("LocationId")
-                        .IsUnique()
-                        .HasFilter("[LocationId] IS NOT NULL");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Cart");
-                });
-
-            modelBuilder.Entity("Domain.entities.Cart.Location", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OrderNote")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("PosstCode")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("Domain.entities.Comments.Comments", b =>
@@ -370,6 +316,50 @@ namespace Data.Migrations
                     b.ToTable("SelectedRole");
                 });
 
+            modelBuilder.Entity("Domain.entities.UserPart.User.Location", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderNote")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("PosstCode")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Locations");
+                });
+
             modelBuilder.Entity("Domain.entities.UserPart.User.User", b =>
                 {
                     b.Property<int>("Id")
@@ -391,6 +381,9 @@ namespace Data.Migrations
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("LocationId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -411,6 +404,10 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LocationId")
+                        .IsUnique()
+                        .HasFilter("[LocationId] IS NOT NULL");
 
                     b.ToTable("Users");
                 });
@@ -497,17 +494,11 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Domain.entities.Cart.Carts", b =>
                 {
-                    b.HasOne("Domain.entities.Cart.Location", "Location")
-                        .WithOne("Cart")
-                        .HasForeignKey("Domain.entities.Cart.Carts", "LocationId");
-
                     b.HasOne("Domain.entities.UserPart.User.User", "User")
                         .WithMany("cart")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Location");
 
                     b.Navigation("User");
                 });
@@ -599,15 +590,18 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.entities.UserPart.User.User", b =>
+                {
+                    b.HasOne("Domain.entities.UserPart.User.Location", "Location")
+                        .WithOne("User")
+                        .HasForeignKey("Domain.entities.UserPart.User.User", "LocationId");
+
+                    b.Navigation("Location");
+                });
+
             modelBuilder.Entity("Domain.entities.Cart.Carts", b =>
                 {
                     b.Navigation("CartDeatails");
-                });
-
-            modelBuilder.Entity("Domain.entities.Cart.Location", b =>
-                {
-                    b.Navigation("Cart")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.entities.GamePart.Game.Game", b =>
@@ -636,6 +630,12 @@ namespace Data.Migrations
             modelBuilder.Entity("Domain.entities.UserPart.Roles.Role", b =>
                 {
                     b.Navigation("UserSelectedRoles");
+                });
+
+            modelBuilder.Entity("Domain.entities.UserPart.User.Location", b =>
+                {
+                    b.Navigation("User")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.entities.UserPart.User.User", b =>

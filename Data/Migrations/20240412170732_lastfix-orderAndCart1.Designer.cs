@@ -4,6 +4,7 @@ using Data.ShopDbcontext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(GameShopDbContext))]
-    partial class GameShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240412170732_lastfix-orderAndCart1")]
+    partial class lastfixorderAndCart1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,7 +87,8 @@ namespace Data.Migrations
                         .IsUnique()
                         .HasFilter("[LocationId] IS NOT NULL");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Cart");
                 });
@@ -502,8 +506,8 @@ namespace Data.Migrations
                         .HasForeignKey("Domain.entities.Cart.Carts", "LocationId");
 
                     b.HasOne("Domain.entities.UserPart.User.User", "User")
-                        .WithMany("cart")
-                        .HasForeignKey("UserId")
+                        .WithOne("cart")
+                        .HasForeignKey("Domain.entities.Cart.Carts", "UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -644,7 +648,8 @@ namespace Data.Migrations
 
                     b.Navigation("UserSelectedRoles");
 
-                    b.Navigation("cart");
+                    b.Navigation("cart")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

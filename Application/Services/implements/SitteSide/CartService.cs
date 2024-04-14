@@ -2,6 +2,7 @@
 using Application.Services.Interfaces.UserSide;
 using Application.ViewModel.UserSide;
 using Domain.entities.Cart;
+using Domain.entities.GamePart.Game;
 using Domain.IRepository.GamePart;
 using Domain.IRepository.UserPart;
 
@@ -29,10 +30,11 @@ public class CartService : ICartService
     #endregion
 
     #region General
-    public async Task<List<CartDto>> ShowListOfCart(int userid)
+    public async Task<List<CartDto>> ShowProductIncart(int userid)
     {
-        var cart = await _cartRepository.GetCartsAsync(userid);
-        if (cart != null)
+        var cart = await _cartRepository.GetCartItems(userid);
+        
+        if (cart != null && cart.Any())
         {
             List<CartDto> model = new List<CartDto>();
 
@@ -56,32 +58,31 @@ public class CartService : ICartService
         return null;
     }
 
-
+   
     public async Task AddToCart(ProductViewModel model, int userid)
     {
         if (model != null)
         {
+            var usercarts = await _accountRepository.GetUserCarts(userid);
+         
+         
 
-            var user = await _accountRepository.GetUserByIdAsync(userid);
-            if (user == null)
-            {
-                throw new Exception();
-            }
-
-            if (user.cart == null || user.cart.Count == 0)
+            if (usercarts == null )
             {
                 Carts newcart = new Carts()
                 {
                     UserId = userid,
-                    Price = 0
+                    Price = 0,
+                    IsFinally = false,    
+                    
                 };
 
                 await _cartRepository.AddUserCartToCarts(newcart);
 
-
             }
 
-            var cartid = user.cart.First().CartId;
+            var user = await _accountRepository.GetUserByIdAsync(userid);
+            var cartid = user.cart.Where(x => x.IsFinally == false).First().CartId;
             var game = await _gameRepository.GetGameById(model.Game.Id);
             var platform = await _platformRepository.GetSelectedPlatform(model.Platformid);
             if (platform != null)
@@ -116,9 +117,9 @@ public class CartService : ICartService
     }
 
 
-    public async Task<bool> DeleteCart(int id)
+    public async Task<bool> DeleteCartProduct(int id)
     {
-        var cart = await _cartRepository.FindCartById(id);
+        var cart = await _cartRepository.FindCartDetailsById(id);
         if (cart == null)
         {
 
@@ -130,9 +131,9 @@ public class CartService : ICartService
 
     }
 
-    public async Task<CheckOutViewModel> CheckOut(int user)
+    public async Task<CheckOutViewModel> ShowCheckOut(int user)
     {
-        var cart = await _cartRepository.GetCartsAsync(user);
+        var cart = await _cartRepository.GetCartItems(user);
         if (cart != null)
         {
             List<OrderDetailsViewModel> model = new List<OrderDetailsViewModel>();
@@ -158,5 +159,61 @@ public class CartService : ICartService
         }
         return null;
     }
+
+
+    public async Task MinusQuantityOfGames(List<Game> games)
+    {
+
+    }
+
+    public async Task SubmitOrder(CheckOutViewModel model ,int userid)
+    {
+        var cart = await _cartRepository.GetCArtByUserId(userid);
+       
+        var billing = model.Billing;
+
+        #region AddLocation to order
+        Location location = new Location()
+        {
+            FirstName = billing.FirstName,
+            LastName = billing.LastName,
+            Address = billing.Address,
+            City = billing.City,
+            Email = billing.Email,
+            OrderNote = billing.OrderNote,
+            PhoneNumber = billing.PhoneNumber,
+            PosstCode = billing.PosstCode,
+            Cart = cart
+
+        };
+          await _cartRepository.AddLocation(location);
+        #endregion
+
+        decimal total = 0;
+        foreach (var item in cart.CartDeatails)
+        {
+            total += item.Price * item.Quantity;
+        }
+
+        cart.Price = total;
+        cart.Price = total;
+        cart.IsFinally = true;
+        cart.Status = OrderStatus.Registred;
+        cart.LocationId = location.Id;
+
+        #region Quantit of games
+        var games = cart.CartDeatails.Select(x => x.Game).ToList();
+        await MinusQuantityOfGames(games);
+        #endregion
+
+
+        await _cartRepository.FinalOrder(cart);
+
+
+
+
+    }
+
     #endregion
+
 }

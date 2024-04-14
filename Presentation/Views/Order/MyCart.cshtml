@@ -36,6 +36,8 @@
                 <!-- START: Products in Cart -->
                 <table class="table nk-store-cart-products">
                     <tbody>
+                        @if(Model != null)
+                        {
                         @foreach (var game in Model)
                         {
 
@@ -85,6 +87,8 @@
                                 <td class="nk-product-cart-remove"> <a asp-controller="Order" asp-action="DeleteCart" asp-route-Id="@game.Id"> <span class="ion-android-close"></span> </a> </td>
                             </tr>
                         }
+                            
+                        }
 
 
                     </tbody>
@@ -111,16 +115,26 @@
                                 </td>
                                 @{
                                     decimal total1 = 0;
-                                    @foreach (var item in Model)
+                                    if(Model != null)
                                     {
+                                        @foreach (var item in Model)
+                                        {
 
-                                        total1 += item.Price * item.Quantity;
+                                            total1 += item.Price * item.Quantity;
+                                        }
+                                        <td>
+
+
+                                            € @total1
+                                        </td>
                                     }
-                                    <td>
+                                    else
+                                    {
+                                        <td>
+                                            € 0
+                                        </td>
+                                    }
 
-
-                                        € @total1
-                                    </td>
                                 }
 
 

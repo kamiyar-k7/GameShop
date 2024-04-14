@@ -6,6 +6,7 @@ public class CheckOutViewModel
 {
     public BillingViewModel Billing { get; set; }
     public List<OrderDetailsViewModel> OrderDetails { get; set; }
+    public OrderDetailsViewModel oreder { get; set; }
 }
 
 public class BillingViewModel

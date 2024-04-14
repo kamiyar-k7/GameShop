@@ -2,7 +2,7 @@
 
 namespace Domain.entities.Cart;
 
-public enum CartStatus
+public enum OrderStatus
 {
     Registred,
     InProccess,

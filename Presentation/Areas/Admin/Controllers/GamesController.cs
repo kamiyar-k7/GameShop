@@ -25,6 +25,7 @@ public class GamesController : BaseController
 
     #endregion
 
+    //  models get admin id for layout model 
     public async Task<IActionResult> ListOfGames()
     {
         ViewData["Title"] = "List OF Games";
@@ -96,6 +97,12 @@ public class GamesController : BaseController
         return RedirectToAction("GameDetails", "Games", new { id = model.Game.Id });
     }
     #endregion
+
+    public async Task<IActionResult> DeleteGame(int id)
+    {
+        await _productService.DeleteGame(id);
+        return RedirectToAction(nameof(ListOfGames));
+    }
 
     public async Task<IActionResult> DeleteScreenShot(int id)
     {

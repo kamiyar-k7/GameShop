@@ -19,12 +19,10 @@ public interface IProductService
     Task<ProductViewModel> ShowAddGame(int id);
     Task<bool> AddNewGame(GameViewModelProduct model, List<int> selectedGenres, List<int> selectedPlatforms);
     Task EditGame(GameViewModelProduct model, List<int> selectedGenres, List<int> selectedPlatforms);
+    Task DeleteGame(int id);
 
 
-  
-    #region Genres
    
-    #endregion
 
     #endregion
 }

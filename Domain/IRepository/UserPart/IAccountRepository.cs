@@ -1,4 +1,5 @@
-﻿using Domain.entities.UserPart.User;
+﻿using Domain.entities.Cart;
+using Domain.entities.UserPart.User;
 
 
 namespace Domain.IRepository.UserPart
@@ -13,6 +14,7 @@ namespace Domain.IRepository.UserPart
         void Update(User user);
 
         bool SuperAdmin(int id);
+        Task<Carts?> GetUserCarts(int userid);
 
         #region Admin Side
         int CountUsers();

@@ -33,7 +33,7 @@
 
 
 
-
+    <form asp-action="CheckOut" asp-controller="Order" method="post">
     <div class="container">
 
         <div class="nk-store nk-store-checkout">
@@ -41,17 +41,17 @@
 
             <!-- START: Billing Details -->
             <div class="nk-gap"></div>
-            <form action="#" class="nk-form" novalidate="novalidate">
+           
                 <div class="row vertical-gap">
                     <div class="col-lg-6">
                         <div class="row vertical-gap">
                             <div class="col-sm-6">
                                 <label for="fname">First Name <span class="text-main-1">*</span>:</label>
-                                <input type="text" class="form-control required" name="fname" id="fname">
+                                <input required type="text" class="form-control required"  asp-for="Billing.FirstName" id="fname">
                             </div>
                             <div class="col-sm-6">
                                 <label for="lname">Last Name <span class="text-main-1">*</span>:</label>
-                                <input type="text" class="form-control required" name="lname" id="lname">
+                                <input required type="text" class="form-control required" asp-for="Billing.LastName" id="lname">
                             </div>
                         </div>
 
@@ -61,11 +61,11 @@
                         <div class="row vertical-gap">
                             <div class="col-sm-6">
                                 <label for="email">Email Address <span class="text-main-1">*</span>:</label>
-                                <input type="email" class="form-control required" name="email" id="email">
+                                <input required type="email" class="form-control required" asp-for="Billing.Email" id="email">
                             </div>
                             <div class="col-sm-6">
                                 <label for="phone">Phone <span class="text-main-1">*</span>:</label>
-                                <input type="tel" class="form-control required" name="phone" id="phone">
+                                <input type="tel" class="form-control required" required asp-for="Billing.PhoneNumber" id="phone">
                             </div>
                         </div>
 
@@ -74,11 +74,11 @@
                     </div>
                     <div class="col-lg-6">
                         <label for="zip">Postcode<span class="text-main-1">*</span>:</label>
-                        <input type="tel" class="form-control required" name="zip" id="zip">
+                        <input type="tel" class="form-control required" required asp-for="Billing.PosstCode" id="zip">
 
                         <div class="nk-gap-1"></div>
                         <label for="city">City<span class="text-main-1">*</span>:</label>
-                        <input type="text" class="form-control required" name="city" id="city">
+                        <input type="text" class="form-control required" required asp-for="Billing.City" id="city">
 
                         <div class="nk-gap-1"></div>
 
@@ -87,7 +87,7 @@
 
                     <div style="width: 100%;padding-right: 15px;padding-left: 15px;">
                         <label for="address">Address <span class="text-main-1">*</span>:</label>
-                        <input type="text" class="form-control required" name="address" id="address">
+                        <input type="text" class="form-control required" required asp-for="Billing.Address" id="address">
                     </div>
                 </div>
            
@@ -97,8 +97,9 @@
            
 
                 <label for="notes">Order Notes:</label>
-                <textarea class="form-control" name="notes" id="notes" placeholder="Order Notes" rows="6"></textarea>
-            </form>
+                <textarea class="form-control" asp-for="Billing.OrderNote" id="notes" placeholder="Order Notes" rows="6"></textarea>
+              
+            
 
 
 
@@ -116,6 +117,7 @@
                         </tr>
                     </thead>
                     <tbody>
+
                         @{
                             decimal all = 0;
                             @if (Model != null)
@@ -124,7 +126,7 @@
                                 {
                                     <tr>
                                         <td class="nk-product-cart-title">
-                                            @product.GameName  × @product.Quantity
+                                            @product.GameName  × @product.Quantity > @product.Platform
                                         </td>
                                         <td class="nk-product-cart-total">
                                             @{
@@ -158,11 +160,11 @@
             <!-- END: Order Products -->
 
             <div class="nk-gap-2"></div>
-            <a class="nk-btn nk-btn-rounded nk-btn-color-main-1" href="#">Place Order</a>
+            <button class="nk-btn nk-btn-rounded nk-btn-color-main-1" type="submit">Place Order</button>
         </div>
     </div>
     <div class="nk-gap-2"></div>
-
+    </form>
 </div>
 
 

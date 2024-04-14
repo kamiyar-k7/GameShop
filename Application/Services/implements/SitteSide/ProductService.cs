@@ -42,13 +42,6 @@ public class ProductService : IProductService
 
     #region General 
 
-
-
-
-
-
-    #endregion
-
     #region Game Details
     // get game by id 
     public async Task<Game> GetGameAsync(int Id)
@@ -331,14 +324,19 @@ public class ProductService : IProductService
 
     #endregion
 
+    #endregion
+
+
 
     #region Admin Side
 
     #region Game
-    // fill lits of games
+
+    // fill list of games
     public async Task<List<GameViewModelProduct>> ListOfGames()
     {
-        var games = await _gamerepository.GamesAsync();
+
+        var games = await _gamerepository.AdminGames();
 
         List<GameViewModelProduct> model = new List<GameViewModelProduct>();
 
@@ -375,7 +373,7 @@ public class ProductService : IProductService
     {
         var admin = await _layoutService.AdminInfo(userid);
         var games = await ListOfGames();
-
+       
 
 
 
@@ -628,6 +626,11 @@ public class ProductService : IProductService
 
     }
 
+
+    public async Task DeleteGame(int id)
+    {
+        await _gamerepository.DeleteGame(id);
+    }
 
     #endregion
 

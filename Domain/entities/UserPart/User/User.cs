@@ -24,12 +24,10 @@ public class User
     public bool IsAdmin { get; set; }
     public bool SuperAdmin { get; set; }
     public bool IsDelete { get; set; }
-    public int? LocationId { get; set; }
 
     #region Rels
     public ICollection<UserSelectedRole> UserSelectedRoles { get; set; }
     public List<Carts> cart { get; set; }
-    public Location? Location { get; set; }
     public ICollection<Comments.Comments> Comments { get; set; }
     #endregion
 

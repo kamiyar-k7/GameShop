@@ -3,7 +3,6 @@ using Domain.entities.Comments;
 using Domain.entities.GamePart.Game;
 using Domain.entities.GamePart.Genre;
 using Domain.entities.GamePart.Platform;
-using Domain.entities.Order;
 using Domain.entities.UserPart.Roles;
 using Domain.entities.UserPart.User;
 using Domain.entities.WebSite;
@@ -32,7 +31,6 @@ public class GameShopDbContext : DbContext
     public DbSet<UserSelectedRole> SelectedRole { get; set; }
     public DbSet<Carts> Cart { get; set; }
     public DbSet<CartDeatails> CartDeatails { get; set; }
-    public DbSet<Order> Orders { get; set; }
     public DbSet<Location> Locations { get; set; }
     #endregion
 

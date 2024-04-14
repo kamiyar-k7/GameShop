@@ -7,8 +7,10 @@ namespace Application.Services.Interfaces.UserSide;
 public interface ICartService
 {
 
-    Task<List<CartDto>> ShowListOfCart(int userid);
+    Task<List<CartDto>> ShowProductIncart(int userid);
     Task AddToCart(ProductViewModel model, int userid);
-    Task<bool> DeleteCart(int id);
-    Task<CheckOutViewModel> CheckOut(int user);
+    Task<bool> DeleteCartProduct(int id);
+    Task<CheckOutViewModel> ShowCheckOut(int user);
+
+    Task SubmitOrder(CheckOutViewModel model, int userid);
 }

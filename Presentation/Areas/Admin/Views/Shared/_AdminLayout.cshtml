@@ -129,11 +129,8 @@
                         <li>
                             <a class="has-arrow" href="mailbox.html" aria-expanded="false"><i class="icon nalika-bar-chart icon-wrap"></i> <span class="mini-click-non">Orders</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
-                                <li><a title="Bar Charts" href="bar-charts.html"><span class="mini-sub-pro">All Orders</span></a></li>
-                                <li><a title="Area Charts" href="area-charts.html"><span class="mini-sub-pro">Processing</span></a></li>
-                                <li><a title="Rounded Charts" href="rounded-chart.html"><span class="mini-sub-pro">Returned Orders</span></a></li>
-                                <li><a title="Line Charts" href="line-charts.html"><span class="mini-sub-pro">Completed</span></a></li>
-                                <li><a title="C3 Charts" href="c3.html"><span class="mini-sub-pro"></span></a></li>
+                                <li><a title="Bar Charts" asp-area="Admin" asp-action="ListOfOrders" asp-controller="Orders"><span class="mini-sub-pro">All Orders</span></a></li>
+                       
                             
                             </ul>
                         </li>
@@ -248,8 +245,8 @@
                                         <li>
                                             <a class="has-arrow" href="mailbox.html" aria-expanded="false"><i class="icon nalika-diamond icon-wrap"></i> <span class="mini-click-non">Manage Users</span></a>
                                             <ul class="submenu-angle" aria-expanded="false">
-                                                <li><a title="Google Map" href="google-map.html"><span class="mini-sub-pro">Users</span></a></li>
-                                                <li><a title="Data Maps" href="data-maps.html"><span class="mini-sub-pro">Admins</span></a></li>
+                                                <li><a asp-area="Admin" asp-controller="Users" asp-action="Users"><span class="mini-sub-pro">Users</span></a></li>
+                                                <li><a asp-area="Admin" asp-controller="Users" asp-action="Admins"><span class="mini-sub-pro">Admins</span></a></li>
 
                                             </ul>
                                         </li>

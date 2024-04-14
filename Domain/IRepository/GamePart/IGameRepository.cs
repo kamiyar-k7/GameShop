@@ -16,15 +16,14 @@ public interface IGameRepository
 
     #region Admin Side
     public int GameCount();
-
+    Task<List<Game>> AdminGames();
     Task SaveChanges();
 
     Task AddNewGame(Game game);
 
-  
-
     Task UpdateGame(Game game);
 
+    Task DeleteGame(int id);
     #endregion
 
 }

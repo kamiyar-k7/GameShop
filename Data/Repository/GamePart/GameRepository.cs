@@ -18,6 +18,10 @@ public class GameRepository : IGameRepository
     #region General
     public async Task<List<Game>> GamesAsync()
     {
+        return await _dbContext.Games.Include(x => x.Screenshots).Include(x => x.gameSelectedPlatforms).Include(x => x.gemeSelectedGenres).Where(x => x.IsDelete == false && x.GamesStatus == GameStatus.Active).ToListAsync();
+    }
+    public async Task<List<Game>> AdminGames()
+    {
         return await _dbContext.Games.Include(x => x.Screenshots).Include(x => x.gameSelectedPlatforms).Include(x => x.gemeSelectedGenres).Where(x => x.IsDelete == false).ToListAsync();
     }
 
@@ -29,9 +33,11 @@ public class GameRepository : IGameRepository
     public async Task<List<Game>> GetRelatedGamesBtGenre(Game game)
     {
 
-        return await _dbContext.Games.Include(x => x.Screenshots).Include(x => x.gemeSelectedGenres).Where(g => g.gemeSelectedGenres
+        return await _dbContext.Games.
+            Include(x => x.Screenshots).Include(x => x.gemeSelectedGenres)
+            .Where(g => g.gemeSelectedGenres
              .Any(genre => genre.GenreId == game.gemeSelectedGenres.Select(g => g.GenreId).FirstOrDefault()))
-         .ToListAsync();
+             .ToListAsync();
     }
 
 
@@ -46,7 +52,7 @@ public class GameRepository : IGameRepository
 
     public int GameCount()
     {
-        var num = _dbContext.Games.Count();
+        var num = _dbContext.Games.Where(x=> x.IsDelete == false).Count();
         return num;
     }
 
@@ -56,14 +62,31 @@ public class GameRepository : IGameRepository
        await SaveChanges();
     }
 
-
-   
-
     public  async Task UpdateGame(Game game)
     {
          _dbContext.Games.Update(game);
           await SaveChanges();
     }
 
+    public async Task DeleteGame(int id)
+    {
+        var game = await _dbContext.Games.FindAsync(id);
+        game.IsDelete = true;
+        game.GamesStatus = GameStatus.InActive;
+        game.Quantitiy = 0;
+        var deletegamefromcart = _dbContext.CartDeatails.Where(gs => gs.GameId == game.Id);
+        _dbContext.CartDeatails.RemoveRange(deletegamefromcart);
+
+        var selectedgenres = _dbContext.SelectedGenres.Where(gs => gs.GameId == game.Id);
+        _dbContext.SelectedGenres.RemoveRange(selectedgenres);
+
+        var selexctedplatforms = _dbContext.SelectedPlatforms.Where(ps=> ps.GameId == game.Id);
+        _dbContext.SelectedPlatforms.RemoveRange(selexctedplatforms);
+
+        var comments = _dbContext.Comments.Where(x=> x.GameId == game.Id);
+        _dbContext.Comments.RemoveRange(comments);
+
+        await SaveChanges();
+    }
     #endregion
 }
