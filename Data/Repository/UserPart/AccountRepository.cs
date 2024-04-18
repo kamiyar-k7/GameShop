@@ -39,20 +39,7 @@ public class AccountRepository : IAccountRepository
         return _dbContext.Users.Where(x => x.IsDelete == false).Any(x => x.PhoneNumber == PhoneNumber || x.Email == email);
 
     }
-    public async Task<Carts?> GetUserCarts(int userid)
-    {
-        //return await _dbContext.Cart.Select(x=> new Carts 
-        //{ 
-        //    UserId = userid,
-        //    CartId = x.CartId,
-            
-            
-
-        //}).FirstAsync();
-       return await _dbContext.Cart.Where(x => x.UserId == userid && x.IsFinally == false).FirstOrDefaultAsync();
-       
-       
-    }
+ 
 
     public async Task<User?> GetUserByIdAsync(int id)
     {

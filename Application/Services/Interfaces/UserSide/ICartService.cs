@@ -1,5 +1,4 @@
 ﻿using Application.DTOs.UserSide.Account;
-using Application.DTOs.UserSide.StorePart;
 using Application.ViewModel.UserSide;
 
 namespace Application.Services.Interfaces.UserSide;
@@ -13,4 +12,5 @@ public interface ICartService
     Task<CheckOutViewModel> ShowCheckOut(int user);
 
     Task SubmitOrder(CheckOutViewModel model, int userid);
+    Task<CheckOutViewModel> GetOrderDetails(int orderid);
 }

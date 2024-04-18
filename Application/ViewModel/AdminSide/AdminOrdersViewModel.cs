@@ -11,7 +11,7 @@ public record AdminOrdersViewModel : AdminBaseViewModel
     public List< OrdersViewModel> ListOfOrders { get; set; }
      public List<CartDeatailsViewModel> cartDeatails { get; set; }
    
-    public LocationViewModel Location { get; set; }
+    public AdminLocationViewModel Location { get; set; }
 }
 
 public record OrdersViewModel
@@ -23,6 +23,7 @@ public record OrdersViewModel
     public int LocationId { get; set; }
     public bool IsFinally { get; set; }
     public OrderStatus Status { get; set; }
+    public string TrackingCode { get; set; }
 
 
 }
@@ -42,7 +43,7 @@ public record CartDeatailsViewModel
 
 }
 
-public class LocationViewModel
+public class AdminLocationViewModel
 {
 
     

@@ -1,6 +1,8 @@
 ﻿
 
+using Domain.entities.Cart;
 using Microsoft.AspNetCore.Http;
+
 
 namespace Application.ViewModel.UserSide;
 
@@ -8,7 +10,8 @@ public class UserAccountViewModel
 {
     public UserDeatailViewModel Deatail { get; set; }
     public List<UserCommentsViewModel> Comments { get; set; }
-
+    public List<UserOrdersViewModel> Orders { get; set; }
+       
 
      
 }
@@ -25,8 +28,16 @@ public record UserDeatailViewModel
 
 public record UserOrdersViewModel
 {
+    public int CartId { get; set; }
+    public int UserId { get; set; }
+    public decimal Price { get; set; }
+    public OrderStatus? Status { get; set; }
+    public DateTime? RegestredDate { get; set; }
+    public string? TrackingPostCode { get; set; }
+
 
 }
+
 public record UserCommentsViewModel
 {
  

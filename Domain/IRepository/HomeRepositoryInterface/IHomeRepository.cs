@@ -10,6 +10,7 @@ public interface IHomeRepository
     #region Admin Side
     Task<List<ContactUs>> Messages();
     Task<bool> DeleteMessage(int id);
+    Task UpdateAboutUs(AboutUs aboutUs);
     #endregion
 
 }

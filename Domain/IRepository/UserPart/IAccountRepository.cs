@@ -14,7 +14,7 @@ namespace Domain.IRepository.UserPart
         void Update(User user);
 
         bool SuperAdmin(int id);
-        Task<Carts?> GetUserCarts(int userid);
+      
 
         #region Admin Side
         int CountUsers();

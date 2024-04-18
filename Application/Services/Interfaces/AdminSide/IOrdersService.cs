@@ -10,5 +10,6 @@ public interface IOrdersService
     Task<AdminOrdersViewModel> GetListOFOrders(int adminid);
 
     Task<AdminOrdersViewModel> GetDetailOfOrder(int orderid, int adminid);
-    Task UpdateOrderStatus(int orderid, OrderStatus status);
+    //Task UpdateOrderStatus(int orderid, OrderStatus status);
+    Task UpdateOrderStatus(OrdersViewModel model);
 }

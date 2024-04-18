@@ -4,6 +4,7 @@ using Data.ShopDbcontext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(GameShopDbContext))]
-    partial class GameShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240414220303_TackingPostCode")]
+    partial class TackingPostCode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,9 +75,6 @@ namespace Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime?>("RegestredDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int?>("Status")
                         .HasColumnType("int");
 
@@ -85,6 +85,10 @@ namespace Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("CartId");
+
+                    b.HasIndex("LocationId")
+                        .IsUnique()
+                        .HasFilter("[LocationId] IS NOT NULL");
 
                     b.HasIndex("UserId");
 
@@ -103,9 +107,6 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CartId")
-                        .HasColumnType("int");
-
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -123,20 +124,17 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OrderNote")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("PostCode")
+                    b.Property<long>("PosstCode")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CartId")
-                        .IsUnique()
-                        .HasFilter("[CartId] IS NOT NULL");
 
                     b.ToTable("Locations");
                 });
@@ -432,15 +430,19 @@ namespace Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Author")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AuthorUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -501,22 +503,19 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Domain.entities.Cart.Carts", b =>
                 {
+                    b.HasOne("Domain.entities.Cart.Location", "Location")
+                        .WithOne("Cart")
+                        .HasForeignKey("Domain.entities.Cart.Carts", "LocationId");
+
                     b.HasOne("Domain.entities.UserPart.User.User", "User")
                         .WithMany("cart")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Location");
+
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Domain.entities.Cart.Location", b =>
-                {
-                    b.HasOne("Domain.entities.Cart.Carts", "Cart")
-                        .WithOne("Location")
-                        .HasForeignKey("Domain.entities.Cart.Location", "CartId");
-
-                    b.Navigation("Cart");
                 });
 
             modelBuilder.Entity("Domain.entities.Comments.Comments", b =>
@@ -609,8 +608,12 @@ namespace Data.Migrations
             modelBuilder.Entity("Domain.entities.Cart.Carts", b =>
                 {
                     b.Navigation("CartDeatails");
+                });
 
-                    b.Navigation("Location");
+            modelBuilder.Entity("Domain.entities.Cart.Location", b =>
+                {
+                    b.Navigation("Cart")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.entities.GamePart.Game.Game", b =>

@@ -31,6 +31,7 @@ public class OrderDetailsViewModel
     public decimal Price { get; set; }
     public int Quantity { get; set; }
     public string Platform { get; set; }
-
+    public string ItemImage { get; set; }
+    public string TrackingPostCode {  get; set; }  
 }
 

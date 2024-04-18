@@ -36,6 +36,7 @@ public class OrdersService : IOrdersService
                 UserId = order.UserId ,
                 
             };
+
             model.Add(childModel);  
 
 
@@ -56,11 +57,11 @@ public class OrdersService : IOrdersService
 
    public async Task<AdminOrdersViewModel> GetDetailOfOrder(int orderid , int adminid)
     {
-        var order = await _cart.GetOrderDetails(orderid);
-       
+        var OrderItems = await _cart.OrderDeatails(orderid);
+        var order = await _cart.GetOrderById(orderid);
         List<CartDeatailsViewModel> detailsmodel = new List<CartDeatailsViewModel>();
 
-        foreach (var item in order)
+        foreach (var item in OrderItems)
         {
             CartDeatailsViewModel childmodel = new CartDeatailsViewModel()
             {
@@ -77,9 +78,24 @@ public class OrdersService : IOrdersService
             detailsmodel.Add(childmodel);
         }
 
+        var loc = order.Location;
+
+        AdminLocationViewModel locationmodel = new AdminLocationViewModel()
+        {
+            FirstName = loc.FirstName,
+            LastName = loc.LastName,
+            Address = loc.Address,
+            City = loc.City,
+            Email = loc.Email,
+            OrderNote = loc.OrderNote   ,
+            PhoneNumber = loc.PhoneNumber,
+            PosstCode = loc.PostCode
+        };
+
         OrdersViewModel cartid = new OrdersViewModel()
         {
             CartId = orderid,
+            TrackingCode = order.TrackingPostCode,
         };
 
         var admin = await _layoutService.AdminInfo(adminid);
@@ -87,8 +103,11 @@ public class OrdersService : IOrdersService
         {
             Admin = admin,
             cartDeatails = detailsmodel
-            , OneOrder = cartid 
+            , OneOrder = cartid ,
+            Location = locationmodel
+            
         };
+
 
 
         return model;
@@ -96,11 +115,12 @@ public class OrdersService : IOrdersService
     }
     
 
-    public async Task UpdateOrderStatus(int orderid , OrderStatus status)
+    public async Task UpdateOrderStatus(OrdersViewModel model)
     {
-        var order = await _cart.GetOrderById(orderid);
-        order.Status = status;
-
+        var order = await _cart.GetOrderById(model.CartId);
+        order.Status = model.Status;
+        order.TrackingPostCode = model.TrackingCode;
+        order.RegestredDate = DateTime.Now;
         await _cart.UpdateOrderStatus(order);
     }
 }

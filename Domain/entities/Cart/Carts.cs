@@ -13,10 +13,10 @@ public class Carts
     public int UserId { get; set; }
     public decimal Price { get; set; }
     public int? LocationId { get; set; }
-
     public bool IsFinally { get; set; }
-
      public OrderStatus? Status { get; set; }
+    public  DateTime? RegestredDate { get; set; } 
+    public string? TrackingPostCode { get; set; }
 
     #region rels
     public  User User { get; set; }

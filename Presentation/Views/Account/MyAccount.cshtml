@@ -104,12 +104,52 @@
                     </div>
 
 
-
+                    <!-- START: orders -->
                     <div role="tabpanel" class="tab-pane fade" id="tabs-1-3">
                         <div class="nk-gap"></div>
-                        <p>I have related the substance of several conversations I had with my master during the greatest part of the time I had the, for brevity sake, omitted much moredown.</p>
+                        <div >
+
+                          
+                             @if(Model.Orders.Any() && Model.Orders != null)
+                            {
+                                foreach (var item in Model.Orders.OrderBy(x=> x.Status) )
+                                {
+                                    <div class="nk-team">
+                                        <div class="nk-team-logo">
+                                            <img src="assets/images/team-1-lg.jpg" alt="">
+                                        </div>
+                                        <div class="nk-team-cont">
+                                            <h3 class="h5 mb-20"><span class="text-main-1">Cart Id:</span> @item.CartId </h3>
+                                            <h3 class="h5 mb-20"><span class="text-main-1">Cart Price:</span> @item.Price </h3>
+                                            <h3 class="h5 mb-20"><span class="text-main-1">Cart Date:</span> @item.RegestredDate </h3>
+
+                                            @if(item.TrackingPostCode != null)
+                                            {
+                                                <h3 class="h5 mb-20"><span class="text-main-1">Cart Post Code:</span> @item.TrackingPostCode </h3>
+                                            }
+                                            else
+                                            {
+                                                <h3 class="h5 mb-20"><span class="text-main-1">Cart Post Code:</span> Tracking Post Code Not Set Yet </h3>
+                                            }
+
+                                            <h4 class="h6 mb-5">Status:</h4>
+                                            <a href="tournaments-teammate.html">@item.Status.ToString()</a>
+                                            <br />
+                                            <a asp-controller="Order" asp-action="CartDetails" asp-route-Id="@item.CartId" class="nk-btn nk-btn-rounded nk-btn-color-main-1">View Details</a>
+
+                                        </div>
+                                    </div>
+                                }
+                            } 
+                          
+
+                           
+                         
+
+                        </div>
                         <div class="nk-gap"></div>
                     </div>
+                    <!-- END: orders -->
                 </div>
             </div>
             <!-- END: Tabs -->
@@ -132,7 +172,7 @@
     }
 
     .tabs {
-        display: flex;
+     
         flex-direction: column;
         flex-wrap: nowrap;
         align-content: center;

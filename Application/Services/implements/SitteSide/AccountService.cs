@@ -1,11 +1,9 @@
 ﻿using Application.DTOs.UserSide.Account;
 using Application.Helpers;
 using Application.Services.Interfaces.UserSide;
-using Application.ViewModel.AdminSide;
 using Application.ViewModel.UserSide;
 using Domain.entities.UserPart.Roles;
 using Domain.entities.UserPart.User;
-
 using Domain.IRepository.GamePart;
 using Domain.IRepository.UserPart;
 
@@ -125,13 +123,45 @@ public class AccountService : IAccountService
     {
         var user = await _account.GetUserByIdAsync(id);
 
+        #region Comments
         List<UserCommentsViewModel> comments = new List<UserCommentsViewModel>();
-
-
-        if (user != null)
+        foreach (var com in user.Comments)
         {
+            var game = await _game.GetGameById(com.GameId);
+            var commentsmodel = new UserCommentsViewModel()
+            {
+                Comment = com.Comment,
+                CreatedAt = com.CreatedAt,
+                GameName = game.Name,
+                GameId = com.GameId,
+                Ratings = com.Ratings,
+                Title = com.Title,
+            };
+            comments.Add(commentsmodel);
+        }
+        #endregion
 
-            var detailmodel = new UserDeatailViewModel()
+        #region Orders
+        List<UserOrdersViewModel> orders = new List<UserOrdersViewModel>();
+        foreach (var item in user.cart.Where(x=> x.IsFinally == true).OrderByDescending(x=>x.RegestredDate))
+        {
+            UserOrdersViewModel oneorder = new UserOrdersViewModel()
+            {
+                CartId = item.CartId,
+                Price = item.Price,
+                RegestredDate = item.RegestredDate,
+                Status = item.Status,
+                TrackingPostCode = item.TrackingPostCode,
+                UserId = user.Id,
+            };
+            orders.Add(oneorder);
+        }
+        #endregion
+
+
+
+
+        UserDeatailViewModel detailmodel = new UserDeatailViewModel()
             {
                 UserId = id,
                 Name = user.UserName,
@@ -141,32 +171,19 @@ public class AccountService : IAccountService
 
             };
 
-            foreach (var com in user.Comments)
-            {
-                var game = await _game.GetGameById(com.GameId);
-                var commentsmodel = new UserCommentsViewModel()
-                {
-                    Comment = com.Comment,
-                    CreatedAt = com.CreatedAt,
-                    GameName = game.Name,
-                    GameId = com.GameId,
-                    Ratings = com.Ratings,
-                    Title = com.Title,
-                };
-                comments.Add(commentsmodel);
-            }
+         
 
             UserAccountViewModel model = new UserAccountViewModel()
             {
                 Deatail = detailmodel,
                 Comments = comments
+                , Orders = orders,
             };
             return model;
 
 
-        }
+        
 
-        return null;
 
     }
 
@@ -208,12 +225,5 @@ public class AccountService : IAccountService
 
 
 
-    //------------------------------------------
-
-    #region Admin Side
-
-
-
-    #endregion
 }
 #endregion

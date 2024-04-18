@@ -8,6 +8,7 @@ using Domain.IRepository.UserPart;
 
 
 
+
 namespace Application.Services.implements.SitteSide;
 
 public class CartService : ICartService
@@ -30,9 +31,13 @@ public class CartService : ICartService
     #endregion
 
     #region General
+
+
     public async Task<List<CartDto>> ShowProductIncart(int userid)
     {
-        var cart = await _cartRepository.GetCartItems(userid);
+        var cart = await _cartRepository.ShowCartDetails(userid);
+
+
         
         if (cart != null && cart.Any())
         {
@@ -58,12 +63,13 @@ public class CartService : ICartService
         return null;
     }
 
-   
+
     public async Task AddToCart(ProductViewModel model, int userid)
     {
         if (model != null)
         {
-            var usercarts = await _accountRepository.GetUserCarts(userid);
+            var usercarts = await _cartRepository.GetCArtByUserId(userid);
+          
          
          
 
@@ -116,7 +122,6 @@ public class CartService : ICartService
         }
     }
 
-
     public async Task<bool> DeleteCartProduct(int id)
     {
         var cart = await _cartRepository.FindCartDetailsById(id);
@@ -131,10 +136,15 @@ public class CartService : ICartService
 
     }
 
+
+
     public async Task<CheckOutViewModel> ShowCheckOut(int user)
     {
-        var cart = await _cartRepository.GetCartItems(user);
-        if (cart != null)
+        var cart = await _cartRepository.ShowCartDetails(user);
+
+        
+
+        if (cart != null && cart.Any())
         {
             List<OrderDetailsViewModel> model = new List<OrderDetailsViewModel>();
             foreach (var item in cart)
@@ -161,7 +171,71 @@ public class CartService : ICartService
     }
 
 
-    public async Task MinusQuantityOfGames(List<Game> games)
+
+    public async Task<CheckOutViewModel> GetOrderDetails(int orderid)
+    {
+        var OrderItems = await _cartRepository.OrderDeatails(orderid);
+        var location = await _cartRepository.LocationAsync(orderid); 
+     
+        List<OrderDetailsViewModel> detailsmodel = new List<OrderDetailsViewModel>();
+
+        foreach (var item in OrderItems)
+        {
+            OrderDetailsViewModel childmodel = new OrderDetailsViewModel()
+            {
+                CartDetailsId = item.CartDetailsId,
+                GameId = item.GameId,
+                GameName = item.Game.Name,
+                ItemImage = item.Game.Screenshots.First().AvararUrl,
+                Platform = item.Platform,
+                Price = item.Price,
+                Quantity = item.Quantity,
+               
+
+            };
+            detailsmodel.Add(childmodel);
+        }
+
+
+
+        BillingViewModel locationmodel = new BillingViewModel()
+        {
+
+            FirstName = location.FirstName,
+            LastName = location.LastName,
+            Address = location.Address,
+            City = location.City,
+            Email = location.Email,
+            OrderNote = location.OrderNote,
+            PhoneNumber = location.PhoneNumber,
+            PosstCode = location.PostCode,
+
+        };
+
+        var Tcode = OrderItems.Select(x => x.Cart.TrackingPostCode).ToString();
+
+        OrderDetailsViewModel cartid = new OrderDetailsViewModel()
+        {
+            CartId = orderid,
+            TrackingPostCode = Tcode
+            
+        };
+
+
+        CheckOutViewModel model = new CheckOutViewModel()
+        {
+            Billing = locationmodel,
+            OrderDetails = detailsmodel,
+            oreder = cartid
+          
+        };
+
+
+        return model;
+    }
+
+
+        public async Task MinusQuantityOfGames(List<Game> games)
     {
 
     }
@@ -169,7 +243,8 @@ public class CartService : ICartService
     public async Task SubmitOrder(CheckOutViewModel model ,int userid)
     {
         var cart = await _cartRepository.GetCArtByUserId(userid);
-       
+
+
         var billing = model.Billing;
 
         #region AddLocation to order
@@ -182,11 +257,13 @@ public class CartService : ICartService
             Email = billing.Email,
             OrderNote = billing.OrderNote,
             PhoneNumber = billing.PhoneNumber,
-            PosstCode = billing.PosstCode,
-            Cart = cart
+            PostCode = billing.PosstCode,
+            CartId = cart.CartId
 
         };
-          await _cartRepository.AddLocation(location);
+
+        await _cartRepository.AddLocation(location);
+
         #endregion
 
         decimal total = 0;
@@ -195,18 +272,19 @@ public class CartService : ICartService
             total += item.Price * item.Quantity;
         }
 
-        cart.Price = total;
+        cart.RegestredDate = DateTime.Now;
         cart.Price = total;
         cart.IsFinally = true;
         cart.Status = OrderStatus.Registred;
         cart.LocationId = location.Id;
+
 
         #region Quantit of games
         var games = cart.CartDeatails.Select(x => x.Game).ToList();
         await MinusQuantityOfGames(games);
         #endregion
 
-
+      
         await _cartRepository.FinalOrder(cart);
 
 

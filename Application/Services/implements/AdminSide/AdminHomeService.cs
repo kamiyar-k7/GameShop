@@ -10,21 +10,25 @@ namespace Application.Services.implements.AdminSide;
 
 public class AdminHomeService : IAdminHomeService
 {
+
     #region Ctor
     private readonly IGameRepository _gameRepository;
     private readonly IAccountRepository _account;
     private readonly IHomeRepository _home;
     private readonly ILayoutService _layoutService;
+    private readonly ICartRepository _cartRepository;
     public AdminHomeService(IGameRepository gameRepository ,
                             IAccountRepository accountRepository,
                             IHomeRepository homeRepository , 
-                            ILayoutService layoutService)
+                            ILayoutService layoutService,
+                            ICartRepository cartRepository)
     {
         
         _gameRepository = gameRepository;
         _account = accountRepository;
         _home = homeRepository;
         _layoutService = layoutService;
+        _cartRepository = cartRepository;
 
     }
     #endregion
@@ -32,21 +36,20 @@ public class AdminHomeService : IAdminHomeService
 
 
     #region Dashboard
- 
 
-
-    public CountsViewModel DashboardView()
+    public  CountsViewModel DashboardView()
     {
 
         var gamecount = _gameRepository.GameCount();
         var users = _account.CountUsers();
         var admins = _account.CountAdmins();
-
+        var orders =  _cartRepository.CountOfOrders();
         CountsViewModel countsViewModel = new CountsViewModel()
         {
             GameCount = gamecount,
             AdminCount = admins,
             UserCount = users,
+            OrdersCount = orders
         };
 
 
@@ -111,6 +114,44 @@ public class AdminHomeService : IAdminHomeService
         var result = await _home.DeleteMessage(id);
         if (result) { return true; }
         return false;
+    }
+    #endregion
+
+    #region About US
+
+    public async Task<AdminHomeViewModel> FillAdminAboutUs(int adminid)
+    {
+        var admininfo = await _layoutService.AdminInfo(adminid);
+
+        var about = await _home.AboutUs();
+
+        AdminAboutUsViewModel a = new AdminAboutUsViewModel()
+        {
+            Title = about.Title,
+            Author = about.Author,
+            AuthorUrl = about.AuthorUrl,
+            Description = about.Description,
+        };
+
+        AdminHomeViewModel model = new AdminHomeViewModel()
+        {
+            Admin = admininfo,
+            aboutUs = a,
+        };
+
+        return model;
+    }
+
+    public async Task EditAboutUs(AdminAboutUsViewModel model)
+    {
+        var aboutinfo = await _home.AboutUs();
+
+        aboutinfo.Title = model.Title;
+        aboutinfo.Author = model.Author;
+        aboutinfo.AuthorUrl = model.AuthorUrl;
+        aboutinfo.Description = model.Description;
+
+        await _home.UpdateAboutUs(aboutinfo);
     }
     #endregion
 

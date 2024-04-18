@@ -22,7 +22,7 @@ public class OrderController : Controller
     public async Task<IActionResult> MyCart()
     {
     
-            var cart = await _cartService.ShowProductIncart((int)HttpContext.User.GetUserId());
+        var cart = await _cartService.ShowProductIncart((int)HttpContext.User.GetUserId());
         if(cart != null)
         {
 
@@ -73,8 +73,7 @@ public class OrderController : Controller
             var model = await _cartService.ShowCheckOut((int)HttpContext.User.GetUserId());
             return View(model);
         
-      
-      
+
     }
      
     [HttpPost , ValidateAntiForgeryToken]
@@ -83,6 +82,19 @@ public class OrderController : Controller
         await _cartService.SubmitOrder(viewModel , (int)HttpContext.User.GetUserId());
         
         return RedirectToAction("index", "home");
+    }
+    #endregion
+
+    #region CartDetails 
+
+    public async Task<IActionResult> CartDetails(int id)
+    {
+        var model = await _cartService.GetOrderDetails(id);
+        if(model != null)
+        {
+            return View(model);                                                                                                                                                                 
+        }
+        return View();
     }
     #endregion
 }

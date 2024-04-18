@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Application.ViewModel.UserSide;
 using Application.Services.Interfaces.UserSide;
+using Application.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 
 
@@ -140,20 +142,23 @@ public class AccountController : Controller
 
     #region My Account
     [HttpGet]
+    [Authorize]
     public async  Task< IActionResult> MyAccount()
     {
-        var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (int.TryParse(userid, out int id))
-        {
-          var user =   await _accountService.UserViewModel(id);
-            return View(user);
-        }
+        
+          var user =   await _accountService.UserViewModel((int)HttpContext.User.GetUserId());
 
-        return NotFound();
+          return View(user);
+        
+
+      
     }
+
+
 
     #endregion
 
+    
     #region Edit Account 
     [HttpGet] 
     public async Task<IActionResult> EditAccount(int id)

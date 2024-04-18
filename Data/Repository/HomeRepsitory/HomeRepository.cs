@@ -54,6 +54,16 @@ public class HomeRepository : IHomeRepository
     }
     #endregion
 
+    #region About US
+
+    public async Task UpdateAboutUs(AboutUs aboutUs)
+    {
+         _dbContext.AboutUs.Update(aboutUs);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    #endregion
+
     #endregion
 
 }

@@ -7,6 +7,8 @@ public record AdminHomeViewModel : AdminBaseViewModel
  
     public CountsViewModel counts { get; set; }
     public List<ContactMessagesViewModel> contactMessages { get; set; }
+    public AdminAboutUsViewModel aboutUs { get; set; }
+
 }
 
 public record CountsViewModel
@@ -26,5 +28,13 @@ public record ContactMessagesViewModel
     public string Title { get; set; }
     public string Message { get; set; }
     public DateTime Time { get; set; }
+}
+
+public record AdminAboutUsViewModel
+{
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public string Author { get; set; }
+    public string AuthorUrl { get; set; }
 }
 

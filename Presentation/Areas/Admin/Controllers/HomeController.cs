@@ -60,21 +60,31 @@ public class HomeController : BaseController
     }
 
 
-    // not finished
+
+    [HttpGet]
     public async Task<IActionResult> AboutUs()
     {
-        var admin = await _layoutService.AdminInfo((int)HttpContext.User.GetUserId());
-        AdminHomeViewModel model = new AdminHomeViewModel()
-        {
-
-            Admin = admin,
-          
-        };
+        
+       
+        var model = await _homeservices.FillAdminAboutUs((int)HttpContext.User.GetUserId());
 
         
-        ViewData["Title"] = "Contact Page";
+        ViewData["Title"] = "ABOUT us";
 
         return View(model);
+    }
+
+    [HttpPost , ValidateAntiForgeryToken]
+    public async Task<IActionResult> AboutUs(AdminHomeViewModel model)
+    {
+
+        await _homeservices.EditAboutUs(model.aboutUs);
+      
+
+
+        ViewData["Title"] = "ABOUT us";
+
+        return RedirectToAction(nameof(AboutUs));
     }
 
 }

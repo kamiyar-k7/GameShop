@@ -34,9 +34,10 @@ public class OrdersController : BaseController
     [HttpPost , ValidateAntiForgeryToken]
     public async Task<IActionResult> ChangeStatus(AdminOrdersViewModel ordermoel)
     {
-        var orderid = ordermoel.OneOrder.CartId;
-        var status = ordermoel.OneOrder.Status;
-        await _Order.UpdateOrderStatus(orderid , status );
+   
+       var model =  ordermoel.OneOrder;
+            
+        await _Order.UpdateOrderStatus(model );
         return RedirectToAction("ListOfOrders", "Orders" );
     }
     
