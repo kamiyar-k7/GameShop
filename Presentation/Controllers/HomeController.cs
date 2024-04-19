@@ -22,17 +22,22 @@ public class HomeController : Controller
 	#endregion
 
 	#region Index
-	public async Task<IActionResult> Index()
+	public async Task<IActionResult> Index(int pageId = 1)
 	{
-		if (ModelState.IsValid)
-		{
-			var games = await	_storeService.ShowGames();
-			return View(games);
-		}
+        ViewBag.PageId = pageId;
 
-			return View();
+        var games = await _storeService.ShowGames();
+        var pagecount = (int)Math.Ceiling(games.Count() / 10.0); 
 
-	}
+        ViewBag.pagecount = pagecount;
+
+     
+        var paginatedGames = games.OrderByDescending(x => x.ReleaseDate).Skip((pageId - 1) * 10 ).Take(10).ToList();
+
+      
+        return View(paginatedGames);
+
+    }
 
 	#endregion
 

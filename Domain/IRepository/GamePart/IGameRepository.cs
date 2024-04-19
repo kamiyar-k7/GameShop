@@ -20,8 +20,8 @@ public interface IGameRepository
     Task SaveChanges();
 
     Task AddNewGame(Game game);
-
-    Task UpdateGame(Game game);
+    Task DeleteScrrenshot(int screenshotId);
+    void UpdateGame(Game game);
 
     Task DeleteGame(int id);
     #endregion

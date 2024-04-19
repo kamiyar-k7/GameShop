@@ -36,6 +36,7 @@ public class GameShopDbContext : DbContext
 
     #region Game
     public DbSet<Game> Games { get; set; }
+    public DbSet<Screenshot> Screenshots { get; set; }
     public DbSet<Genre> Genres { get; set; }
     public DbSet<Platform> Platforms { get; set; }
     public DbSet<GemeSelectedGenre> SelectedGenres { get; set; }

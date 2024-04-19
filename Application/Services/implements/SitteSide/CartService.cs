@@ -38,7 +38,7 @@ public class CartService : ICartService
         var cart = await _cartRepository.ShowCartDetails(userid);
 
 
-        
+
         if (cart != null && cart.Any())
         {
             List<CartDto> model = new List<CartDto>();
@@ -69,18 +69,18 @@ public class CartService : ICartService
         if (model != null)
         {
             var usercarts = await _cartRepository.GetCArtByUserId(userid);
-          
-         
-         
 
-            if (usercarts == null )
+
+
+
+            if (usercarts == null)
             {
                 Carts newcart = new Carts()
                 {
                     UserId = userid,
                     Price = 0,
-                    IsFinally = false,    
-                    
+                    IsFinally = false,
+
                 };
 
                 await _cartRepository.AddUserCartToCarts(newcart);
@@ -142,7 +142,7 @@ public class CartService : ICartService
     {
         var cart = await _cartRepository.ShowCartDetails(user);
 
-        
+
 
         if (cart != null && cart.Any())
         {
@@ -175,8 +175,8 @@ public class CartService : ICartService
     public async Task<CheckOutViewModel> GetOrderDetails(int orderid)
     {
         var OrderItems = await _cartRepository.OrderDeatails(orderid);
-        var location = await _cartRepository.LocationAsync(orderid); 
-     
+        var location = await _cartRepository.LocationAsync(orderid);
+
         List<OrderDetailsViewModel> detailsmodel = new List<OrderDetailsViewModel>();
 
         foreach (var item in OrderItems)
@@ -190,7 +190,7 @@ public class CartService : ICartService
                 Platform = item.Platform,
                 Price = item.Price,
                 Quantity = item.Quantity,
-               
+
 
             };
             detailsmodel.Add(childmodel);
@@ -218,7 +218,7 @@ public class CartService : ICartService
         {
             CartId = orderid,
             TrackingPostCode = Tcode
-            
+
         };
 
 
@@ -227,20 +227,19 @@ public class CartService : ICartService
             Billing = locationmodel,
             OrderDetails = detailsmodel,
             oreder = cartid
-          
+
         };
 
 
         return model;
     }
 
+    // public async Task MinusQuantityOfGames(List<Game> games)
+    //{
 
-        public async Task MinusQuantityOfGames(List<Game> games)
-    {
+    //}
 
-    }
-
-    public async Task SubmitOrder(CheckOutViewModel model ,int userid)
+    public async Task SubmitOrder(CheckOutViewModel model, int userid)
     {
         var cart = await _cartRepository.GetCArtByUserId(userid);
 
@@ -280,18 +279,24 @@ public class CartService : ICartService
 
 
         #region Quantit of games
-        var games = cart.CartDeatails.Select(x => x.Game).ToList();
-        await MinusQuantityOfGames(games);
+        foreach (var item in cart.CartDeatails)
+        {
+        
+            var game = await _gameRepository.GetGameById(item.GameId);
+            if (game != null)
+            {
+              
+                game.Quantitiy -= item.Quantity;
+            }
+            _gameRepository.UpdateGame(game);
+            #endregion
+
+        }
+        
+
+        await _cartRepository.FinalOrder(cart);
+        await _cartRepository.SaveChanges();
         #endregion
 
-      
-        await _cartRepository.FinalOrder(cart);
-
-
-
-
     }
-
-    #endregion
-
 }

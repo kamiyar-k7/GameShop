@@ -1,7 +1,9 @@
-﻿using Application.Services.Interfaces.UserSide;
+﻿using Application.Helpers;
+using Application.Services.Interfaces.UserSide;
 using Application.ViewModel.UserSide;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Drawing.Printing;
 using System.Security.Claims;
 
 namespace Presentation.Controllers;
@@ -45,38 +47,46 @@ public class StoreController : Controller
 
     #region Catalog
     [HttpGet]
-    public async Task<IActionResult> Catalog(string searchString, int? platformId, int? genreId)
+    public async Task<IActionResult> Catalog(string searchString, int? platformId, int? genreId, int pageId = 1)
     {
 
+        int pageSize = 10; // Number of items per page
+
+        // take to service
+       
         var model = await _catalogService.SearchCatalog(new CatalogViewModel
         {
             search = new CatalogSearchViewModel
             {
                 SearchString = searchString,
                 PlatfromId = platformId,
-                GenreId = genreId
+                GenreId = genreId,
+                PageId = pageId  // Add pageId to the search parameters
             }
-        });
 
-        if (model.Games.Count != 0)
+        });
+         
+        int totalCount = model.Games.Count();
+        int pageCount = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+        ViewBag.PageId = pageId;
+        ViewBag.PageCount = pageCount;
+        var paginatedGames = model.Games.OrderByDescending(x => x.ReleaseDate).Skip((pageId - 1) * 10).Take(10).ToList();
+        model.Games = paginatedGames;
+        if (paginatedGames.Count != 0)
         {
+        
             return View(model);
         }
 
-        TempData["NullRefrence"] = "We Couldent Find Any Game By This Information in Our Stuck";
+        TempData["NullReference"] = "We Couldn't Find Any Game By This Information in Our Stock";
         return View(model);
-
-
     }
-
-
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Catalog(CatalogViewModel viewModel, string search)
+    public async Task<IActionResult> Catalog(CatalogViewModel viewModel, string search, int pageId = 1)
     {
-        
-
         var searchString = viewModel.search?.SearchString;
         var platformId = viewModel.search?.PlatfromId;
         var genreId = viewModel.search?.GenreId;
@@ -85,8 +95,8 @@ public class StoreController : Controller
             searchString = search;
         }
 
-
-        return RedirectToAction("Catalog", new { searchString, platformId, genreId });
+        // Redirect to the GET action with pagination parameters
+        return RedirectToAction("Catalog", new { searchString, platformId, genreId, pageId });
     }
     #endregion
 
@@ -113,14 +123,14 @@ public class StoreController : Controller
     [HttpPost, ValidateAntiForgeryToken, Authorize]
     public async Task<IActionResult> Product([FromForm] ProductViewModel model)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userId = (int)HttpContext.User.GetUserId();
 
-        if (int.TryParse(userId, out int id))
-        {
+       
+        
             // Map ProductViewModel to your service model
             var serviceModel = new CommentsViewModelProduct
             {
-                UserId = id,
+                UserId = userId,
                 GameId = model.Game.Id, 
                 Title = model.Title,
                 Comment = model.Comment,
@@ -136,7 +146,7 @@ public class StoreController : Controller
                 return RedirectToAction("Product", new { Id = model.Game.Id });
             }
 
-        }
+        
     
 
         

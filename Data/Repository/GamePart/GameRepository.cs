@@ -61,11 +61,20 @@ public class GameRepository : IGameRepository
        await _dbContext.Games.AddAsync(game);
        await SaveChanges();
     }
+    public async Task DeleteScrrenshot(int screenshotId)
+    {
+        var screenshot = await _dbContext.Screenshots.FindAsync(screenshotId);
+      
+        
+            _dbContext.Screenshots.Remove(screenshot);
+          
+        
+    }
 
-    public  async Task UpdateGame(Game game)
+    public   void UpdateGame(Game game)
     {
          _dbContext.Games.Update(game);
-          await SaveChanges();
+       
     }
 
     public async Task DeleteGame(int id)

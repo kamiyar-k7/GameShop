@@ -65,7 +65,7 @@ public record GameViewModelProduct
     public int selectedStatus {  get; set; }
 
     [Required(ErrorMessage = "This Field is required")]
-    public int Quantity { get; set; }
+    public int? Quantity { get; set; }
 }
 
 

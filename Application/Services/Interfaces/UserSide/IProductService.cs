@@ -20,9 +20,9 @@ public interface IProductService
     Task<bool> AddNewGame(GameViewModelProduct model, List<int> selectedGenres, List<int> selectedPlatforms);
     Task EditGame(GameViewModelProduct model, List<int> selectedGenres, List<int> selectedPlatforms);
     Task DeleteGame(int id);
+    Task<CommentsViewModel> GetAllCommments(int adminid);
+    Task DeleteComment(int id);
 
-
-   
 
     #endregion
 }

@@ -47,6 +47,7 @@ public class CatalogService : ICatalogService
     #region Search
     public async Task<CatalogViewModel> SearchCatalog(CatalogViewModel searchViewModel)
     {
+      
 
         var listOfGames = await _gameRepository.GamesAsync();
         var listOfPlatforms = await _platformRepository.GetPlatforms();
@@ -56,7 +57,11 @@ public class CatalogService : ICatalogService
         {
             listOfGames = SearchGames(listOfGames, searchViewModel);
         }
+     
 
+        
+
+  
         var model = await FillModel(listOfGames, listOfPlatforms, ListOfGenres);
         return model;
 

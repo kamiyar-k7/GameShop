@@ -2,7 +2,7 @@
 
 @{
     Layout = "_Layout";
-  
+
 }
 
 <div class="nk-main">
@@ -13,11 +13,60 @@
 
     <div class="container">
         <!-- START: Image Slider -->
-   
-   
 
-       
-        
+        <div>
+            <section class="section__slider">
+                <div class="container__center">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            @{
+                                // Sort games by Rating in descending order and select the top 5
+                                var newest = Model.OrderByDescending(g => g.ReleaseDate).Take(5);
+                            }
+                            @foreach (var item in newest)
+                            {
+                                <div class="swiper-slide">
+                                    <div class="swiper-slide__block">
+
+                                        <div class="swiper-slide__block__img" data-swiper-parallax-y="70%">
+                                            <a target="_blank">
+                                                <img src="~/assets/images/GameImages/@item.Screenshots.First()" alt="aa" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide__block__text">
+                                            <p data-swiper-parallax-x="-60%" class="main__title">
+                                                @item.Name
+
+                                                <span>.</span>
+                                            </p>
+                                            <h3 data-swiper-parallax-x="-50%" class="main__subtitle">
+                                                Relese Date
+                                                <span> • @item.ReleaseDate</span>
+                                            </h3>
+                                            <p data-swiper-parallax-x="-40%" class="paragraphe">@item.Description</p>
+                                            <a data-swiper-parallax-x="-30%" class="link" asp-controller="Store" asp-action="Product" asp-route-Id="@item.Id">Discover</a>
+                                            <span data-swiper-parallax-y="60%" class="number">1</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+
+
+                        </div>
+                        <div class="swiper-button-next">
+                            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        </div>
+                        <div class="swiper-button-prev">
+                            <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+
         <div class="nk-gap"></div>
         <!-- END: Image Slider -->
         <!-- START: Categories -->
@@ -77,7 +126,7 @@
                     <div class="nk-widget-content">
                         <form method="post" asp-controller="Store" asp-action="Catalog" class="nk-form nk-form-style-1" novalidate="novalidate">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Type something..." name="search" >
+                                <input type="text" class="form-control" placeholder="Type something..." name="search">
                                 <button class="nk-btn nk-btn-color-main-1"><span class="ion-search"></span></button>
                             </div>
                         </form>
@@ -104,7 +153,7 @@
                                 {
                                     var firstscreenshot = Game.Screenshots.First();
                                     <a class="nk-product-image" asp-controller="Store" asp-action="Product" asp-route-Id="@Game.Id">
-                                        <img src="assets/images/GameImages/@firstscreenshot" alt="@Game.Name" style="width:100%; height:205px" >
+                                        <img src="~/assets/images/GameImages/@firstscreenshot" alt="@Game.Name" style="width:100%; height:205px">
                                     </a>
                                 }
 
@@ -144,8 +193,8 @@
                                     <div class="nk-gap-1"></div>
                                     <div class="nk-product-price">€ @Game.Price</div>
                                     <div class="nk-gap-1"></div>
-                                     <a class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1" asp-controller="Store" asp-action="Product" asp-route-Id="@Game.Id">Show Game</a> 
-                                  
+                                    <a class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1" asp-controller="Store" asp-action="Product" asp-route-Id="@Game.Id">Show Game</a>
+
                                 </div>
                             </div>
                         </div>
@@ -155,7 +204,35 @@
 
                 </div>
                 <!-- END: Our Games -->
+                <div class="nk-gap"></div>
+                <hr />
+                <div class="nk-pagination nk-pagination-center">
+                    @if (ViewBag.PageId > 1)
+                    {
+                        <a href="/Home/Index?pageId=@(ViewBag.PageId - 1)" class="nk-pagination-prev">
+                            <span class="ion-ios-arrow-back"></span>
+                        </a>
+                    }
+                    <nav>
+                        @for (int i = 1; i <= ViewBag.pagecount; i++)
+                        {
+                            <a class="@(((int)ViewBag.PageId == i) ? "nk-pagination-current" : "nk-pagination")" href="@Url.Action("Index", "Home", new { pageId = i })">@i</a>
+                        }
+                    </nav>
+                    @if (ViewBag.PageId < ViewBag.pagecount)
+                    {
+                        <a href="/Home/Index?pageId=@(ViewBag.PageId + 1)" class="nk-pagination-next">
+                            <span class="ion-ios-arrow-forward"></span>
+                        </a>
+                    }
+                </div>
+
+
+
             </div>
+
+
+
 
 
             <div class="col-lg-4">

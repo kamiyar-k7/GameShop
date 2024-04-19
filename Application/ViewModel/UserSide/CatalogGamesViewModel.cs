@@ -21,7 +21,7 @@ public record CatalogGamesViewModel
     public DateOnly ReleaseDate { get; set; }
     public string Company { get; set; }
     public decimal Price { get; set; }
-    public int Quantitiy { get; set; }
+    public int? Quantitiy { get; set; }
     public float Rating { get; set; }
     public string Trailer { get; set; }
     public string SystemRequirements { get; set; }
@@ -53,4 +53,5 @@ public record CatalogSearchViewModel
     public int? GenreId { get; set; }
     public decimal? MinPrice { get; set; }
     public decimal? MaxPrice { get; set; }
+    public int PageId { get; set; }
 }

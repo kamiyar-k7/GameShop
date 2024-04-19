@@ -52,6 +52,7 @@ public class CartRepository : ICartRepository
         return await _dbContext.CartDeatails.FirstOrDefaultAsync(x => x.CartDetailsId == id);
 
     }
+
     public async  Task<Carts?> GetCArtByUserId(int id)
     {
         return await _dbContext.Cart.Include(x=> x.CartDeatails).Where(x=> x.UserId == id && x.IsFinally == false).AsNoTracking().AsQueryable().FirstOrDefaultAsync();
@@ -88,7 +89,7 @@ public class CartRepository : ICartRepository
     public async Task FinalOrder(Carts cart)
     {
          _dbContext.Update(cart);
-        await SaveChanges();
+      
     }
    
     public async Task<Location?> LocationAsync(int orderir) 

@@ -1,4 +1,5 @@
 ﻿using Application.Helpers;
+using Application.Services.implements.SitteSide;
 using Application.Services.Interfaces.AdminSide;
 using Application.Services.Interfaces.UserSide;
 using Application.ViewModel.AdminSide;
@@ -25,12 +26,24 @@ public class GamesController : BaseController
 
     #endregion
 
-    //  models get admin id for layout model 
-    public async Task<IActionResult> ListOfGames()
+    //  models get admin id for layout Service
+    public async Task<IActionResult> ListOfGames(int pageId = 1 )
     {
         ViewData["Title"] = "List OF Games";
+        ViewBag.PageId = pageId;
+
+        var games = await  _productService.ListOfProducts((int)HttpContext.User.GetUserId());
+        var pagecount = (int)Math.Ceiling(games.ListGames.Count() / 10.0);
+
+        ViewBag.pagecount = pagecount;
+
+        
+        var paginatedGames = games.ListGames.OrderByDescending(x => x.ReleaseDate).Skip((pageId - 1) * 10).Take(10).ToList();
+
+
 
         var model = await _productService.ListOfProducts((int)HttpContext.User.GetUserId());
+        model.ListGames = paginatedGames;
         return View(model);
 
     }
@@ -90,7 +103,7 @@ public class GamesController : BaseController
 
     }
     [HttpPost, ValidateAntiForgeryToken]
-    public async Task<IActionResult> EditGame(ProductViewModel model, List<int> selectedGenres, List<int> selectedPlatforms, int selectedStatus)
+    public async Task<IActionResult> EditGame(ProductViewModel model, List<int> selectedGenres, List<int> selectedPlatforms)
     {
         await _productService.EditGame(model.Game, selectedGenres, selectedPlatforms);
 
@@ -104,6 +117,7 @@ public class GamesController : BaseController
         return RedirectToAction(nameof(ListOfGames));
     }
 
+    // not finished 
     public async Task<IActionResult> DeleteScreenShot(int id)
     {
         return View();
@@ -111,18 +125,23 @@ public class GamesController : BaseController
 
     #region Platforms
 
-    public async Task<IActionResult> ListOfPlatforms()
+    public async Task<IActionResult> ListOfPlatforms(int pageId = 1)
     {
+        ViewData["Title"] = "List OF Platforms";
+        ViewBag.PageId = pageId;
 
-        var model = await _platfromservice.ListOfPLatforms((int)HttpContext.User.GetUserId()) ;
-       if(model.ListOfPlats != null)
-        {
+        var plats = await _platfromservice.ListOfPLatforms((int)HttpContext.User.GetUserId());
+        var pagecount = (int)Math.Ceiling(plats.ListOfPlats.Count() / 10.0);
+
+        ViewBag.pagecount = pagecount;
+
+        var Pagedplats = plats.ListOfPlats.OrderByDescending(x => x.Name).Skip((pageId - 1) * 10).Take(10).ToList();
+
+        var model = await _platfromservice.ListOfPLatforms((int)HttpContext.User.GetUserId());
+        model.ListOfPlats = Pagedplats;
+
             return View(model);
-        }
-       return View();
-          
         
-  
     }
 
     [HttpGet]
@@ -138,6 +157,7 @@ public class GamesController : BaseController
 
         return RedirectToAction(nameof(ListOfPlatforms));
     }
+
 
     [HttpGet]
     public async Task<IActionResult> EditPlatform(int id)
@@ -164,15 +184,23 @@ public class GamesController : BaseController
 
     #region Genres
 
-    public async Task<IActionResult> ListOfGenres()
+    public async Task<IActionResult> ListOfGenres(int pageId = 1)
     {
-        var model = await _genreService.ListOfGenres((int)HttpContext.User.GetUserId());
-        if(model.ListOfGenres != null)
-        {
+        ViewBag.PageId = pageId;
 
-          return View(model);
-        }
-        return View();
+        var genres = await _genreService.ListOfGenres((int)HttpContext.User.GetUserId());
+        var pagecount = (int)Math.Ceiling(genres.ListOfGenres.Count() / 10.0);
+
+        ViewBag.pagecount = pagecount;
+
+
+        var Pagedgenres = genres.ListOfGenres.OrderByDescending(x => x.Name).Skip((pageId - 1) * 10).Take(10).ToList();
+
+
+
+        var model = await _genreService.ListOfGenres((int)HttpContext.User.GetUserId());
+        model.ListOfGenres = Pagedgenres;
+        return View(model);
     }
 
     // addd genre
@@ -213,4 +241,23 @@ public class GamesController : BaseController
         return RedirectToAction(nameof(ListOfGenres));
     }
     #endregion
+
+    #region Comments
+    [HttpGet]
+    public async Task<IActionResult> AllComments()
+    {
+        var model = await _productService.GetAllCommments((int)HttpContext.User.GetUserId());
+
+        return View(model);
+    }
+
+    public async Task<IActionResult> DeleteComment(int Id)
+    {
+        await _productService.DeleteComment(Id);
+        return RedirectToAction(nameof(AllComments));
+    }
+    #endregion
+
+
+
 }

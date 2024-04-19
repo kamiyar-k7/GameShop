@@ -84,7 +84,7 @@ public class ProductService : IProductService
     public async Task<List<CommentsViewModelProduct>> FillComment(int Id)
     {
         var game = await GetGameAsync(Id);
-        var comments = await _commentRepository.GetCommentsAsync(game.Id);
+        var comments = await _commentRepository.GetCommentsOfGame(game.Id);
         List<CommentsViewModelProduct> listofcomments = new List<CommentsViewModelProduct>();
         if (comments != null)
         {
@@ -272,7 +272,7 @@ public class ProductService : IProductService
     public async Task<List<CommentsViewModelProduct>> GetCommentsbyGameId(int Id)
     {
         var game = await _gamerepository.GetGameById(Id);
-        var comments = await _commentRepository.GetCommentsAsync(game.Id);
+        var comments = await _commentRepository.GetCommentsOfGame(game.Id);
 
         if (comments != null)
         {
@@ -327,7 +327,7 @@ public class ProductService : IProductService
     #endregion
 
 
-
+    //---------------------------------
     #region Admin Side
 
     #region Game
@@ -374,9 +374,6 @@ public class ProductService : IProductService
         var admin = await _layoutService.AdminInfo(userid);
         var games = await ListOfGames();
        
-
-
-
         ProductViewModel adminProductViewModel = new ProductViewModel()
         {
             Admin = admin,
@@ -540,8 +537,19 @@ public class ProductService : IProductService
 
 
         // screenshots
+         // it need to be fixed 
         if (model.FormFiles != null && model.FormFiles.Any())
         {
+            foreach (var screenshot in game.Screenshots)
+            {
+                await _gamerepository.DeleteScrrenshot(screenshot.Id);
+            }
+           await _gamerepository.SaveChanges();
+            // Clear existing screenshots
+            game.Screenshots.Clear();
+
+          
+
             foreach (var file in model.FormFiles)
             {
                 if (file != null && file.Length > 0)
@@ -557,13 +565,13 @@ public class ProductService : IProductService
                     Screenshot screen = new Screenshot()
                     {
                         AvararUrl = uniqueFileName,
-
                     };
                     screenshots.Add(screen);
-
                 }
             }
-            // game.Screenshots == screenshots;
+
+          
+            game.Screenshots = screenshots;
         }
 
 
@@ -622,7 +630,8 @@ public class ProductService : IProductService
         }
 
 
-        await _gamerepository.UpdateGame(game);
+         _gamerepository.UpdateGame(game);
+        await _gamerepository.SaveChanges();
 
     }
 
@@ -634,7 +643,46 @@ public class ProductService : IProductService
 
     #endregion
 
-    
+    #region Comment
+    public async Task<CommentsViewModel> GetAllCommments(int adminid)
+    {
+        var adminifo = await _layoutService.AdminInfo(adminid);
+
+        var comments = await _commentRepository.AllComents();
+
+        List<CommentModel> commentsModel = new List<CommentModel>();    
+
+        foreach (var item in comments)
+        {
+            CommentModel commentModel = new CommentModel()
+            {
+                Title = item.Title,
+                Comment = item.Comment,
+                CreatedAt = item.CreatedAt,
+                Id = item.Id,
+                Ratings = item.Ratings,
+               UserName = item.User.UserName
+            };
+            commentsModel.Add(commentModel);
+        }
+
+        CommentsViewModel model = new CommentsViewModel()
+        {
+            Admin = adminifo,
+            Allcoments = commentsModel,
+        };
+
+        return model;
+        
+    }
+
+
+    public async Task DeleteComment(int id)
+    {
+        await _commentRepository.DeleteComment(id);
+
+    }
+    #endregion
 
     #endregion
 

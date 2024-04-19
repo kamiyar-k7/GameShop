@@ -111,7 +111,7 @@
                            
                                
                             <div>
-                                    <input type="hidden" name="formToken" value="@ViewBag.FormToken">
+                                  @*   <input type="hidden" name="formToken" value="@ViewBag.FormToken"> *@
                                     <button type="submit" class="nk-btn nk-btn-rounded nk-btn-color-white">Apply</button>
                             </div>
                         </div>
@@ -191,7 +191,7 @@
                                     <div class="nk-gap-2"></div>
                                     <div class="nk-product-price">€ @game.Price</div>
                                     <div class="nk-gap-1"></div>
-                                    <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                                    <a asp-controller="Store" asp-action="Product" asp-route-Id="@game.GameId" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Show Game</a>
                                 </div>
                             </div>
                         </div>
@@ -214,20 +214,24 @@
         <!-- START: Pagination -->
         <div class="nk-gap-3"></div>
         <div class="nk-pagination nk-pagination-center">
-            <a href="#" class="nk-pagination-prev">
-                <span class="ion-ios-arrow-back"></span>
-            </a>
+            @if (ViewBag.PageId > 1)
+            {
+                <a href="/Store/Catalog?pageId=@(ViewBag.PageId - 1)" class="nk-pagination-prev">
+                    <span class="ion-ios-arrow-back"></span>
+                </a>
+            }
             <nav>
-                <a class="nk-pagination-current" href="#">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <span>...</span>
-                <a href="#">14</a>
+                @for (int i = 1; i <= (int)ViewBag.pagecount + 1; i++)
+                {
+                    <a class="@(((int)ViewBag.PageId == i) ? "nk-pagination-current" : "nk-pagination") " href="/Store/Catalog?pageId=@i">@i</a>
+                }
             </nav>
-            <a href="#" class="nk-pagination-next">
-                <span class="ion-ios-arrow-forward"></span>
-            </a>
+            @if (ViewBag.PageId < ViewBag.pagecount)
+            {
+                <a href="/Store/Catalog?pageId=@(ViewBag.PageId + 1)" class="nk-pagination-next">
+                    <span class="ion-ios-arrow-forward"></span>
+                </a>
+            }
         </div>
         <!-- END: Pagination -->
         <!-- START: Most Popular -->
