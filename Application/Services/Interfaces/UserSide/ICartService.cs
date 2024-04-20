@@ -11,6 +11,6 @@ public interface ICartService
     Task<bool> DeleteCartProduct(int id);
     Task<CheckOutViewModel> ShowCheckOut(int user);
 
-    Task SubmitOrder(CheckOutViewModel model, int userid);
+    Task<bool> SubmitOrder(CheckOutViewModel model, int userid);
     Task<CheckOutViewModel> GetOrderDetails(int orderid);
 }

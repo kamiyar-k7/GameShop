@@ -6,15 +6,28 @@
 <div class="container">
     <div class="nk-gap"></div>
     <div class="row vertical-gap">
-        <div class="col-lg-6">
+        @if(Model != null)
+        {
+            <div class="col-lg-6">
 
-            <h3 class="nk-decorated-h"><span><span class="text-main-1">About</span> Us</span></h3>
+                <h3 class="nk-decorated-h"><span><span class="text-main-1">About</span> Us</span></h3>
 
-            <h1>@Model.AboutUsViewModel.Title</h1>
-            <p class="lead">@Model.AboutUsViewModel.Description</p>
-            <h3>@Model.AboutUsViewModel.Author</h3>
-            <h3>@Model.AboutUsViewModel.AuthorUrl</h3>
-        </div>
+                <h1>@Model.AboutUsViewModel.Title</h1>
+                <p class="lead">@Model.AboutUsViewModel.Description</p>
+                <h3>@Model.AboutUsViewModel.Author</h3>
+                <h3>@Model.AboutUsViewModel.AuthorUrl</h3>
+            </div>
+        }
+        else
+        {
+            <div class="col-lg-6">
+
+                <h3 class="nk-decorated-h"><span><span class="text-main-1">About</span> Us</span></h3>
+ 
+                <p>NUll</p>
+            </div>
+        }
+
 
         <div class="col-lg-6">
             <h3 class="nk-decorated-h"><span><span class="text-main-1">Contact</span> Us</span></h3>

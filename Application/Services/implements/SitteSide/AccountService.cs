@@ -50,7 +50,7 @@ public class AccountService : IAccountService
                 PhoneNumber = user.PhoneNumber,
                 Password = user.Password,
                 Email = user.Email,
-                //Role = model.Role,
+               
                 SuperAdmin = user.SuperAdmin,
                 UserAvatar = user.UserAvatar
             };
@@ -61,7 +61,7 @@ public class AccountService : IAccountService
     }
     #endregion
 
-    #region ADD TO DATABASE
+    #region Sign UP
 
     public bool IsExist(string phonenumber, string email)
     {
@@ -80,7 +80,9 @@ public class AccountService : IAccountService
 
         var userSelectedRole = new UserSelectedRole
         {
-            RoleId = 3
+            RoleId = 5 , // must change by enterd role Id in Database  == Customer Role Id
+          
+            
         };
 
 

@@ -5,6 +5,7 @@ using Domain.entities.Cart;
 using Domain.entities.GamePart.Game;
 using Domain.IRepository.GamePart;
 using Domain.IRepository.UserPart;
+using Microsoft.AspNetCore.Components.Forms;
 
 
 
@@ -239,63 +240,69 @@ public class CartService : ICartService
 
     //}
 
-    public async Task SubmitOrder(CheckOutViewModel model, int userid)
+    public async Task<bool> SubmitOrder(CheckOutViewModel model, int userid)
     {
         var cart = await _cartRepository.GetCArtByUserId(userid);
 
-
-        var billing = model.Billing;
-
-        #region AddLocation to order
-        Location location = new Location()
+        if(cart.CartDeatails != null && cart.CartDeatails.Any())  
         {
-            FirstName = billing.FirstName,
-            LastName = billing.LastName,
-            Address = billing.Address,
-            City = billing.City,
-            Email = billing.Email,
-            OrderNote = billing.OrderNote,
-            PhoneNumber = billing.PhoneNumber,
-            PostCode = billing.PosstCode,
-            CartId = cart.CartId
+            var billing = model.Billing;
 
-        };
-
-        await _cartRepository.AddLocation(location);
-
-        #endregion
-
-        decimal total = 0;
-        foreach (var item in cart.CartDeatails)
-        {
-            total += item.Price * item.Quantity;
-        }
-
-        cart.RegestredDate = DateTime.Now;
-        cart.Price = total;
-        cart.IsFinally = true;
-        cart.Status = OrderStatus.Registred;
-        cart.LocationId = location.Id;
-
-
-        #region Quantit of games
-        foreach (var item in cart.CartDeatails)
-        {
-        
-            var game = await _gameRepository.GetGameById(item.GameId);
-            if (game != null)
+            #region AddLocation to order
+            Location location = new Location()
             {
-              
-                game.Quantitiy -= item.Quantity;
-            }
-            _gameRepository.UpdateGame(game);
+                FirstName = billing.FirstName,
+                LastName = billing.LastName,
+                Address = billing.Address,
+                City = billing.City,
+                Email = billing.Email,
+                OrderNote = billing.OrderNote,
+                PhoneNumber = billing.PhoneNumber,
+                PostCode = billing.PosstCode,
+                CartId = cart.CartId
+
+            };
+
+            await _cartRepository.AddLocation(location);
+
             #endregion
 
-        }
-        
+            decimal total = 0;
+            foreach (var item in cart.CartDeatails)
+            {
+                total += item.Price * item.Quantity;
+            }
 
-        await _cartRepository.FinalOrder(cart);
-        await _cartRepository.SaveChanges();
+            cart.RegestredDate = DateTime.Now;
+            cart.Price = total;
+            cart.IsFinally = true;
+            cart.Status = OrderStatus.Registred;
+            cart.LocationId = location.Id;
+
+
+            #region Quantit of games
+            foreach (var item in cart.CartDeatails)
+            {
+
+                var game = await _gameRepository.GetGameById(item.GameId);
+                if (game != null)
+                {
+
+                    game.Quantitiy -= item.Quantity;
+                }
+                _gameRepository.UpdateGame(game);
+                #endregion
+
+            }
+
+
+            await _cartRepository.FinalOrder(cart);
+            await _cartRepository.SaveChanges();
+            return true;
+        }
+
+        return false;
+       
         #endregion
 
     }

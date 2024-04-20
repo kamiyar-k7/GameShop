@@ -48,8 +48,21 @@ public class OrderController : Controller
     }
     #endregion
 
+    #region CartDetails 
+
+    public async Task<IActionResult> CartDetails(int id)
+    {
+        var model = await _cartService.GetOrderDetails(id);
+        if (model != null)
+        {
+            return View(model);
+        }
+        return View();
+    }
+    #endregion
+
     #region Delete Cart
-     
+
 
     public async Task<IActionResult> DeleteCart(int Id)
     {
@@ -79,22 +92,21 @@ public class OrderController : Controller
     [HttpPost , ValidateAntiForgeryToken]
     public async Task<IActionResult> CheckOut(CheckOutViewModel viewModel)
     {
-        await _cartService.SubmitOrder(viewModel , (int)HttpContext.User.GetUserId());
+      var check =  await _cartService.SubmitOrder(viewModel , (int)HttpContext.User.GetUserId());
         
-        return RedirectToAction("index", "home");
-    }
-    #endregion
-
-    #region CartDetails 
-
-    public async Task<IActionResult> CartDetails(int id)
-    {
-        var model = await _cartService.GetOrderDetails(id);
-        if(model != null)
+        if(check == true)
         {
-            return View(model);                                                                                                                                                                 
+            return RedirectToAction("index", "home");
         }
-        return View();
+        else
+        {
+            TempData["error"] = "error";
+            return RedirectToAction("index", "home");
+           
+        }
+
     }
     #endregion
+
+    
 }

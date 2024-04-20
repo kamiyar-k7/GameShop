@@ -55,6 +55,7 @@ public class HomeController : Controller
 		return View();
        
     }
+
 	[HttpPost]
 	[ValidateAntiForgeryToken]
 	public async Task<IActionResult> AboutUs(AboutPageViewModel model)
