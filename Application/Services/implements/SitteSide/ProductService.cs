@@ -661,7 +661,8 @@ public class ProductService : IProductService
                 CreatedAt = item.CreatedAt,
                 Id = item.Id,
                 Ratings = item.Ratings,
-               UserName = item.User.UserName
+               UserName = item.User.UserName ,
+               GameName = item.Game.Name,
             };
             commentsModel.Add(commentModel);
         }

@@ -1,12 +1,14 @@
 ﻿using Application.Helpers;
 using Application.Services.Interfaces.AdminSide;
 using Application.ViewModel.AdminSide;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Areas.Admin.Controllers;
 
 public class UsersController : BaseController
 {
+
     #region Ctor
     private readonly IUserService _userService;
     private readonly IAdminService _adminService;
@@ -80,4 +82,7 @@ public class UsersController : BaseController
         ViewData["Title"] = "Admins";
         return View(model);
     }
+
+
+    
 }

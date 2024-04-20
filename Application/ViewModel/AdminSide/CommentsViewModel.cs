@@ -18,5 +18,5 @@ public record CommentModel
     public DateTime CreatedAt { get; set; } 
     public int UserId { get; set; }
     public string UserName { get; set; }    
-        
+        public string GameName { get; set; }
 }

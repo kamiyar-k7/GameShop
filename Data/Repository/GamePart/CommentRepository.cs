@@ -35,7 +35,7 @@ public class CommentRepository : ICommentRepository
     #region Admin Side
     public async Task<List<Comments>> AllComents()
     {
-       return await _dbcontext.Comments.Include(x=> x.User).ToListAsync();
+       return await _dbcontext.Comments.Include(x=> x.User).Include(x=> x.Game).ToListAsync();
     }
 
     public async Task DeleteComment(int id)

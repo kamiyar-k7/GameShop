@@ -119,12 +119,13 @@ public class AccountController : Controller
     #region LogOut
     public IActionResult Logout()
     {
-        HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        HttpContext.SignOutAsync();
 
         return RedirectToAction("Index", "Home");
     }
     #endregion
 
+    // not finished
     #region DeleteAccount
 
     public IActionResult DeleteAccount()
@@ -132,7 +133,7 @@ public class AccountController : Controller
         return View();
     }
     #endregion
-
+    // not finished
     #region ForgotPassword
     public IActionResult ForgotPassword()
     {
