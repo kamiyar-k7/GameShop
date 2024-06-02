@@ -427,7 +427,7 @@ public class ProductService : IProductService
             Rating = model.Rating,
             Trailer = model.Trailer,
             ReleaseDate = model.ReleaseDate,
-            // GameStatus =  selectedStatus
+  
             gameSelectedPlatforms = new List<GameSelectedPlatform>(),
             gemeSelectedGenres = new List<GemeSelectedGenre>(),
             Screenshots = screenshots,
@@ -461,13 +461,15 @@ public class ProductService : IProductService
                 screenshots.Add(screen);
             }
         }
+
         //Video 
+
         if (model.VideoFile != null)
         {
             //Save New Image
             string filename = NameGenerator.GenerateUniqCode() + Path.GetExtension(model.VideoFile.FileName);
 
-            string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/Trailers", filename);
+            string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/Trailer", filename);
             using (var stream = new FileStream(imagePath, FileMode.Create))
             {
                 model.VideoFile.CopyTo(stream);
