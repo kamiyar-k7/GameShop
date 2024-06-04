@@ -56,6 +56,7 @@ public class StoreController : Controller
        
         var model = await _catalogService.SearchCatalog(new CatalogViewModel
         {
+<<<<<<< HEAD
             search = new CatalogSearchViewModel
             {
                 SearchString = searchString,
@@ -77,6 +78,13 @@ public class StoreController : Controller
         {
         
             return View(model);
+=======
+    
+            ViewData["Platform"] = await _platformService.ShowPlatform();
+            var games = await _catalogService.ShowGames();
+       
+            return View(games);
+>>>>>>> origin/master
         }
 
         TempData["NullReference"] = "We Couldn't Find Any Game By This Information in Our Stock";
@@ -98,6 +106,18 @@ public class StoreController : Controller
         // Redirect to the GET action with pagination parameters
         return RedirectToAction("Catalog", new { searchString, platformId, genreId, pageId });
     }
+
+    public async Task<IActionResult> Search(string search)
+    {
+        if (ModelState.IsValid)
+        {
+
+        
+
+            return View(search);
+        }
+        return NotFound();
+    }
     #endregion
 
 
@@ -111,8 +131,26 @@ public class StoreController : Controller
 
         if (Product != null)
         {
+<<<<<<< HEAD
 
             return View(Product);
+=======
+     
+            var game = await _productService.GetProductById(Id);
+                   
+
+            if (game != null)
+            {
+                ViewData["Platforms"] = await _platformService.GetPlatformsById(Id);
+             
+
+                return View(game);
+            }
+            else
+            {
+                return NotFound();
+            }
+>>>>>>> origin/master
         }
 
 
@@ -151,6 +189,13 @@ public class StoreController : Controller
 
         
         return View(model);
+    }
+    #endregion
+
+    #region Search
+    public async Task<IActionResult> Search()
+    {
+        return View();
     }
     #endregion
 

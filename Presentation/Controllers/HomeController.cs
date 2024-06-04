@@ -39,8 +39,18 @@ public class HomeController : Controller
 
     }
 
+<<<<<<< HEAD
 	#endregion
 
+=======
+	}
+	
+	#endregion
+	public async Task<IActionResult> ContactUs()
+	{
+		return View();
+	}
+>>>>>>> origin/master
 
 	#region AboutUs  / contact us
 	[HttpGet]

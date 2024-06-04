@@ -22,7 +22,11 @@ namespace Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+<<<<<<< HEAD
             modelBuilder.Entity("Domain.entities.Cart.CartDeatails", b =>
+=======
+            modelBuilder.Entity("Domain.entities.GamePart.GemGenreDto.Genre", b =>
+>>>>>>> origin/master
                 {
                     b.Property<int>("CartDetailsId")
                         .ValueGeneratedOnAdd()
@@ -229,6 +233,7 @@ namespace Data.Migrations
                     b.ToTable("Games");
                 });
 
+<<<<<<< HEAD
             modelBuilder.Entity("Domain.entities.GamePart.Game.Screenshot", b =>
                 {
                     b.Property<int>("Id")
@@ -252,6 +257,9 @@ namespace Data.Migrations
                 });
 
             modelBuilder.Entity("Domain.entities.GamePart.Genre.GemeSelectedGenre", b =>
+=======
+            modelBuilder.Entity("Domain.entities.Store.GemGenreDto.GemeGenreDto", b =>
+>>>>>>> origin/master
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -271,7 +279,7 @@ namespace Data.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.ToTable("SelectedGenres");
+                    b.ToTable("GenreDtos");
                 });
 
             modelBuilder.Entity("Domain.entities.GamePart.Genre.Genre", b =>
@@ -378,6 +386,48 @@ namespace Data.Migrations
                     b.ToTable("SelectedRole");
                 });
 
+<<<<<<< HEAD
+=======
+            modelBuilder.Entity("Domain.entities.UserPart.User.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("GameName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Platform")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ScreenShot")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Cart");
+                });
+
+>>>>>>> origin/master
             modelBuilder.Entity("Domain.entities.UserPart.User.User", b =>
                 {
                     b.Property<int>("Id")
@@ -538,14 +588,22 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
+<<<<<<< HEAD
             modelBuilder.Entity("Domain.entities.GamePart.Game.Screenshot", b =>
                 {
                     b.HasOne("Domain.entities.GamePart.Game.Game", "Game")
                         .WithMany("Screenshots")
+=======
+            modelBuilder.Entity("Domain.entities.Store.GemGenreDto.GemeGenreDto", b =>
+                {
+                    b.HasOne("Domain.entities.Store.Game.Game", "Game")
+                        .WithMany("gemeGenreDtos")
+>>>>>>> origin/master
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+<<<<<<< HEAD
                     b.Navigation("Game");
                 });
 
@@ -559,6 +617,10 @@ namespace Data.Migrations
 
                     b.HasOne("Domain.entities.GamePart.Genre.Genre", "Genre")
                         .WithMany("gemeSelectedGenres")
+=======
+                    b.HasOne("Domain.entities.GamePart.GemGenreDto.Genre", "Genre")
+                        .WithMany("gemeGenreDtos")
+>>>>>>> origin/master
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -619,11 +681,26 @@ namespace Data.Migrations
 
                     b.Navigation("Comments");
 
+<<<<<<< HEAD
+=======
+            modelBuilder.Entity("Domain.entities.GamePart.GemGenreDto.Genre", b =>
+                {
+                    b.Navigation("gemeGenreDtos");
+                });
+
+            modelBuilder.Entity("Domain.entities.GamePart.Paltform.Platform", b =>
+                {
+                    b.Navigation("gameSelectedPlatforms");
+                });
+
+            modelBuilder.Entity("Domain.entities.Store.Game.Game", b =>
+                {
+>>>>>>> origin/master
                     b.Navigation("Screenshots");
 
                     b.Navigation("gameSelectedPlatforms");
 
-                    b.Navigation("gemeSelectedGenres");
+                    b.Navigation("gemeGenreDtos");
                 });
 
             modelBuilder.Entity("Domain.entities.GamePart.Genre.Genre", b =>

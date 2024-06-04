@@ -27,8 +27,26 @@ public class User
 
     #region Rels
     public ICollection<UserSelectedRole> UserSelectedRoles { get; set; }
+<<<<<<< HEAD
     public List<Carts> cart { get; set; }
     public ICollection<Comments.Comments> Comments { get; set; }
     #endregion
 
 }
+=======
+    public ICollection<Cart> UserCart { get; set; } = new List<Cart>();
+    #endregion
+
+}
+
+public class Cart
+{
+    public int Id { get; set; }
+    public  int GameId { get; set; }
+    public string Platform { get; set; }
+    public string GameName { get; set; }
+    public float Price { get; set; }
+    public int Quantity { get; set; }
+    public string ScreenShot { get; set; }
+}
+>>>>>>> origin/master

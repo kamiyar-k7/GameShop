@@ -1,7 +1,18 @@
+<<<<<<< HEAD
 ﻿using Domain.entities.Cart;
 using Domain.entities.GamePart.Genre;
 using Domain.entities.GamePart.Platform;
 using System.ComponentModel.DataAnnotations;
+=======
+﻿using Domain.entities.GamePart.Paltform;
+using Domain.entities.Store.Game;
+using Domain.entities.Store.GemGenreDto;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+>>>>>>> origin/master
 
 
 namespace Domain.entities.GamePart.Game;
@@ -23,6 +34,7 @@ public class Game
 
 
 
+<<<<<<< HEAD
 
     #region Rels
     public ICollection<Screenshot> Screenshots { get; set; }
@@ -32,6 +44,13 @@ public class Game
     public ICollection<Comments.Comments> Comments { get; set; }
     public GameStatus GamesStatus { get; set; }
     #endregion
+=======
+        #region Rels
+        public ICollection<Screenshot> Screenshots { get; set; }
+        public ICollection<GemGenreDto.GameSelectedGenre> gameSelectedGenres { get; set; }
+        public ICollection<GameSelectedPlatform> gameSelectedPlatforms { get; set; }
+        #endregion
+>>>>>>> origin/master
 
 
 }

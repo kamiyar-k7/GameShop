@@ -1,5 +1,17 @@
+<<<<<<< HEAD
 ﻿@model Application.ViewModel.UserSide.CatalogViewModel
 
+=======
+﻿@model List<Application.DTOs.UserSide.StorePart.CatalogDto>
+@{
+    var platformlist = ViewData["Platform"] as List<Domain.entities.GamePart.Paltform.Platform>;
+
+
+
+
+
+}
+>>>>>>> origin/master
 
 <div class="nk-main">
 
@@ -71,9 +83,11 @@
         <div class="nk-gap-2"></div>
         <form asp-action="Catalog" asp-controller="Store" method="post" class="nk-form">
         <div class="row vertical-gap">
+
             <div class="col-lg-8">
 
                 <div class="row vertical-gap" style="justify-content: space-around; align-items: center;">
+<<<<<<< HEAD
                     <div class="col-md-4">
                         <select asp-for="search.GenreId" class="form-control">
                             <option  value="" disabled selected>Select Genre</option>
@@ -102,23 +116,57 @@
                             }
                            
                           
+=======
 
 
-                        </select>
-                    </div>
+                    @await Component.InvokeAsync("ShowGenres")
+>>>>>>> origin/master
+
+
                     <div class="col-md-4">
                         <div class="nk-input-slider-inline">
+<<<<<<< HEAD
                            
                                
                             <div>
                                   @*   <input type="hidden" name="formToken" value="@ViewBag.FormToken"> *@
                                     <button type="submit" class="nk-btn nk-btn-rounded nk-btn-color-white">Apply</button>
                             </div>
+=======
+                            <div class="nk-input-slider">
+                                <div class="nk-input-slider-content text-white">
+                                    PRICE:
+                                    <strong class="text-main-1">€ <span class="nk-input-slider-value-0"></span></strong>
+                                    -
+                                    <strong class="text-main-1">€ <span class="nk-input-slider-value-1"></span></strong>
+                                </div>
+
+                                @{
+                                    var maxprice = Model.Max(x => x.Price);
+                                    var minprice = Model.Min(x => x.Price);
+                                }
+
+
+
+                                <div class="nk-input-slider-input">
+                                    <input type="text"
+                                           name="price-filter"
+                                           data-slider-min="@minprice"
+                                           data-slider-max="@maxprice"
+                                           data-slider-step="1"
+                                           data-slider-value="[@minprice, @maxprice]"
+                                           data-slider-tooltip="hide">
+                                </div>
+
+                            </div>
+
+>>>>>>> origin/master
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4">
+<<<<<<< HEAD
                  
                     
                     <div class="input-group">
@@ -126,7 +174,21 @@
                         <a  class="nk-btn nk-btn-color-main-1"><span class="ion-search"></span></a>
                     </div>
               
+=======
+                @using (Html.BeginForm("Search", "Store", FormMethod.Get))
+                {
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="search" placeholder="Type something...">
+                        <button class="nk-btn nk-btn-color-main-1"><span class="ion-search"></span></button>
+                    </div>
+                    <br />
+                    <div>
+                        <a  class="nk-btn nk-btn-rounded nk-btn-color-white">Apply</a>
+                    </div>
+                }
+>>>>>>> origin/master
             </div>
+
         </div>
         </form>
         <!-- END: Products Filter -->

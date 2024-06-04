@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 ﻿@model Application.ViewModel.UserSide.ProductViewModel;
 
+=======
+﻿@model Application.DTOs.UserSide.StorePart.ProductDto;
+@{
+   
+    var platformlist = ViewData["Platforms"] as List<Domain.entities.GamePart.Paltform.Platform>;
+>>>>>>> origin/master
 
 
 <div class="nk-main">
@@ -39,6 +46,7 @@
         <div class="row vertical-gap">
             <div class="col-lg-8">
                 <div class="nk-store-product">
+<<<<<<< HEAD
                    
                         <div class="row vertical-gap">
                      
@@ -50,6 +58,24 @@
                                         <div class="nk-gallery-item-box">
                                         <a href="~/assets/trailers/@Model.Game.Trailer">
                                             <video src="~/assets/Trailers/@Model.Game.Trailer" alt="" controls style="width: 100%; height: 100%;"></video>
+=======
+
+
+                   @*  <!-- START: Related Products -->
+                    @await Component.InvokeAsync("RelatedGames")
+                    <!-- END: Related Products --> *@
+
+                    <form asp-controller="Account" asp-action="AddToCart" method="post" class="nk-product-addtocart">
+                        <div class="row vertical-gap">
+                            <div class="col-md-6">
+                                <!-- START: Product Photos -->
+                                <div class="nk-popup-gallery">
+                                    @if (Model.Trailer != null)
+                                    {
+                                        <div class="nk-gallery-item-box">
+                                            <a href="~/assets/trailers/@Model.Trailer">
+                                                <video src="~/assets/Trailers/@Model.Trailer" alt="" controls style="width: 100%; height: 100%;"></video>
+>>>>>>> origin/master
                                             </a>
                                         </div>
                                     }
@@ -61,17 +87,26 @@
 
                                     <div class="nk-gap-1"></div>
                                     <div class="row vertical-gap sm-gap">
+<<<<<<< HEAD
                                         @foreach (var screenshot in Model.Game.ScreenShots)
+=======
+                                        @foreach (var screenshot in Model.Screenshots)
+>>>>>>> origin/master
                                         {
                                             <div class="col-6 col-md-4">
                                                 <div class="nk-gallery-item-box">
                                                     <a href="~/assets/images/GameImages/@screenshot" class="nk-gallery-item" data-size="622x942">
                                                         <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
+<<<<<<< HEAD
                                                         <img src="~/assets/images/GameImages/@screenshot" alt="error" style="width:100%;">
+=======
+                                                        <img src="~/assets/images/GameImages/@screenshot" alt="" style="background: url('assets/images/@screenshot') no-repeat center fixed; background-size:cover width: 160px; height: 205px;">
+>>>>>>> origin/master
                                                     </a>
                                                 </div>
                                             </div>
                                         }
+<<<<<<< HEAD
 
 
                                     </div>
@@ -217,11 +252,70 @@
                         }
 
                         </div>
+=======
+
+
+                                    </div>
+
+                                </div>
+                                <!-- END: Product Photos -->
+                            </div>
+                            <div class="col-md-6">
+
+                                <h2 class="nk-product-title h3">@Model.Name </h2>
+
+                                <select class="form-control">
+                                    <option value="" disabled selected>Select Platform</option>
+                                    @foreach (var plats in platformlist)
+                                    {
+                                   
+                                        <option  value="@plats.Name">@plats.Name</option>
+                                    }
+
+                                </select>
+
+                                <div class="nk-product-description">
+                                    <p>@Model.Description.</p>
+                                </div>
+
+                                <!-- START: Add to Cart -->
+                                <div class="nk-gap-2"></div>
+
+                                <div class="nk-product-price">€ @Model.Price</div>
+                                <div class="nk-gap-1"></div>
+                                <div class="input-group">
+
+                                    <input type="number" asp-for="Quantity" class="form-control" value="1" min="1" max="3">
+                                    <input hidden asp-for="Id" value="@Model.Id" />
+
+                                    <button class="nk-btn nk-btn-rounded nk-btn-color-main-1" asp-controller="Account" asp-action="AddToCart">Add to Cart</button>
+
+                                </div>
+
+
+
+                                <div class="nk-gap-3"></div>
+                                <!-- END: Add to Cart -->
+                                <!-- START: Meta -->
+                                <div class="nk-product-meta">
+                                  @*   @await Component.InvokeAsync("GenresByIdViewComponent", new { Id = Model.Id }) *@
+
+                                    <div><strong>Compony</strong>: <a href="#">@Model.Company</a></div>
+                                </div>
+                                <!-- END: Meta -->
+                            </div>
+
+                        </div>
+                    </form>
+>>>>>>> origin/master
 
 
 
 
+<<<<<<< HEAD
                 
+=======
+>>>>>>> origin/master
 
 
 
@@ -269,6 +363,7 @@
                                     <div class="col-md-3">
                                         <div class="nk-gap"></div>
                                         <strong class="text-white">Genre:</strong>
+<<<<<<< HEAD
                                         <div class="nk-gap"></div> 
                                        
                                             @foreach (var Genre in Model.Genres)
@@ -281,6 +376,10 @@
                                             }
                                         
                                       
+=======
+                                        <div class="nk-gap"></div>
+                                     @*    @await Component.InvokeAsync("GenresByIdViewComponent", new { Id = Model.Id }); *@
+>>>>>>> origin/master
                                         <div class="nk-gap"></div>
                                     </div>
                                     <div class="col-md-4">
@@ -288,6 +387,7 @@
                                         <strong class="text-white">Customer Rating:</strong>
                                         <div class="nk-gap"></div>
 
+<<<<<<< HEAD
                                         @if (Model.Game.Rating != 0)
                                         {
 
@@ -296,6 +396,16 @@
                                             bool hasHalfStar = Model.Game.Rating - fullStars >= 0.5;
 
                                             <div class="nk-product-rating" data-rating="@Model.Game.Rating">
+=======
+                                        @if (Model.Rating != 0)
+                                        {
+
+                                            // Calculate the number of full stars and half star based on the Rating value
+                                            int fullStars = (int)Math.Floor((decimal)Model.Rating);
+                                            bool hasHalfStar = Model.Rating - fullStars >= 0.5;
+
+                                            <div class="nk-product-rating" data-rating="@Model.Rating">
+>>>>>>> origin/master
                                                 @for (int i = 0; i < 5; i++)
                                                 {
                                                     if (i < fullStars)

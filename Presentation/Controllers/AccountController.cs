@@ -3,9 +3,13 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+<<<<<<< HEAD
 using Application.ViewModel.UserSide;
 using Application.Services.Interfaces.UserSide;
 using Application.Helpers;
+=======
+using Application.DTOs.UserSide.StorePart;
+>>>>>>> origin/master
 using Microsoft.AspNetCore.Authorization;
 
 
@@ -53,9 +57,142 @@ public class AccountController : Controller
         }
         else
         {
+<<<<<<< HEAD
+=======
+
+            return View();
+        }
+
+
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> SignIn(SignInDto model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _signInService.FindUser(model);
+                if (user != null)
+                {
+                    var claims = new List<Claim>()
+                    {
+
+                        new (ClaimTypes.NameIdentifier ,user.UserName.ToString()),
+                         new (ClaimTypes.Email ,user.Email),
+                         
+                         new (ClaimTypes.MobilePhone ,user.PhoneNumber)
+                    };
+
+                    var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var principal = new ClaimsPrincipal(claimIdentity);
+
+                    var authProps = new AuthenticationProperties();
+                    // authProps.IsPersistent = model.Remmemberme;
+
+                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProps);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Email Or Password Are Incorecct!";
+                }
+
+                return View();
+
+            }
+>>>>>>> origin/master
             TempData["ErrorMessage"] = "Fill Fields Properly";
         }
+<<<<<<< HEAD
         return View();
+=======
+       
+        #endregion
+
+        #region My Account(Index)
+        public IActionResult Index()
+        {
+            return View();
+        }
+        #endregion
+
+       
+        #region LogOut
+        public IActionResult Logout()
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+         
+            return RedirectToAction("Index", "Home");
+        }
+        #endregion
+
+        #region DeleteAccount
+
+        public IActionResult DeleteAccount()
+        {
+            return View();
+        }
+        #endregion
+
+        #region ForgotPassword
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+        #endregion
+
+        #region My Cart
+        [Authorize]
+        public async Task<IActionResult> MyCart()
+        {
+            var cart = await _cartService.ListOfCart();
+            if (cart != null)
+            {
+                return View(cart);
+            }
+
+            return View();
+        }
+        #endregion
+
+        #region Add to cart
+        [HttpPost, ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> AddToCart(ProductDto model)
+        {
+            string userphone = User.FindFirstValue(ClaimTypes.MobilePhone);
+
+
+            if (ModelState.IsValid)
+            {
+               
+                await _cartService.AddToCAart(userphone, model);
+                return RedirectToAction("Product", "Store", new { id = model.Id });
+            }
+            return null;
+
+        }
+        #endregion
+
+        #region Delete Product From Cart
+       
+        public async Task<IActionResult>  DeleteCart(int Id) 
+        {
+            string userphone = User.FindFirstValue(ClaimTypes.MobilePhone);
+            await _cartService.DeleteCart(userphone, Id);
+            return RedirectToAction(nameof(MyCart));
+           
+        }
+
+        #endregion
+
+        #region CheckOut
+        [Authorize]
+        public async Task<IActionResult> CheckOut()
+        {
+            return View();
+        }
+        #endregion
+>>>>>>> origin/master
     }
     #endregion
 
