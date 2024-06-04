@@ -1,28 +1,19 @@
-using Application.Services.implements;
-using Application.Services.Interfaces;
-#region Using
-using Data.Repository.AccountRepositories;
-using Data.Repository.CartRepository;
-using Data.Repository.HomeRepository;
-using Data.Repository.StoreRepository;
-using Data.Repository.StoreRepository.CatalogRepository;
-using Data.Repository.StoreRepository.GenreRepository;
-using Data.Repository.StoreRepository.Platformrepository;
-using Data.Repository.StoreRepository.ProductRepository;
+#region Usings
+
+using Application.Services.implements.AdminSide;
+using Application.Services.implements.SitteSide;
+using Application.Services.Interfaces.AdminSide;
+using Application.Services.Interfaces.UserSide;
+using Data.Repository.GamePart;
+using Data.Repository.HomeRepsitory;
+using Data.Repository.UserPart;
 using Data.ShopDbcontext;
-using Domain.IRepository.AccountRepositorieInterfaces;
-using Domain.IRepository.AccountRepositories;
-using Domain.IRepository.CartRepositoryInterface;
-using Domain.IRepository.CatalogRepository;
-using Domain.IRepository.GenreRepostoryInterface;
+using Domain.IRepository.GamePart;
 using Domain.IRepository.HomeRepositoryInterface;
-using Domain.IRepository.PlatformRepositoryInterface;
-using Domain.IRepository.ProductRepositoryInterface;
-using Domain.IRepository.StoreRepositoryInterface;
+using Domain.IRepository.UserPart;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 #endregion
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -30,49 +21,72 @@ builder.Services.AddControllersWithViews();
 
 #region ioc Container
 //Home
-builder.Services.AddScoped<IHomeRepository, HomeRepository>();
 builder.Services.AddScoped<IHomeService, HomeService>();
+builder.Services.AddScoped<IHomeRepository , HomeRepository>();
+
+// AdminGameDetailsViewModel 
+builder.Services.AddScoped<IGameRepository, GameRepository>();
 
 #region Store part
 // Store
-builder.Services.AddScoped<IStoreRepositpory, StoreRepository>();
 builder.Services.AddScoped<IStoreService, StoreService>();
 
 // catalog 
-builder.Services.AddScoped<ICatalogRepository, CatalogRepository>();
+
 builder.Services.AddScoped<ICatalogService, CatalogService>();
 
 // Product 
-builder.Services.AddScoped<IProductRepository , ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICommentRepository , CommentRepository>();   
 
 // Genre 
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
-builder.Services.AddScoped<IGenreService, GenreService>();
+builder.Services.AddScoped<IgenreService  , GenreService>();
 
 // Platform
 builder.Services.AddScoped<IPlatformRepository, PlatformRepository>();
-builder.Services.AddScoped<IPlatformService, PlatformService>();
+builder.Services.AddScoped<IplatfromsService, PlatfromsService>();
 
 #endregion
-
 
 
 #region Account 
-// sign up
-builder.Services.AddScoped<ISignUpRepository, SignUpRepository>();
-builder.Services.AddScoped<ISignUpService, SignUpService>();
+//Account 
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IAccountService , AccountService>();
 
-//Sign in
-builder.Services.AddScoped<ISignInService, SignInService>();
-builder.Services.AddScoped<ISignInRepository , SignInRepository>();
+//Role
+builder.Services.AddScoped<IRoleRepository , RolesRepository>();
+builder.Services.AddScoped<IRoleService ,  RoleService>();  
 
-// Cart
+
+// Cart 
 builder.Services.AddScoped<ICartRepository , CartRepository>();
 builder.Services.AddScoped<ICartService , CartService>();
+
+
 #endregion
 
 
+#region Admin side
+// admin Layout
+builder.Services.AddScoped<ILayoutService , LayoutService>();
+
+// Dashboard 
+builder.Services.AddScoped<IAdminHomeService , AdminHomeService>();
+
+// orders 
+builder.Services.AddScoped<IOrdersService , OrdersService>();   
+
+#region Users
+builder.Services.AddScoped<IUserService, UsersService>();
+
+
+//admins 
+builder.Services.AddScoped<IAdminService , AdminService>();
+#endregion
+
+#endregion
 
 #endregion
 
@@ -132,10 +146,6 @@ app.UseEndpoints(endpoints =>
 });
 
 
-
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
 

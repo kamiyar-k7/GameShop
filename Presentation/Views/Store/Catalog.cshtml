@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+﻿@model Application.ViewModel.UserSide.CatalogViewModel
+
+=======
 ﻿@model List<Application.DTOs.UserSide.StorePart.CatalogDto>
 @{
     var platformlist = ViewData["Platform"] as List<Domain.entities.GamePart.Paltform.Platform>;
@@ -7,6 +11,7 @@
 
 
 }
+>>>>>>> origin/master
 
 <div class="nk-main">
 
@@ -32,12 +37,11 @@
     </div>
     <div class="nk-gap-1"></div>
     <!-- END: Breadcrumbs -->
-
+    
 
 
 
     <div class="container">
-        <!-- START: Categories -->
         <div class="row vertical-gap">
             <div class="col-lg-4">
                 <div class="nk-feature-1">
@@ -45,8 +49,8 @@
                         <img src="~/assets/images/icon-mouse.png" alt="">
                     </div>
                     <div class="nk-feature-cont">
-                        <h3 class="nk-feature-title"><a href="#">PC</a></h3>
-                        <h3 class="nk-feature-title text-main-1"><a href="#">View Games</a></h3>
+                        <h3 class="nk-feature-title"><a asp-controller="Store" asp-action="Catalog">Games</a></h3>
+                        <h3 class="nk-feature-title text-main-1"><a asp-controller="Store" asp-action="Catalog">View Games</a></h3>
                     </div>
                 </div>
             </div>
@@ -56,8 +60,8 @@
                         <img src="~/assets/images/icon-gamepad.png" alt="">
                     </div>
                     <div class="nk-feature-cont">
-                        <h3 class="nk-feature-title"><a href="#">PS4</a></h3>
-                        <h3 class="nk-feature-title text-main-1"><a href="#">View Games</a></h3>
+                        <h3 class="nk-feature-title"><a asp-controller="Home" asp-action="AboutUS">About Us</a></h3>
+                        <h3 class="nk-feature-title text-main-1"><a asp-controller="Home" asp-action="AboutUs">Contact Us</a></h3>
                     </div>
                 </div>
             </div>
@@ -67,45 +71,68 @@
                         <img src="~/assets/images/icon-gamepad-2.png" alt="">
                     </div>
                     <div class="nk-feature-cont">
-                        <h3 class="nk-feature-title"><a href="#">Xbox</a></h3>
-                        <h3 class="nk-feature-title text-main-1"><a href="#">View Games</a></h3>
+                        <h3 class="nk-feature-title"><a asp-action="SignUp" asp-controller="Account">Sign Up</a></h3>
+                        <h3 class="nk-feature-title text-main-1"><a asp-action="SignUp" asp-controller="Account">Lets Go</a></h3>
                     </div>
                 </div>
             </div>
         </div>
         <!-- END: Categories -->
+
         <!-- START: Products Filter -->
         <div class="nk-gap-2"></div>
+        <form asp-action="Catalog" asp-controller="Store" method="post" class="nk-form">
         <div class="row vertical-gap">
 
             <div class="col-lg-8">
+
                 <div class="row vertical-gap" style="justify-content: space-around; align-items: center;">
-
-
-                    @await Component.InvokeAsync("ShowGenres")
-
-
+<<<<<<< HEAD
                     <div class="col-md-4">
-                        <select class="form-control">
-                            <option value="" disabled selected>Select Platform</option>
-                            @if (platformlist != null)
+                        <select asp-for="search.GenreId" class="form-control">
+                            <option  value="" disabled selected>Select Genre</option>
+                            @if (Model.Genre != null)
                             {
-                                @foreach (var item in platformlist)
+
+                                @foreach (var item in Model.Genre)
                                 {
-                                    <option value="@item.Id">@item.Name</option>
+
+                                    <option value="@item.Id">@item.GenreName</option>
 
                                 }
-                            }
-                            else
-                            {
-                                <option value="">NULL</option>
                             }
 
 
                         </select>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
+                        <select asp-for="search.PlatfromId" class="form-control">
+                            <option value="" disabled selected>Select Platform</option>
+                            @if(Model.Platforms != null)
+                            @foreach (var item in Model.Platforms)
+                            {
+                                <option  value="@item.Id">@item.Name</option>
+
+                            }
+                           
+                          
+=======
+
+
+                    @await Component.InvokeAsync("ShowGenres")
+>>>>>>> origin/master
+
+
+                    <div class="col-md-4">
                         <div class="nk-input-slider-inline">
+<<<<<<< HEAD
+                           
+                               
+                            <div>
+                                  @*   <input type="hidden" name="formToken" value="@ViewBag.FormToken"> *@
+                                    <button type="submit" class="nk-btn nk-btn-rounded nk-btn-color-white">Apply</button>
+                            </div>
+=======
                             <div class="nk-input-slider">
                                 <div class="nk-input-slider-content text-white">
                                     PRICE:
@@ -133,11 +160,21 @@
 
                             </div>
 
+>>>>>>> origin/master
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4">
+<<<<<<< HEAD
+                 
+                    
+                    <div class="input-group">
+                        <input asp-for="search.SearchString" class="form-control" placeholder="Type something...">
+                        <a  class="nk-btn nk-btn-color-main-1"><span class="ion-search"></span></a>
+                    </div>
+              
+=======
                 @using (Html.BeginForm("Search", "Store", FormMethod.Get))
                 {
                     <div class="input-group">
@@ -149,94 +186,114 @@
                         <a  class="nk-btn nk-btn-rounded nk-btn-color-white">Apply</a>
                     </div>
                 }
+>>>>>>> origin/master
             </div>
 
         </div>
+        </form>
         <!-- END: Products Filter -->
 
         <div class="nk-gap-2"></div>
         <!-- START: Products -->
         <div class="row vertical-gap">
 
-            @foreach (var game in Model)
+            @if(Model.Games.Count != 0)
             {
-
-                @if (game != null)
+                @foreach (var game in Model.Games)
                 {
-                    <div class="col-lg-6">
-                        <div class="nk-product-cat-2">
-                            @if (game.Screenshots.Any())
-                            {
-                                var firstscreenshot = game.Screenshots.First();
 
-                                <a class="nk-product-image" href="store-product.html">
-                                    <img src="~/assets/images/GameImages/@firstscreenshot" alt="@game.Name" style="background: url('~/assets/images/@firstscreenshot') no-repeat center fixed; background-size:cover width: 205px; height: 160px;">
-                                </a>
-                            }
-                            <div class="nk-product-cont">
-                                <h3 class="nk-product-title h5"><a href="store-product.html">@game.Name</a></h3>
-                                <div class="nk-gap-1"></div>
+                    @if (game != null)
+                    {
+                        <div class="col-lg-6">
+                            <div class="nk-product-cat-2">
 
-                                <div class="nk-product-rating" data-rating="@game.Rating">
-                                    @{
-                                        // Calculate the number of full stars and half star based on the Rating value
-                                        int fullStars1 = (int)Math.Floor(game.Rating);
-                                        bool hasHalfStar1 = game.Rating - fullStars1 >= 0.5;
-                                    }
-                                    @for (int i = 0; i < 5; i++)
-                                    {
-                                        if (i < fullStars1)
-                                        {
-                                            // Render full star icon
-                                            <i class="fa fa-star"></i>
+                                @if (game.Screenshots != null && game.Screenshots.Any())
+                                {
+                                    var firstscreenshot = game.Screenshots.First();
+
+                                    <a class="nk-product-image" asp-action="Product" asp-route-Id="@game.GameId" asp-controller="Store">
+                                        <img src="~/assets/images/GameImages/@firstscreenshot" alt="@game.Name" style="width: 100%; height: 205px;">
+                                    </a>
+                                }
+
+
+
+
+                                <div class="nk-product-cont">
+                                    <h3 class="nk-product-title h5"><a asp-action="Catalog" asp-route-Id="@game.GameId" asp-controller="Store">@game.Name</a></h3>
+                                    <div class="nk-gap-1"></div>
+
+                                    <div class="nk-product-rating" data-rating="@game.Rating">
+                                        @{
+                                            // Calculate the number of full stars and half star based on the Rating value
+                                            int fullStars1 = (int)Math.Floor(game.Rating);
+                                            bool hasHalfStar1 = game.Rating - fullStars1 >= 0.5;
                                         }
-                                        else if (hasHalfStar1 && i == fullStars1)
+                                        @for (int i = 0; i < 5; i++)
                                         {
-                                            // Render half star icon
-                                            <i class="fas fa-star-half"></i>
+                                            if (i < fullStars1)
+                                            {
+                                                // Render full star icon
+                                                <i class="fa fa-star"></i>
+                                            }
+                                            else if (hasHalfStar1 && i == fullStars1)
+                                            {
+                                                // Render half star icon
+                                                <i class="fas fa-star-half"></i>
+                                            }
+                                            else
+                                            {
+                                                // Render empty star icon
+                                                <i class="far fa-star"></i>
+                                            }
                                         }
-                                        else
-                                        {
-                                            // Render empty star icon
-                                            <i class="far fa-star"></i>
-                                        }
-                                    }
+                                    </div>
+                                    <div class="nk-gap-1"></div>
+                                    @game.Description
+                                    <div class="nk-gap-2"></div>
+                                    <div class="nk-product-price">€ @game.Price</div>
+                                    <div class="nk-gap-1"></div>
+                                    <a asp-controller="Store" asp-action="Product" asp-route-Id="@game.GameId" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Show Game</a>
                                 </div>
-                                <div class="nk-gap-1"></div>
-                                @game.Description
-                                <div class="nk-gap-2"></div>
-                                <div class="nk-product-price">€ @game.Price</div>
-                                <div class="nk-gap-1"></div>
-                                <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
                             </div>
                         </div>
-                    </div>
-                }
-                else
-                {
-                    <p>OUt OF GAME</p>
-                }
-            }
+                    }
 
+
+                }
+              
+            }
+            else
+            {
+                <div class="col-lg-6">
+                  <div class="nk-product-cat-2">@TempData["NullRefrence"]</div>
+                </div>
+            }
+          
+         
         </div>
         <!-- END: Products -->
         <!-- START: Pagination -->
         <div class="nk-gap-3"></div>
         <div class="nk-pagination nk-pagination-center">
-            <a href="#" class="nk-pagination-prev">
-                <span class="ion-ios-arrow-back"></span>
-            </a>
+            @if (ViewBag.PageId > 1)
+            {
+                <a href="/Store/Catalog?pageId=@(ViewBag.PageId - 1)" class="nk-pagination-prev">
+                    <span class="ion-ios-arrow-back"></span>
+                </a>
+            }
             <nav>
-                <a class="nk-pagination-current" href="#">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <span>...</span>
-                <a href="#">14</a>
+                @for (int i = 1; i <= (int)ViewBag.pagecount + 1; i++)
+                {
+                    <a class="@(((int)ViewBag.PageId == i) ? "nk-pagination-current" : "nk-pagination") " href="/Store/Catalog?pageId=@i">@i</a>
+                }
             </nav>
-            <a href="#" class="nk-pagination-next">
-                <span class="ion-ios-arrow-forward"></span>
-            </a>
+            @if (ViewBag.PageId < ViewBag.pagecount)
+            {
+                <a href="/Store/Catalog?pageId=@(ViewBag.PageId + 1)" class="nk-pagination-next">
+                    <span class="ion-ios-arrow-forward"></span>
+                </a>
+            }
         </div>
         <!-- END: Pagination -->
         <!-- START: Most Popular -->
@@ -246,7 +303,7 @@
         <div class="row vertical-gap">
 
             @{
-                var top6 = Model.OrderByDescending(x => x.Rating).Take(6);
+                var top6 = Model.Games.OrderByDescending(x => x.Rating).Take(6);
             }
             @foreach (var game in top6)
             {
@@ -254,14 +311,15 @@
                 {
                     <div class="col-lg-4 col-md-6">
                         <div class="nk-product-cat">
-                            @if (game.Screenshots.Any())
+                            @if (game.Screenshots != null && game.Screenshots.Any())
                             {
                                 var firstscreenshot = game.Screenshots.First();
 
                                 <a class="nk-product-image" href="store-product.html">
-                                    <img src="~/assets/images/GameImages/@firstscreenshot" alt="@game.Name" style="background: url('~/assets/images/@firstscreenshot') no-repeat center fixed; background-size:cover width: 205px; height: 160px;">
+                                    <img src="~/assets/images/GameImages/@firstscreenshot" alt="@game.Name" style="width:100%; height:205px;">
                                 </a>
                             }
+
                             <div class="nk-product-cont">
                                 <h3 class="nk-product-title h5"><a href="store-product.html">@game.Name</a></h3>
                                 <div class="nk-gap-1"></div>
@@ -298,19 +356,12 @@
 
             }
 
-
-
         </div>
         <!-- END: Most Popular -->
     </div>
 
     <div class="nk-gap-2"></div>
 
-
-
-
 </div>
-
-
 
 

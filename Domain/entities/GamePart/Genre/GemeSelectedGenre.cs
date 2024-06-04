@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+﻿
+
+namespace Domain.entities.GamePart.Genre;
+=======
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +11,7 @@ using System.Threading.Tasks;
 using Domain.entities.GamePart.GemGenreDto;
 
 namespace Domain.entities.Store.GemGenreDto;
+>>>>>>> origin/master
 
 public class GameSelectedGenre
 {
@@ -14,7 +20,7 @@ public class GameSelectedGenre
     public int GameId { get; set; }
 
     public int GenreId { get; set; }
-    
+
 
 
     #region Rels

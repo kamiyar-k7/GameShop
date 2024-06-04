@@ -5,6 +5,10 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Views\Store\Catalog.cshtml~RF213dd3.TMP" />
+  </ItemGroup>
 	
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
@@ -17,6 +21,7 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
 	</ItemGroup>
 	
 	<ItemGroup>
@@ -26,7 +31,9 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-	  <Folder Include="wwwroot\Login\" />
+	  <Folder Include="wwwroot\assets\images\UserAvatar\" />
+	  <Folder Include="wwwroot\assets\Trailers\" />
+	  <Folder Include="wwwroot\Slider\" />
 	</ItemGroup>
 	
 </Project>

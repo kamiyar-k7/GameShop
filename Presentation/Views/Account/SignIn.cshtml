@@ -31,17 +31,36 @@
                     <div class="mail-form-agile" style="padding:5px; color:red;">
                         @TempData["ErrorMessage"]
                     </div>
-                }<br />
+                }
+                <br />
+                <div class="mail-form-agile-agile">
+                 
+                    <label class="lns-checkbox">
+                        <input type="checkbox" asp-for="RememberMe" >
+                        <span>Remember Me</span>
+                    </label>
+                  
+                </div>
 
+                <br />
 
                 <div>
+<<<<<<< HEAD
+                    <label class="padding" style="color:white"><a >Forgot Password?</a></label>
+                    <br />
+                    <br />
+                    <label class="padding" style="color:white">Need A New Account? <a asp-controller="Account" asp-action="SignUp">Create Account</a></label>
+=======
                     <label class="padding" style="color:white"><a href="#">Forgot Password?</a></label>
                     <br />
                     <label class="padding" style="color:white">Create Account <a  asp-controller="Account" asp-action="SignUp"> Sign Up</a></label>
 
+>>>>>>> origin/master
                 </div>
                 <br />
+                <input type="hidden" asp-for="ReturnUrl" />
                 <input type="submit" value="Submit" class="padding">
+
             </form>
         
 

@@ -7835,10 +7835,13 @@ div.nk-error {
 
 /*---------------------------
   Element Image Slider
- ----------------------------*/
+ ----------------------------*/ 
+
+
+
 .nk-image-slider {
     position: relative;
-    height: 360px;
+    height: 100%;
     overflow: hidden;
     background-color: #232930;
     border-bottom: 3px solid #dd163b;
@@ -7852,6 +7855,7 @@ div.nk-error {
         overflow: hidden;
     }
 
+
     .nk-image-slider .nk-image-slider-bg,
     .nk-image-slider .nk-image-slider-bg-transition {
         position: absolute;
@@ -7859,8 +7863,8 @@ div.nk-error {
         right: 0;
         bottom: 0;
         left: 0;
-         background-position: center center;
-    background-size: cover;
+        background-position: center center;
+        background-size: cover;
         z-index: -1;
     }
 
@@ -7953,6 +7957,7 @@ div.nk-error {
                     border-radius: 50%;
                     z-index: 1;
                 }
+
 
 /*------------------------------------------------------------------
 

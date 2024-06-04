@@ -1,21 +1,15 @@
-﻿using Domain.entities.Store.Game;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Domain.entities.GamePart.Game;
 
-namespace Domain.entities.GamePart.Paltform
+namespace Domain.entities.GamePart.Platform;
+
+public class GameSelectedPlatform
 {
-    public class GameSelectedPlatform
-    {
-        public int Id { get; set; }
-        public int GameId { get; set; }
-        public int PlatformId { get; set; }
+    public int Id { get; set; }
+    public int GameId { get; set; }
+    public int PlatformId { get; set; }
 
-        #region Rels
-        public Game Game { get; set; }
-        public Platform Platform { get; set; }
-        #endregion
-    }
+    #region Rels
+    public Domain.entities.GamePart.Game.Game Game { get; set; }
+    public Platform Platform { get; set; }
+    #endregion
 }

@@ -48,12 +48,15 @@
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="~/assets/css/custom.css">
+    <!--image slider -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/css/swiper.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Slider/style.css">
 
     <!-- END: Styles -->
     <!-- jQuery -->
     <script src="~/assets/vendor/jquery/dist/jquery.min.js"></script>
 
-  
 </head>
 
 
@@ -114,11 +117,6 @@
                 </div>
                 <div class="nk-contacts-right">
                     <ul class="nk-contacts-icons">
-
-
-
-                  
-
                     </ul>
                 </div>
             </div>
@@ -142,9 +140,11 @@
 
                     <ul class="nk-nav nk-nav-right d-none d-lg-table-cell" data-nav-mobile="#nk-nav-mobile">
 
-                        
+                        <li >
+                            <a asp-controller="Home" asp-action="Index">Home </a>
+                        </li>
                         <li class=" nk-drop-item">
-                            <a >
+                            <a>
                                 Store
 
                             </a>
@@ -156,14 +156,14 @@
 
                                     </a>
                                 </li>
-                            
+
                                 <li>
                                     <a asp-controller="Store" asp-action="Catalog">
                                         Catalog
 
                                     </a>
                                 </li>
-                             
+
                             </ul>
                         </li>
 
@@ -178,20 +178,20 @@
 
                                     <li>
                                         <a asp-controller="Account" asp-action="MyAccount">
-                                            My Account  
+                                            My Account
 
                                         </a>
                                     </li>
                                     <li>
-                                        <a asp-controller="Account" asp-action="MyCart">
+                                        <a asp-controller="Order" asp-action="MyCart">
                                             My Cart
 
                                         </a>
                                     </li>
                                     <li>
-                                        <a asp-controller="Account" asp-action="LogOut" type="button"  onclick="return confirm('are you sure you want log out ?')">
-                                           log Out
-                                          
+                                        <a asp-controller="Account" asp-action="LogOut" type="button" onclick="return confirm('are you sure you want log out ?')">
+                                            log Out
+
 
 
                                         </a>
@@ -226,28 +226,12 @@
                             </li>
                         }
 
-                    
-
                         <li>
-                            <a>
+                            <a asp-controller="Home" asp-action="AboutUs">
                                 About Us
                             </a>
                         </li>
-                        <li>
-                            <a>
-                                Contact Us
-                            </a>
-                        </li>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li>
-                                <a>
-                                  @User.Identity.Name
-                                </a>
-                            </li>
-                        }
-                        
-
+                     
                     </ul>
                     <ul class="nk-nav nk-nav-right nk-nav-icons">
 
@@ -296,11 +280,7 @@
         </div>
     </div>
     <!-- END: Navbar Mobile -->
-
-
-
-
-        @RenderBody()
+    @RenderBody()
 
 
 
@@ -311,7 +291,7 @@
             <div class="nk-gap-3"></div>
             <div class="row vertical-gap">
 
-                <p>ill fill it later</p>
+                <p>Footer (not finished)</p>
             </div>
             <div class="nk-gap-3"></div>
         </div>
@@ -361,8 +341,6 @@
         </div>
     </footer>
     <!-- END: Footer -->
-
-
     <!-- START: Page Background -->
 
     <img class="nk-page-background-top" src="~/assets/images/bg-top.png" alt="">
@@ -390,7 +368,6 @@
     </div>
     <!-- END: Search Modal -->
     <!-- START: Login Modal -->
-    
     <!-- END: Login Modal -->
     <!-- START: Scripts -->
     <!-- Object Fit Polyfill -->
@@ -452,8 +429,10 @@
     <!-- GoodGames -->
     <script src="~/assets/js/goodgames.min.js"></script>
     <script src="~/assets/js/goodgames-init.js"></script>
+ 
     <!-- END: Scripts -->
-
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.min.js"></script>
+    <script defer src="~/Slider/main.js"></script>
 
 
 </body>

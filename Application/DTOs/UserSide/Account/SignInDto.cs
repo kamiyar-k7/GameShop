@@ -17,8 +17,8 @@ namespace Application.DTOs.UserSide.Account
         public string?  UserAvatar { get; set; }
         public bool? IsAdmin { get; set; }
         public bool? SuperAdmin { get; set; }
-      //  public string? Role { get; set; }
-
+        public string? ReturnUrl { get; set; }
+        public bool RememberMe { get; set; }
 
     }
 }
